@@ -1,0 +1,70 @@
+import type { Config } from 'tailwindcss'
+import forms from '@tailwindcss/forms'
+
+export default {
+  content: ['./app/**/*.{js,jsx,ts,tsx}', './components/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: 'oklch(97% 0.01 260)',
+          100: 'oklch(93% 0.02 260)',
+          200: 'oklch(85% 0.06 260)',
+          300: 'oklch(74% 0.12 260)',
+          400: 'oklch(63% 0.18 260)',
+          500: 'oklch(55% 0.20 260)',
+          600: 'oklch(48% 0.18 260)',
+          700: 'oklch(40% 0.14 260)',
+          800: 'oklch(32% 0.10 260)',
+          900: 'oklch(24% 0.08 260)',
+          950: 'oklch(14% 0.06 260)',
+        },
+        secondary: {
+          50: 'oklch(97% 0.01 340)',
+          100: 'oklch(93% 0.02 340)',
+          200: 'oklch(85% 0.06 340)',
+          300: 'oklch(74% 0.12 340)',
+          400: 'oklch(63% 0.18 340)',
+          500: 'oklch(55% 0.20 340)',
+          600: 'oklch(48% 0.18 340)',
+          700: 'oklch(40% 0.14 340)',
+          800: 'oklch(32% 0.10 340)',
+          900: 'oklch(24% 0.08 340)',
+          950: 'oklch(14% 0.06 340)',
+        },
+        surface: {
+          50: 'oklch(98% 0 0)',
+          100: 'oklch(95% 0 0)',
+          200: 'oklch(90% 0 0)',
+          300: 'oklch(82% 0 0)',
+          400: 'oklch(64% 0 0)',
+          500: 'oklch(55% 0 0)',
+          600: 'oklch(45% 0 0)',
+          700: 'oklch(35% 0 0)',
+          800: 'oklch(25% 0 0)',
+          900: 'oklch(15% 0 0)',
+          950: 'oklch(10% 0 0)',
+        },
+        error: {
+          50: 'oklch(97% 0.05 25)',
+          100: 'oklch(93% 0.08 25)',
+          200: 'oklch(85% 0.14 25)',
+          300: 'oklch(74% 0.20 25)',
+          400: 'oklch(63% 0.24 25)',
+          500: 'oklch(55% 0.24 25)',
+          600: 'oklch(48% 0.22 25)',
+          700: 'oklch(40% 0.18 25)',
+          800: 'oklch(32% 0.12 25)',
+          900: 'oklch(24% 0.08 25)',
+          950: 'oklch(14% 0.05 25)',
+        },
+        success: {
+          500: 'oklch(55% 0.20 145)',
+          700: 'oklch(40% 0.15 145)',
+        },
+      },
+    },
+  },
+  plugins: [forms],
+} satisfies Config

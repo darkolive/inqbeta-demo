@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+/* Workhouse semantic identity — style meaning, not decoration.
+   Visual tokens live here so future themes can restyle roles globally.
+   Future Dark Olive theme work: Skeleton theme configuration + these semantic classes. */
+
+@layer components {
+  .workhouse-surface {
+    --wh-id-self-fg: var(--color-primary-500);
+    --wh-id-other-fg: var(--color-primary-500);
+    --wh-id-character-fg: var(--color-primary-500);
+    --wh-id-system-fg: var(--color-secondary-500);
+    --wh-id-proof-fg: var(--color-primary-500);
+    --wh-id-warning-fg: var(--color-error-500);
+    --wh-id-success-fg: var(--color-success-500);
+    --wh-id-neutral-fg: var(--color-secondary-500);
+    /* Chart lines = information (same contrast as readable foreground text).
+       Skeleton legacy pairings — full opacity, no color-mix.
+       Runtime mapping (light / dark via light-dark pairings):
+         primary   → exchange, credit balance, action received
+         secondary → support, action sent
+         tertiary  → community interest (body foreground) */
+    --wh-chart-series-primary: var(--color-primary-700-300);
+    --wh-chart-series-secondary: var(--color-secondary-700-300);
+    --wh-chart-series-tertiary: var(--color-surface-950-50);
+  }
+
+  .wh-semantic-self {
+    @apply font-semibold;
+    color: var(--wh-id-self-fg);
+  }
+
+  .wh-semantic-other {
+    @apply font-semibold;
+    color: var(--wh-id-other-fg);
+  }
+
+  .wh-semantic-character {
+    @apply font-semibold;
+    color: var(--wh-id-character-fg);
+  }
+
+  .wh-semantic-system {
+    color: var(--wh-id-system-fg);
+  }
+
+  .wh-semantic-proof {
+    color: var(--wh-id-proof-fg);
+  }
+
+  .wh-semantic-proof-hash {
+    @apply select-all break-all font-mono text-xs touch-manipulation opacity-60;
+  }
+
+  .wh-semantic-warning {
+    @apply font-semibold;
+    color: var(--wh-id-warning-fg);
+  }
+
+  .wh-semantic-success {
+    @apply font-semibold;
+    color: var(--wh-id-success-fg);
+  }
+
+  .wh-semantic-neutral {
+    @apply font-medium;
+    color: var(--wh-id-neutral-fg);
+  }
+
+  /* Intro carousel — compact frame + fluid anchor line (homepage rules deck). */
+  .rules-carousel-statement {
+    container-type: inline-size;
+    container-name: rules-carousel;
+    width: 100%;
+  }
+
+  .rules-carousel-anchor {
+    @apply font-extrabold uppercase leading-none tracking-tight;
+    font-size: clamp(1rem, 8.25cqi, 2.25rem);
+    white-space: nowrap;
+    max-width: 100%;
+  }
+}
