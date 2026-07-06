@@ -783,8 +783,8 @@ function formatActivityMessage(
       if (isSelf(actor, currentUser)) {
         return (
           <>
-            <ActivityName name={actor} currentUser={currentUser} /> accepted
-            this offer of <ActivityTerm>{gesture}</ActivityTerm> in exchange for{" "}
+            <ActivityName name={actor} currentUser={currentUser} /> accepted{" "}
+            <N name={from} />'s offer of <ActivityTerm>{gesture}</ActivityTerm> in exchange for{" "}
             <ActivityTerm>{terms}</ActivityTerm>.
           </>
         );
@@ -3361,7 +3361,8 @@ export default function WorkhousePage() {
                           </>
                         ) : (
                           <>
-                            You accepted this offer of{" "}
+                            You accepted{" "}
+                            <ActivityName name={offer.from} currentUser={username} />'s offer of{" "}
                             <ActivityTerm>{giveTermsText(offer)}</ActivityTerm>{" "}
                             in exchange for{" "}
                             <ActivityTerm>
