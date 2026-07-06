@@ -3,7 +3,7 @@
 
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose, Portal as DialogPortal } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitleComponent, DialogDescription, DialogClose, Portal as DialogPortal } from '@/components/ui/dialog'
 
 // AppBar
 function AppBarBase({ children, className = '' }: { children?: React.ReactNode; className?: string }) {
@@ -28,7 +28,10 @@ const AppBar = Object.assign(AppBarBase, {
 export { AppBar }
 
 // Dialog
-export { Dialog, DialogContent, DialogTitle, DialogDescription, DialogClose }
+export { Dialog, DialogContent, DialogTitleComponent as DialogTitle, DialogDescription, DialogClose }
+
+// Add CloseTrigger as an alias for DialogClose for compatibility
+Dialog.CloseTrigger = DialogClose
 
 // Portal - custom implementation
 export function Portal({ children }: { children?: React.ReactNode }) {

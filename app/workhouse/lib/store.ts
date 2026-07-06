@@ -674,12 +674,9 @@ export async function getStateForSession(sessionIdRaw: string): Promise<Workhous
     throw new WorkhouseError('unauthenticated', WorkhouseMessages.sessionNotBound)
   }
 
-  const storage = await getStorage()
-  const resetKeys = await storage.getResetIdentityKeys()
-  if (resetKeys.has(key)) {
-    throw new WorkhouseError('identity_reset', WorkhouseMessages.identityReset)
-  }
+  // For demo: allow re-entry with same name after reset (don't block on resetKeys)
 
+  const storage = await getStorage()
   const user = await storage.getUser(key)
   if (!user) {
     throw new WorkhouseError('unauthenticated', WorkhouseMessages.sessionNotBound)

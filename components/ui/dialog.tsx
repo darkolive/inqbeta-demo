@@ -3,6 +3,11 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
+// Create context for dialog state
+const DialogContext = React.createContext<{
+  onOpenChange: (open: boolean) => void
+} | null>(null)
+
 // Base Dialog component
 function DialogBase({ open, onOpenChange, children, ...props }: React.ComponentProps<'div'> & {
   open?: boolean
@@ -25,24 +30,34 @@ function DialogBase({ open, onOpenChange, children, ...props }: React.ComponentP
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
-      <div
-        className="fixed inset-0 z-[-1] bg-black/40"
-        onClick={() => props.closeOnInteractOutside !== false && handleOpenChange(false)}
-      />
-      <div
-        className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 w-full max-w-md p-5 shadow-lg"
-        role={props.role}
-        onKeyDown={(e) => {
-          if (props.closeOnEscape !== false && e.key === 'Escape') {
-            handleOpenChange(false)
-          }
-        }}
-      >
-        {children}
+    <DialogContext.Provider value={{ onOpenChange: handleOpenChange }}>
+      <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
+        <div
+          className="fixed inset-0 z-[-1] bg-black/40"
+          onClick={() => props.closeOnInteractOutside !== false && handleOpenChange(false)}
+        />
+        <div
+          className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 w-full max-w-md p-5 shadow-lg"
+          role={props.role}
+          onKeyDown={(e) => {
+            if (props.closeOnEscape !== false && e.key === 'Escape') {
+              handleOpenChange(false)
+            }
+          }}
+        >
+          {children}
+        </div>
       </div>
-    </div>
+    </DialogContext.Provider>
   )
+}
+
+function useDialogContext() {
+  const context = React.useContext(DialogContext)
+  if (!context) {
+    throw new Error('Dialog components must be used within Dialog')
+  }
+  return context
 }
 
 // Create the compound component
@@ -79,8 +94,9 @@ const Dialog = Object.assign(DialogBase, {
     )
   },
   CloseTrigger: function DialogCloseTrigger({ children, disabled, ...props }: React.ComponentProps<'button'>) {
+    const { onOpenChange } = useDialogContext()
     return (
-      <button type="button" disabled={disabled} className="btn btn-sm preset-outlined-surface-200-800" {...props}>
+      <button type="button" disabled={disabled} onClick={() => onOpenChange(false)} className="btn btn-sm preset-outlined-surface-200-800" {...props}>
         {children}
       </button>
     )
@@ -89,7 +105,7 @@ const Dialog = Object.assign(DialogBase, {
 
 export { Dialog }
 
-export function Portal({ children }: { children: React.ReactNode }) {
+export function Portal({ children }: { children?: React.ReactNode }) {
   if (typeof document === 'undefined') return null
   const container = document.createElement('div')
   document.body.appendChild(container)
@@ -116,7 +132,7 @@ export function DialogContentComponent({ children, className = '', ...props }: R
   )
 }
 
-export function DialogTitle({ children, className = '', ...props }: React.ComponentProps<'h2'>) {
+export function DialogTitleComponent({ children, className = '', ...props }: React.ComponentProps<'h2'>) {
   return (
     <h2 className={`h5 font-semibold ${className}`} {...props}>
       {children}
@@ -137,8 +153,9 @@ export const DialogContent = DialogContentComponent
 
 export const DialogCloseTrigger = DialogClose
 export function DialogClose({ children, disabled, ...props }: React.ComponentProps<'button'>) {
+  const { onOpenChange } = useDialogContext()
   return (
-    <button type="button" disabled={disabled} className="btn btn-sm preset-outlined-surface-200-800" {...props}>
+    <button type="button" disabled={disabled} onClick={() => onOpenChange(false)} className="btn btn-sm preset-outlined-surface-200-800" {...props}>
       {children}
     </button>
   )
