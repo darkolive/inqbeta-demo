@@ -6,7 +6,7 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start",
-    "test": "npx --yes tsx --test app/workhouse/lib/sessions.test.ts"
+    "test": "npx --yes tsx --test app/workhouse/lib/sessions.test.ts app/workhouse/lib/storage.test.ts app/workhouse/lib/route-integration.test.ts"
   },
   "dependencies": {
     "@skeletonlabs/skeleton-react": "^4.15.2",

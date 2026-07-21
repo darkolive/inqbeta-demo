@@ -6,6 +6,7 @@ import {
   WORKHOUSE_SESSION_COOKIE,
   createSession,
   getSessionIdFromRequest,
+  setSessionCookie,
   clearSessionCookie,
 } from './sessions'
 
@@ -120,11 +121,11 @@ test('stale request completion cannot overwrite newer successful login', () => {
   // This is a logic test - the frontend must not allow a stale 401 response
   // to clear the session after a successful login
   // The fix: busy flag check prevents this
-  
+
   // Simulate: login succeeded, then stale refresh returns 401
   // The frontend should check `busy` flag before clearing session
   const busy = true // User is currently logging in
-  
+
   // If busy is true, the stale 401 should NOT clear the session
   if (busy) {
     // This is the expected behavior - stale refresh is ignored during login
@@ -133,4 +134,110 @@ test('stale request completion cannot overwrite newer successful login', () => {
     // This would be the bug - stale refresh clearing active session
     assert.fail('Stale refresh should not clear session during login')
   }
+})
+
+// Cookie attribute tests
+
+test('setSessionCookie includes all required attributes', () => {
+  const { NextResponse } = require('next/server')
+  const sessionId = createSession('testuser')
+  const response = NextResponse.json({ ok: true })
+  setSessionCookie(response, sessionId)
+
+  const setCookieHeader = response.headers.get('set-cookie')
+  assert.ok(setCookieHeader !== null, 'Set-Cookie header should exist')
+
+  // Cookie name
+  assert.ok(
+    setCookieHeader.startsWith('workhouseSession='),
+    `Cookie should start with name, got: ${setCookieHeader}`
+  )
+
+  // Path=/
+  assert.ok(
+    setCookieHeader.includes('Path=/'),
+    `Cookie should have Path=/, got: ${setCookieHeader}`
+  )
+
+  // HttpOnly
+  assert.ok(
+    setCookieHeader.includes('HttpOnly'),
+    `Cookie should have HttpOnly, got: ${setCookieHeader}`
+  )
+
+  // SameSite=Lax (case-insensitive)
+  assert.ok(
+    setCookieHeader.toLowerCase().includes('samesite=lax'),
+    `Cookie should have SameSite=Lax, got: ${setCookieHeader}`
+  )
+
+  // Max-Age present (72 hours = 259200 seconds)
+  assert.ok(
+    setCookieHeader.includes('Max-Age=259200'),
+    `Cookie should have Max-Age=259200, got: ${setCookieHeader}`
+  )
+
+  // Secure in production
+  const isProduction = process.env.NODE_ENV === 'production'
+  if (isProduction) {
+    assert.ok(
+      setCookieHeader.includes('Secure'),
+      `Cookie should have Secure in production, got: ${setCookieHeader}`
+    )
+  }
+})
+
+test('clearSessionCookie includes all required attributes', () => {
+  const { NextResponse } = require('next/server')
+  const response = NextResponse.json({ ok: true })
+  clearSessionCookie(response)
+
+  const setCookieHeader = response.headers.get('set-cookie')
+  assert.ok(setCookieHeader !== null, 'Set-Cookie header should exist')
+
+  // Cookie name (empty value)
+  assert.ok(
+    setCookieHeader.startsWith('workhouseSession='),
+    `Cookie should start with name, got: ${setCookieHeader}`
+  )
+
+  // Path=/
+  assert.ok(
+    setCookieHeader.includes('Path=/'),
+    `Cookie should have Path=/, got: ${setCookieHeader}`
+  )
+
+  // Max-Age=0
+  assert.ok(
+    setCookieHeader.toLowerCase().includes('max-age=0'),
+    `Cookie should have Max-Age=0, got: ${setCookieHeader}`
+  )
+
+  // HttpOnly
+  assert.ok(
+    setCookieHeader.includes('HttpOnly'),
+    `Cookie should have HttpOnly, got: ${setCookieHeader}`
+  )
+
+  // SameSite=Lax (case-insensitive)
+  assert.ok(
+    setCookieHeader.toLowerCase().includes('samesite=lax'),
+    `Cookie should have SameSite=Lax, got: ${setCookieHeader}`
+  )
+})
+
+test('cookie path is / (root) not /api/workhouse', () => {
+  const { NextResponse } = require('next/server')
+  const sessionId = createSession('testuser')
+  const response = NextResponse.json({ ok: true })
+  setSessionCookie(response, sessionId)
+
+  const setCookieHeader = response.headers.get('set-cookie')
+  assert.ok(setCookieHeader !== null)
+
+  // Path should be root, not /api/workhouse
+  assert.ok(
+    setCookieHeader.includes('Path=/') && !setCookieHeader.includes('Path=/api/workhouse'),
+    `Cookie path should be /, got: ${setCookieHeader}`
+  )
 })
