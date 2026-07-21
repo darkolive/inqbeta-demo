@@ -2117,8 +2117,10 @@ export default function WorkhousePage() {
         setState(next);
         saveSession(next.user.username);
       })
-      .catch(() => {
-        // No active cookie session — show login form
+      .catch((err) => {
+        if (err instanceof WorkhouseApiError && err.code === 'unauthenticated') {
+          clearUsername();
+        }
       });
   }, []);
 
@@ -2142,13 +2144,15 @@ export default function WorkhousePage() {
             err.code === "session_not_bound" ||
             err.code === "unauthenticated"
           ) {
-            handleLocalSessionEnded();
+            if (!busy) {
+              handleLocalSessionEnded();
+            }
           }
         }
       });
     }, 2500);
     return () => window.clearInterval(id);
-  }, [username, refresh, handleSessionEnded, handleLocalSessionEnded]);
+  }, [username, refresh, handleSessionEnded, handleLocalSessionEnded, busy]);
 
   useEffect(() => {
     if (!state || !username) return;

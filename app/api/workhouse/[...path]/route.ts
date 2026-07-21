@@ -67,12 +67,22 @@ export async function GET(req: Request, ctx: { params: Promise<{ path: string[] 
     if (path.length === 1 && path[0] === 'state') {
       const sessionId = getSessionIdFromRequest(req)
       if (!sessionId) {
-        return json(
+        const response = json(
           { error: { code: 'unauthenticated', message: WorkhouseMessages.sessionNotBound } },
           401
         )
+        clearSessionCookie(response)
+        return response
       }
       const state = await getStateForSession(sessionId)
+      if (!state) {
+        const response = json(
+          { error: { code: 'unauthenticated', message: WorkhouseMessages.sessionNotBound } },
+          401
+        )
+        clearSessionCookie(response)
+        return response
+      }
       return json(state)
     }
 

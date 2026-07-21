@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "npx --yes tsx --test app/workhouse/lib/sessions.test.ts"
   },
   "dependencies": {
     "@skeletonlabs/skeleton-react": "^4.15.2",
@@ -30,6 +31,7 @@
     "@types/react": "^19.0.0",
     "postcss": "^8.5.15",
     "tailwindcss": "^4.3.1",
+    "tsx": "^4.19.0",
     "typescript": "^5.0.0"
   }
 }

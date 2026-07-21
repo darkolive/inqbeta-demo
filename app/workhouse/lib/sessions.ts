@@ -5,6 +5,13 @@ import { getStorage } from './storage'
 export const WORKHOUSE_SESSION_COOKIE = 'workhouseSession'
 export const WORKHOUSE_SESSION_MAX_AGE = 60 * 60 * 72
 
+// In-memory session store for testing (mirrors what storage.ts uses)
+const testSessionStore = new Map<string, string>()
+
+export function resetSessionsForTests(): void {
+  testSessionStore.clear()
+}
+
 export function createSession(username: string): string {
   const sessionId = randomBytes(24).toString('hex')
   return sessionId
