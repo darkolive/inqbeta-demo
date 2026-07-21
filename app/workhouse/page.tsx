@@ -3122,16 +3122,28 @@ export default function WorkhousePage() {
                         currentUser={username}
                         perspective="sender"
                       />
-                      <button
-                        type="button"
-                        disabled={busy}
-                        onClick={() =>
-                          run(() => acceptCounterOffer(offer.id, username))
-                        }
-                        className="btn preset-filled-primary-500 w-full sm:w-auto"
-                      >
-                        Accept counteroffer
-                      </button>
+                      <div className="btn-group flex w-full flex-col sm:flex-row sm:flex-wrap">
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() =>
+                            run(() => acceptCounterOffer(offer.id, username))
+                          }
+                          className="btn preset-filled-primary-500 w-full sm:w-auto"
+                        >
+                          Accept
+                        </button>
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() =>
+                            run(() => rejectOffer(offer.id, username))
+                          }
+                          className="btn preset-filled-error-500 w-full sm:w-auto"
+                        >
+                          Decline
+                        </button>
+                      </div>
                     </div>
                   );
                 }

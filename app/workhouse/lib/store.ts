@@ -890,19 +890,37 @@ export async function rejectOffer(offerId: string, actor: string): Promise<Workh
   if (!actorUser) {
     throw new WorkhouseError('unauthenticated', WorkhouseMessages.sessionNotBound)
   }
-  if (offer.to.toLowerCase() !== actorUser.username.toLowerCase()) {
+  const isSender = offer.from.toLowerCase() === actorUser.username.toLowerCase()
+  const isRecipient = offer.to.toLowerCase() === actorUser.username.toLowerCase()
+
+  if (!isSender && !isRecipient) {
     throw new WorkhouseError('forbidden', WorkhouseMessages.onlyRecipientReject)
   }
-  if (offer.status !== 'pending') {
+
+  const isPending = offer.status === 'pending'
+  const isCountered = offer.status === 'countered'
+  const canReject = isPending || isCountered
+  if (!canReject) {
     throw new WorkhouseError('invalid_state', WorkhouseMessages.offerCannotReject)
   }
 
-  await commitConstitutionalOccurrence({
-    message: `${actorUser.username} rejected ${offer.from}'s offer: ${giveTermsText(offer)} for ${receiveTermsText(offer)}`,
-    kind: 'reject',
-    participants: auditParticipantNames(offer.from, offer.to, actorUser.username),
-    offerId: offer.id,
-  })
+  const isCounterDecline = isCountered && isSender
+
+  if (isCounterDecline) {
+    await commitConstitutionalOccurrence({
+      message: `${actorUser.username} rejected ${offer.to}'s counteroffer: ${giveTermsText(offer)} for ${receiveTermsText(offer)}`,
+      kind: 'reject',
+      participants: auditParticipantNames(offer.from, offer.to, actorUser.username),
+      offerId: offer.id,
+    })
+  } else {
+    await commitConstitutionalOccurrence({
+      message: `${actorUser.username} rejected ${offer.from}'s offer: ${giveTermsText(offer)} for ${receiveTermsText(offer)}`,
+      kind: 'reject',
+      participants: auditParticipantNames(offer.from, offer.to, actorUser.username),
+      offerId: offer.id,
+    })
+  }
 
   offer.status = 'rejected'
   offer.rejectionMessage = 'Sorry, no thanks.'
