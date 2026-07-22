@@ -47,25 +47,19 @@ export async function clearSessionsForUsername(usernameRaw: string): Promise<voi
 }
 
 export function setSessionCookie(response: NextResponse, sessionId: string): void {
-  response.cookies.set({
-    name: WORKHOUSE_SESSION_COOKIE,
-    value: sessionId,
+  response.cookies.set(WORKHOUSE_SESSION_COOKIE, sessionId, {
     httpOnly: true,
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
+    path: '/api/workhouse',
     maxAge: WORKHOUSE_SESSION_MAX_AGE,
   })
 }
 
 export function clearSessionCookie(response: NextResponse): void {
-  response.cookies.set({
-    name: WORKHOUSE_SESSION_COOKIE,
-    value: '',
+  response.cookies.set(WORKHOUSE_SESSION_COOKIE, '', {
     httpOnly: true,
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
+    path: '/api/workhouse',
     maxAge: 0,
   })
 }

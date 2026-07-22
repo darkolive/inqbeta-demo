@@ -32,27 +32,10 @@ async function post<T>(path: string, body: Record<string, unknown>): Promise<T> 
   return data as T
 }
 
-/** Source tracking for diagnosing request origins */
-let fetchStateSource: string = 'unknown'
-
-export function setFetchStateSource(source: string) {
-  fetchStateSource = source
-}
-
-export function getFetchStateSource(): string {
-  return fetchStateSource
-}
-
 async function get<T>(path: string, params?: Record<string, string>): Promise<T> {
   const qs = params ? `?${new URLSearchParams(params).toString()}` : ''
-  const headers: Record<string, string> = {}
-  // Add diagnostic header to trace request source
-  if (path === 'state') {
-    headers['X-Workhouse-State-Source'] = fetchStateSource
-  }
   const res = await fetch(`${BASE}/${path}${qs}`, {
     credentials: 'same-origin',
-    headers,
   })
   const data = await res.json()
   if (!res.ok) {

@@ -24,12 +24,7 @@ import { getStorage, getPersistenceStatus } from '../../../workhouse/lib/storage
 import { normalizeValueType } from '../../../workhouse/lib/exchange-value'
 
 function json(data: unknown, status = 200) {
-  return NextResponse.json(data, {
-    status,
-    headers: {
-      'Cache-Control': 'no-store',
-    },
-  })
+  return NextResponse.json(data, { status })
 }
 
 function parseCreditAmountField(raw: unknown): number | undefined {
@@ -71,19 +66,7 @@ export async function GET(req: Request, ctx: { params: Promise<{ path: string[] 
 
     if (path.length === 1 && path[0] === 'state') {
       const sessionId = getSessionIdFromRequest(req)
-      const storage = await getStorage()
-      const status = await getPersistenceStatus()
-
-      console.log('[workhouse] GET /state', {
-        route: 'state',
-        cookiePresent: !!sessionId,
-        cookiePrefix: sessionId?.slice(0, 6),
-        sessionFound: false, // Will be updated below
-        storageBackend: status.persistence,
-      })
-
       if (!sessionId) {
-        console.log('[workhouse] GET /state - no cookie')
         const response = json(
           { error: { code: 'unauthenticated', message: WorkhouseMessages.sessionNotBound } },
           401
@@ -91,39 +74,16 @@ export async function GET(req: Request, ctx: { params: Promise<{ path: string[] 
         clearSessionCookie(response)
         return response
       }
-
-      try {
-        const state = await getStateForSession(sessionId)
-        if (!state) {
-          console.log('[workhouse] GET /state - session not found in storage')
-          const response = json(
-            { error: { code: 'unauthenticated', message: WorkhouseMessages.sessionNotBound } },
-            401
-          )
-          clearSessionCookie(response)
-          return response
-        }
-        console.log('[workhouse] GET /state - success', {
-          route: 'state',
-          cookiePresent: true,
-          cookiePrefix: sessionId.slice(0, 6),
-          sessionFound: true,
-          usernameFound: true,
-          storageBackend: status.persistence,
-        })
-        return json(state)
-      } catch (err) {
-        if (err instanceof WorkhouseError && err.code === 'unauthenticated') {
-          console.log('[workhouse] GET /state - session lookup failed')
-          const response = json(
-            { error: { code: 'unauthenticated', message: err.message } },
-            401
-          )
-          clearSessionCookie(response)
-          return response
-        }
-        throw err
+      const state = await getStateForSession(sessionId)
+      if (!state) {
+        const response = json(
+          { error: { code: 'unauthenticated', message: WorkhouseMessages.sessionNotBound } },
+          401
+        )
+        clearSessionCookie(response)
+        return response
       }
+      return json(state)
     }
 
     if (path.length === 1 && path[0] === 'lookup') {
@@ -165,37 +125,9 @@ export async function POST(req: Request, ctx: { params: Promise<{ path: string[]
       const result = await enterSession(username, password)
       const sessionId = createSession(result.user.username)
       const storage = await getStorage()
-      const status = await getPersistenceStatus()
-
-      console.log('[workhouse] POST /session', {
-        route: 'session',
-        isNew: result.isNew,
-        sessionCreated: true,
-        storageBackend: status.persistence,
-      })
-
-      let sessionPersisted = false
-      try {
-        await storage.setSession(sessionId, result.user.username.toLowerCase())
-        sessionPersisted = true
-        console.log('[workhouse] POST /session - session persisted', {
-          route: 'session',
-          sessionIdPrefix: sessionId.slice(0, 6),
-          sessionPersisted: true,
-          storageBackend: status.persistence,
-        })
-      } catch (err) {
-        console.error('[workhouse] POST /session - session persist failed', {
-          route: 'session',
-          sessionIdPrefix: sessionId.slice(0, 6),
-          error: err instanceof Error ? err.message : 'unknown',
-        })
-      }
-
+      await storage.setSession(sessionId, result.user.username.toLowerCase())
       const response = json(result)
       setSessionCookie(response, sessionId)
-      response.headers.set('X-Workhouse-Session-Cookie', sessionPersisted ? 'set' : 'set-but-persist-failed')
-      response.headers.set('Cache-Control', 'no-store')
       return response
     }
 

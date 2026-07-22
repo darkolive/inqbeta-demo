@@ -89,36 +89,19 @@ async function kvGet<T>(key: string): Promise<T | null> {
   const kv = await getKvClient()
   if (!kv) return null
   try {
-    const raw = await kv.get<unknown>(key)
-    if (raw === null || raw === undefined) {
-      return null
-    }
-    if (typeof raw === 'string') {
-      try {
-        return JSON.parse(raw) as T
-      } catch {
-        return raw as T
-      }
-    }
-    return raw as T
-  } catch (error) {
-    console.error('[workhouse] KV read failed', {
-      key,
-      error: error instanceof Error ? error.message : 'unknown error',
-    })
+    const raw = await kv.get<string>(key)
+    if (!raw) return null
+    return JSON.parse(raw) as T
+  } catch {
     return null
   }
 }
 
-async function kvSet(key: string, value: unknown, opts?: { ex?: number }): Promise<void> {
+async function kvSet(key: string, value: unknown, _opts?: { ex?: number }): Promise<void> {
   const kv = await getKvClient()
   if (!kv) return
-  const serialized = JSON.stringify(value)
-  if (opts?.ex) {
-    await kv.set(key, serialized, { ex: opts.ex })
-  } else {
-    await kv.set(key, serialized)
-  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await kv.set(key, JSON.stringify(value) as any)
 }
 
 async function kvDel(key: string): Promise<void> {
