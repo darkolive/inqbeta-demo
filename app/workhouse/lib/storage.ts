@@ -14,7 +14,7 @@ import type { AuditEntry, WorkhouseExchange, WorkhouseOffer, WorkhouseUser } fro
 // KV store (Vercel / Upstash)
 // ---------------------------------------------------------------------------
 
-function isKvAvailable(): boolean {
+export function isKvAvailable(): boolean {
   return !!(
     process.env.KV_URL &&
     process.env.KV_REST_API_URL &&
@@ -28,23 +28,96 @@ async function getKvClient() {
   return kv
 }
 
-async function kvGet<T>(key: string): Promise<T | null> {
-  const kv = await getKvClient()
-  if (!kv) return null
-  try {
-    const raw = await kv.get<string>(key)
-    if (!raw) return null
-    return JSON.parse(raw) as T
-  } catch {
-    return null
+/**
+ * Custom error for storage failures (distinct from "key not found").
+ */
+class StorageError extends Error {
+  constructor(
+    message: string,
+    public readonly key?: string,
+    public readonly cause?: unknown
+  ) {
+    super(message)
+    this.name = 'StorageError'
   }
 }
 
-async function kvSet(key: string, value: unknown, _opts?: { ex?: number }): Promise<void> {
+/**
+ * Safely get a value from KV storage.
+ *
+ * Handles the edge case where @vercel/kv returns:
+ * - null/undefined for missing keys
+ * - string for JSON-stringified values
+ * - already-deserialized object/array/boolean/number
+ *
+ * @throws {StorageError} on client errors or malformed JSON
+ */
+async function kvGet<T>(key: string): Promise<T | null> {
+  const kv = await getKvClient()
+  if (!kv) return null
+
+  try {
+    const raw = await kv.get<unknown>(key)
+
+    if (raw === null || raw === undefined) {
+      return null
+    }
+
+    if (typeof raw === 'string') {
+      try {
+        return JSON.parse(raw) as T
+      } catch (parseError) {
+        // Malformed JSON in storage - this is an error, not a "missing key"
+        throw new StorageError(
+          `Failed to parse JSON for key "${key}"`,
+          key,
+          parseError
+        )
+      }
+    }
+
+    // Already-deserialized: object, array, number, boolean
+    return raw as T
+  } catch (error) {
+    if (error instanceof StorageError) {
+      throw error
+    }
+    // Redis client error or network failure
+    throw new StorageError(
+      `KV get failed for key "${key}"`,
+      key,
+      error
+    )
+  }
+}
+
+async function kvSet(key: string, value: unknown, opts?: { ex?: number }): Promise<void> {
   const kv = await getKvClient()
   if (!kv) return
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await kv.set(key, JSON.stringify(value) as any)
+
+  // Serialize non-primitive values as JSON strings for compatibility
+  const storedValue =
+    value === null ||
+    value === undefined ||
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean'
+      ? value
+      : JSON.stringify(value)
+
+  try {
+    if (opts?.ex !== undefined && opts.ex > 0) {
+      await kv.set(key, storedValue, { ex: opts.ex })
+    } else {
+      await kv.set(key, storedValue)
+    }
+  } catch (error) {
+    throw new StorageError(
+      `KV set failed for key "${key}"`,
+      key,
+      error
+    )
+  }
 }
 
 async function kvDel(key: string): Promise<void> {
@@ -175,6 +248,9 @@ function memStore() {
 // ---------------------------------------------------------------------------
 
 export interface DemoStorage {
+  // Backend identifier: 'kv' means Vercel KV / Upstash; 'memory' means in-process fallback.
+  readonly backend: 'kv' | 'memory'
+
   // Users
   getUser(key: string): Promise<WorkhouseUser | undefined>
   setUser(key: string, user: WorkhouseUser): Promise<void>
@@ -218,6 +294,8 @@ export interface DemoStorage {
 // ---------------------------------------------------------------------------
 
 class KvStorage implements DemoStorage {
+  readonly backend: 'kv' = 'kv'
+
   async getUser(key: string): Promise<WorkhouseUser | undefined> {
     const users = await loadKvUsers()
     return users.get(key)
@@ -355,6 +433,8 @@ class KvStorage implements DemoStorage {
 // ---------------------------------------------------------------------------
 
 class MemStorage implements DemoStorage {
+  readonly backend: 'memory' = 'memory'
+
   private s = memStore()
 
   async getUser(key: string): Promise<WorkhouseUser | undefined> {
