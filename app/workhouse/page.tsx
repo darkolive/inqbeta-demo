@@ -1,6 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+
+/** Authentication session status for session-hydration UX */
+type SessionStatus = "checking" | "authenticated" | "unauthenticated" | "error";
 import { Pagination, Steps } from "@/components/ui/skeleton-react";
 import {
   ChevronDownIcon,
@@ -1975,8 +1978,17 @@ export default function WorkhousePage() {
 
   const resumeStartedRef = useRef(false);
 
+  /** Session status for session-hydration UX - prevents flash of unauthenticated content */
+  const [sessionStatus, setSessionStatus] = useState<SessionStatus>("checking");
+
+  /** Request generation counter to prevent stale async updates (race condition protection) */
+  const requestGenerationRef = useRef(0);
+
   const refresh = useCallback(async () => {
+    const gen = ++requestGenerationRef.current;
     const next = await fetchState();
+    // Only update state if this is the most recent request
+    if (gen !== requestGenerationRef.current) return;
     setState(next);
     setUsername(next.user.username);
   }, []);
@@ -2046,6 +2058,7 @@ export default function WorkhousePage() {
     clearUsername();
     setUsername("");
     setState(null);
+    setSessionStatus("unauthenticated");
     setLoginInput("");
     setToUser("");
     setGiveType(null);
@@ -2077,6 +2090,7 @@ export default function WorkhousePage() {
     setEnteredGame(false);
     setUsername("");
     setState(null);
+    setSessionStatus("unauthenticated");
     setLoginInput("");
     setToUser("");
     setGiveType(null);
@@ -2104,23 +2118,40 @@ export default function WorkhousePage() {
     scrollWorkhouseTop();
   }, []);
 
+  /** Initial session restoration - runs once on mount with race condition protection */
   useEffect(() => {
     if (resumeStartedRef.current) return;
     resumeStartedRef.current = true;
+
     const stored = loadStoredUsername();
     if (stored) {
       setLoginInput(stored);
     }
+
+    // Capture the generation at request start for race condition protection
+    const gen = ++requestGenerationRef.current;
+
     fetchState()
       .then((next) => {
+        // Ignore stale responses from old requests (e.g., late 401 after successful login)
+        if (gen !== requestGenerationRef.current) return;
         setUsername(next.user.username);
         setState(next);
+        setSessionStatus("authenticated");
         saveSession(next.user.username);
       })
       .catch((err) => {
-        if (err instanceof WorkhouseApiError && err.code === 'unauthenticated') {
-          clearUsername();
+        // Ignore stale responses
+        if (gen !== requestGenerationRef.current) return;
+
+        // Treat 401/unauthenticated as expected state, not a frontend error
+        if (err instanceof WorkhouseApiError && (err.code === "unauthenticated" || err.code === "session_not_bound")) {
+          setSessionStatus("unauthenticated");
+          return;
         }
+        // Genuine network or server error - show retry state
+        setSessionStatus("error");
+        setError(err instanceof Error ? err.message : "Failed to restore session");
       });
   }, []);
 
@@ -2133,10 +2164,19 @@ export default function WorkhousePage() {
       window.removeEventListener(HELP_SIGNALS_UPDATED_EVENT, refreshHelpActivity);
   }, []);
 
+  /** Polling effect - only runs when authenticated to prevent unnecessary 401 noise */
   useEffect(() => {
-    if (!username) return;
+    // Only poll when we have an authenticated session
+    if (sessionStatus !== "authenticated" || !username) return;
+
     const id = window.setInterval(() => {
+      // Capture generation for race condition protection
+      const gen = requestGenerationRef.current;
+
       refresh().catch((err) => {
+        // Ignore stale responses
+        if (gen !== requestGenerationRef.current) return;
+
         if (err instanceof WorkhouseApiError) {
           if (err.code === "identity_reset") {
             handleSessionEnded(WorkhouseMessages.identityReset);
@@ -2152,7 +2192,7 @@ export default function WorkhousePage() {
       });
     }, 2500);
     return () => window.clearInterval(id);
-  }, [username, refresh, handleSessionEnded, handleLocalSessionEnded, busy]);
+  }, [sessionStatus, username, refresh, handleSessionEnded, handleLocalSessionEnded, busy]);
 
   useEffect(() => {
     if (!state || !username) return;
@@ -2511,11 +2551,15 @@ export default function WorkhousePage() {
 
     setBusy(true);
     setError("");
+    // Increment generation to cancel any pending stale requests
+    ++requestGenerationRef.current;
+
     try {
       const res = await enterSession(name);
       const joined = res.user.username;
       setUsername(joined);
       setLoginInput("");
+      setSessionStatus("authenticated");
       await refresh();
       scrollWorkhouseTop();
     } catch (err) {
@@ -2621,6 +2665,9 @@ export default function WorkhousePage() {
   }
 
   async function handleLeave() {
+    // Increment generation to cancel any pending stale requests
+    ++requestGenerationRef.current;
+
     if (username) {
       try {
         await leaveSession();
@@ -2631,6 +2678,7 @@ export default function WorkhousePage() {
     clearUsername();
     setUsername("");
     setState(null);
+    setSessionStatus("unauthenticated");
     setError("");
     setLoginInput("");
     resetOfferForm();
@@ -2649,6 +2697,26 @@ export default function WorkhousePage() {
     setTransientTerminalCards([]);
     prevActiveOffersRef.current = new Map();
     scrollWorkhouseTop();
+  }
+
+  /** Session restoration loading state - shown while checking authentication */
+  if (sessionStatus === "checking") {
+    return (
+      <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 py-6 sm:max-w-lg">
+        <WorkhouseHeader />
+        <div className="mt-20 flex flex-col items-center justify-center gap-4">
+          <div className="flex flex-col items-center gap-3 text-center">
+            <p className="text-lg font-medium text-foreground">inQbeta</p>
+            <p className="text-sm text-foreground/70">Restoring your game…</p>
+          </div>
+          {/* Subtle progress indicator */}
+          <div className="h-1 w-24 overflow-hidden rounded-full bg-surface-200-900">
+            <div className="h-full w-1/3 animate-pulse bg-primary-500" />
+          </div>
+        </div>
+        <WorkhouseAttributionFooter className="mt-20" />
+      </div>
+    );
   }
 
   if (!username) {
