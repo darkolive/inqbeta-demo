@@ -73,6 +73,7 @@ import {
   rejectOffer,
   resetDemoIdentity,
   saveSession,
+  setFetchStateSource,
   WorkhouseApiError,
 } from "./lib/api";
 import { characterDisplayName } from "./lib/character-display";
@@ -1980,6 +1981,9 @@ export default function WorkhousePage() {
 
   /** Session status for session-hydration UX - prevents flash of unauthenticated content */
   const [sessionStatus, setSessionStatus] = useState<SessionStatus>("checking");
+  
+  /** Ref for sessionStatus to avoid stale closures in polling */
+  const sessionStatusRef = useRef<SessionStatus>("checking");
 
   /** Request generation counter to prevent stale async updates (race condition protection) */
   const requestGenerationRef = useRef(0);
@@ -2059,6 +2063,7 @@ export default function WorkhousePage() {
     setUsername("");
     setState(null);
     setSessionStatus("unauthenticated");
+    sessionStatusRef.current = "unauthenticated";
     setLoginInput("");
     setToUser("");
     setGiveType(null);
@@ -2091,6 +2096,7 @@ export default function WorkhousePage() {
     setUsername("");
     setState(null);
     setSessionStatus("unauthenticated");
+    sessionStatusRef.current = "unauthenticated";
     setLoginInput("");
     setToUser("");
     setGiveType(null);
@@ -2130,6 +2136,9 @@ export default function WorkhousePage() {
 
     // Capture the generation at request start for race condition protection
     const gen = ++requestGenerationRef.current;
+    
+    // Mark this as the initial hydration request
+    setFetchStateSource('initial-hydration');
 
     fetchState()
       .then((next) => {
@@ -2138,6 +2147,7 @@ export default function WorkhousePage() {
         setUsername(next.user.username);
         setState(next);
         setSessionStatus("authenticated");
+        sessionStatusRef.current = "authenticated";
         saveSession(next.user.username);
       })
       .catch((err) => {
@@ -2147,10 +2157,12 @@ export default function WorkhousePage() {
         // Treat 401/unauthenticated as expected state, not a frontend error
         if (err instanceof WorkhouseApiError && (err.code === "unauthenticated" || err.code === "session_not_bound")) {
           setSessionStatus("unauthenticated");
+          sessionStatusRef.current = "unauthenticated";
           return;
         }
         // Genuine network or server error - show retry state
         setSessionStatus("error");
+        sessionStatusRef.current = "error";
         setError(err instanceof Error ? err.message : "Failed to restore session");
       });
   }, []);
@@ -2169,9 +2181,23 @@ export default function WorkhousePage() {
     // Only poll when we have an authenticated session
     if (sessionStatus !== "authenticated" || !username) return;
 
-    const id = window.setInterval(() => {
+    let timerId: ReturnType<typeof setInterval> | null = null;
+    
+    const poll = () => {
+      // Only poll if still authenticated - check ref to avoid stale closure
+      if (sessionStatusRef.current !== "authenticated") {
+        if (timerId) {
+          clearInterval(timerId);
+          timerId = null;
+        }
+        return;
+      }
+      
       // Capture generation for race condition protection
       const gen = requestGenerationRef.current;
+      
+      // Mark this as authenticated polling
+      setFetchStateSource('authenticated-poll');
 
       refresh().catch((err) => {
         // Ignore stale responses
@@ -2180,18 +2206,35 @@ export default function WorkhousePage() {
         if (err instanceof WorkhouseApiError) {
           if (err.code === "identity_reset") {
             handleSessionEnded(WorkhouseMessages.identityReset);
+            if (timerId) {
+              clearInterval(timerId);
+              timerId = null;
+            }
           } else if (
             err.code === "session_not_bound" ||
             err.code === "unauthenticated"
           ) {
             if (!busy) {
               handleLocalSessionEnded();
+              if (timerId) {
+                clearInterval(timerId);
+                timerId = null;
+              }
             }
           }
         }
       });
-    }, 2500);
-    return () => window.clearInterval(id);
+    };
+    
+    // Start polling
+    timerId = setInterval(poll, 2500);
+    
+    return () => {
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+    };
   }, [sessionStatus, username, refresh, handleSessionEnded, handleLocalSessionEnded, busy]);
 
   useEffect(() => {
@@ -2560,6 +2603,7 @@ export default function WorkhousePage() {
       setUsername(joined);
       setLoginInput("");
       setSessionStatus("authenticated");
+      sessionStatusRef.current = "authenticated";
       await refresh();
       scrollWorkhouseTop();
     } catch (err) {
@@ -2679,6 +2723,7 @@ export default function WorkhousePage() {
     setUsername("");
     setState(null);
     setSessionStatus("unauthenticated");
+    sessionStatusRef.current = "unauthenticated";
     setError("");
     setLoginInput("");
     resetOfferForm();
