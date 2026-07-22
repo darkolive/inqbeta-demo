@@ -2118,7 +2118,12 @@ export default function WorkhousePage() {
         saveSession(next.user.username);
       })
       .catch(() => {
-        // No active cookie session — show login form
+        // 401 on initial load means no session - clear any stale client-side state
+        clearSession();
+        setUsername("");
+        setState(null);
+        setLoginInput("");
+        setEnteredGame(false);
       });
   }, []);
 
