@@ -11,72 +11,15 @@
 import type { AuditEntry, WorkhouseExchange, WorkhouseOffer, WorkhouseUser } from './types'
 
 // ---------------------------------------------------------------------------
-// Persistence status reporting
+// KV store (Vercel / Upstash)
 // ---------------------------------------------------------------------------
 
-export type PersistenceStatus = {
-  persistence: 'kv' | 'memory' | 'kv-error'
-  reason?: string
-}
-
-let _persistenceStatus: PersistenceStatus | null = null
-let _persistenceStatusLogged = false
-
-function isKvConfigured(): boolean {
+function isKvAvailable(): boolean {
   return !!(
     process.env.KV_URL &&
     process.env.KV_REST_API_URL &&
     process.env.KV_REST_API_TOKEN
   )
-}
-
-async function performKvHealthCheck(): Promise<{ ok: boolean; error?: string }> {
-  try {
-    const kv = await getKvClient()
-    if (!kv) {
-      return { ok: false, error: 'KV client not available' }
-    }
-    await kv.ping()
-    return { ok: true }
-  } catch {
-    return { ok: false, error: 'KV health check failed' }
-  }
-}
-
-export async function getPersistenceStatus(): Promise<PersistenceStatus> {
-  if (_persistenceStatus) return _persistenceStatus
-
-  if (!isKvConfigured()) {
-    _persistenceStatus = {
-      persistence: 'memory',
-      reason: 'KV environment variables are not configured',
-    }
-  } else {
-    const health = await performKvHealthCheck()
-    if (health.ok) {
-      _persistenceStatus = { persistence: 'kv' }
-    } else {
-      _persistenceStatus = {
-        persistence: 'kv-error',
-        reason: health.error ?? 'KV health check failed',
-      }
-    }
-  }
-
-  if (!_persistenceStatusLogged) {
-    console.log(`[workhouse] persistence backend: ${_persistenceStatus.persistence}${_persistenceStatus.reason ? ` - ${_persistenceStatus.reason}` : ''}`)
-    _persistenceStatusLogged = true
-  }
-
-  return _persistenceStatus
-}
-
-// ---------------------------------------------------------------------------
-// KV store (Vercel / Upstash)
-// ---------------------------------------------------------------------------
-
-function isKvAvailable(): boolean {
-  return isKvConfigured()
 }
 
 async function getKvClient() {

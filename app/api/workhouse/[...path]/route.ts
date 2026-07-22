@@ -20,7 +20,7 @@ import {
   getSessionIdFromRequest,
   setSessionCookie,
 } from '../../../workhouse/lib/sessions'
-import { getStorage, getPersistenceStatus } from '../../../workhouse/lib/storage'
+import { getStorage } from '../../../workhouse/lib/storage'
 import { normalizeValueType } from '../../../workhouse/lib/exchange-value'
 
 function json(data: unknown, status = 200) {
@@ -67,22 +67,12 @@ export async function GET(req: Request, ctx: { params: Promise<{ path: string[] 
     if (path.length === 1 && path[0] === 'state') {
       const sessionId = getSessionIdFromRequest(req)
       if (!sessionId) {
-        const response = json(
+        return json(
           { error: { code: 'unauthenticated', message: WorkhouseMessages.sessionNotBound } },
           401
         )
-        clearSessionCookie(response)
-        return response
       }
       const state = await getStateForSession(sessionId)
-      if (!state) {
-        const response = json(
-          { error: { code: 'unauthenticated', message: WorkhouseMessages.sessionNotBound } },
-          401
-        )
-        clearSessionCookie(response)
-        return response
-      }
       return json(state)
     }
 
@@ -98,14 +88,6 @@ export async function GET(req: Request, ctx: { params: Promise<{ path: string[] 
       const users = await storage.getAllUsers()
       const participants = [...users.values()].map(u => u.username)
       return json({ participants })
-    }
-
-    if (path.length === 1 && path[0] === 'health') {
-      const status = await getPersistenceStatus()
-      if (status.persistence === 'kv-error') {
-        return json({ ok: false, ...status }, 503)
-      }
-      return json({ ok: true, ...status })
     }
 
     return json({ error: { code: 'not_found', message: 'Not found' } }, 404)
