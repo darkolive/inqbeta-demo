@@ -347,9 +347,9 @@ describe("Landing page — first-time participant experience", () => {
         "utf-8"
       );
       // Should have a larger clamp range
-      expect(css).toContain("clamp(1.25rem");
-      expect(css).toContain("9cqi");
-      expect(css).toContain("3rem");
+      expect(css).toContain("clamp(1.4rem");
+      expect(css).toContain("10cqi");
+      expect(css).toContain("3.35rem");
     });
 
     it("rules-carousel-anchor uses var(--color-primary-950-50) for theme-aware foreground", async () => {
