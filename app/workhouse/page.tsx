@@ -3697,6 +3697,10 @@ export default function WorkhousePage() {
             )
           }
         >
+          <p className="pt-4 pb-2 opacity-60">
+            Below is a record of every interaction you have made, secured by
+            encrypted, tamper-evident, hash-verified receipts.
+          </p>
           <summary className="flex cursor-pointer list-none items-center gap-2 marker:content-none [&::-webkit-details-marker]:hidden">
             <ChevronRightIcon
               className="size-4 shrink-0 opacity-60 group-open:hidden"
@@ -3709,10 +3713,6 @@ export default function WorkhousePage() {
             <p className="text-lg font-bold">{ACTIVITY_HEADING}</p>
           </summary>
           <div className="mt-3 grid gap-4">
-            <p className="opacity-60">
-              Below is a record of every interaction you have made, secured by
-              encrypted, tamper-evident, hash-verified receipts.
-            </p>
             <div className="flex flex-wrap items-center gap-2">
               <input
                 type="search"
