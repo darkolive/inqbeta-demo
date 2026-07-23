@@ -1857,9 +1857,8 @@ function RulesOfTheGameDeck({
   return (
     <div className="grid gap-4">
       <div
-        className={`flex items-center justify-between ${WORKHOUSE_PAGE_GUTTER}`}
+        className={`flex items-center justify-end ${WORKHOUSE_PAGE_GUTTER}`}
       >
-        <p className={RULES_SECTION_TITLE_CLASS}>Rules of the game</p>
         <p className="text-sm font-semibold tabular-nums opacity-70">
           {progressLabel}
         </p>
@@ -1898,27 +1897,44 @@ function RulesOfTheGameDeck({
           type="button"
           onClick={goPrev}
           disabled={atFirst}
-          className="btn preset-tonal w-full"
+          aria-label="Previous card"
+          className="btn preset-outlined-surface-200-800 w-full"
         >
-          Previous
+          <ChevronLeftIcon className="size-4 shrink-0" aria-hidden="true" />
+          <span>Previous</span>
         </button>
         <button
           type="button"
           onClick={goNext}
           disabled={atLast}
-          className="btn preset-tonal w-full"
+          aria-label="Next card"
+          className="btn preset-outlined-surface-200-800 w-full"
         >
-          Next
+          <span>Next</span>
+          <ChevronRightIcon className="size-4 shrink-0" aria-hidden="true" />
         </button>
       </div>
 
       <button
         type="button"
         onClick={onDone}
-        className="btn preset-filled-primary-500 mt-8 mb-12 w-full"
+        className="btn preset-filled-primary-500 mt-8 w-full"
       >
         START GAME
       </button>
+
+      <div className="mt-8 flex flex-col items-center gap-3 pb-8">
+        <img
+          src="/images/qr-code.png"
+          alt="QR code to join this shared experience"
+          width={200}
+          height={200}
+          className="w-[180px] max-w-full sm:w-[200px]"
+        />
+        <p className="text-center text-xs leading-relaxed opacity-60">
+          Scan to join this shared experience on another device.
+        </p>
+      </div>
     </div>
   );
 }
