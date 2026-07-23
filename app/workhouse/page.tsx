@@ -1753,40 +1753,39 @@ type OfferFormStep = "friend" | "give" | "receive";
 
 type RulesGameCard = {
   id: string;
-  top?: string;
-  main: string;
+  lead?: string;
+  anchor: string;
 };
 
 /** Outer page rhythm — header, controls, footer (aligns with logo edge). */
 const WORKHOUSE_PAGE_GUTTER = "px-1";
 
 /** Deeper reading margin — carousel slide text only. */
-const WORKHOUSE_CAROUSEL_GUTTER = "pl-8 pr-6";
+const WORKHOUSE_CAROUSEL_GUTTER = "px-3 sm:px-4";
 
 const RULES_SECTION_TITLE_CLASS = "text-xl font-bold leading-tight";
-const RULES_INTRO_LINE_CLASS =
-  "text-2xl font-medium leading-snug text-surface-950-50 opacity-80";
 
 const RULES_OF_THE_GAME_CARDS: RulesGameCard[] = [
-  { id: "game", top: "This is a", main: "GAME" },
-  { id: "choose", top: "Choose how to", main: "PLAY" },
-  { id: "character", top: "Create a", main: "CHARACTER" },
-  { id: "friend", top: "Find a", main: "FRIEND" },
-  { id: "deal", top: "Make an", main: "OFFER" },
-  { id: "yes", top: "You can say", main: "YES" },
-  { id: "no", top: "You can say", main: "NO" },
-  { id: "bargain", top: "You can", main: "BARGAIN" },
-  { id: "give", main: "FREE TO GIVE" },
-  { id: "take", main: "NEVER FREE TO TAKE" },
-  { id: "consequence", top: "Choice has", main: "CONSEQUENCE" },
-  { id: "receipt", top: "System keeps", main: "RECEIPTS" },
+  { id: "game", lead: "This is a", anchor: "GAME" },
+  { id: "choose", lead: "Choose how to", anchor: "PLAY" },
+  { id: "character", lead: "Create a", anchor: "CHARACTER" },
+  { id: "friend", lead: "Find a", anchor: "FRIEND" },
+  { id: "deal", lead: "Make an", anchor: "OFFER" },
+  { id: "yes", lead: "You can say", anchor: "YES" },
+  { id: "no", lead: "You can say", anchor: "NO" },
+  { id: "bargain", lead: "You can", anchor: "BARGAIN" },
+  { id: "give", lead: "Free to", anchor: "GIVE" },
+  { id: "take", lead: "Never free to", anchor: "TAKE" },
+  { id: "consequence", lead: "Choice has consequence.\nThe system keeps", anchor: "RECEIPTS" },
 ];
 
-function RulesCardStatement({ top, main }: RulesGameCard) {
+function RulesCardStatement({ lead, anchor }: RulesGameCard) {
   return (
-    <div className="rules-carousel-statement grid gap-2 text-left">
-      {top ? <p className={RULES_INTRO_LINE_CLASS}>{top}</p> : null}
-      <p className="rules-carousel-anchor">{main}</p>
+    <div className="rules-carousel-statement flex min-h-[130px] flex-col justify-between py-3 text-left">
+      {lead ? (
+        <p className="rules-carousel-lead whitespace-pre-wrap">{lead}</p>
+      ) : null}
+      <p className="rules-carousel-anchor">{anchor}</p>
     </div>
   );
 }

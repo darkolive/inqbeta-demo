@@ -81,12 +81,20 @@
   .rules-carousel-anchor {
     @apply font-extrabold uppercase leading-tight tracking-tight;
     color: var(--color-surface-950-50);
-    font-size: clamp(1.1rem, 8cqi, 3.35rem);
+    font-size: clamp(2.6rem, 13vw, 5.25rem);
+    line-height: 0.88;
     display: block;
     max-width: 100%;
     overflow-wrap: anywhere;
-    word-break: break-word;
-    white-space: normal;
+    text-align: center;
+  }
+
+  .rules-carousel-lead {
+    font-size: clamp(1rem, 3.5vw, 1.3rem);
+    line-height: 1.25;
+    font-weight: 500;
+    color: var(--color-surface-950-50);
+    opacity: 0.8;
   }
 }
 

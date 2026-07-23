@@ -104,7 +104,7 @@ describe("Landing page — Skeleton React Carousel", () => {
       expect(content).toContain("const RULES_OF_THE_GAME_CARDS");
       expect(content).toContain('id: "game"');
       expect(content).toContain('id: "yes"');
-      expect(content).toContain('id: "receipt"');
+      expect(content).toContain('id: "consequence"');
     });
 
     it("RulesCardStatement is still used to render card text", () => {
@@ -124,7 +124,6 @@ describe("Landing page — Skeleton React Carousel", () => {
         'id: "give"',
         'id: "take"',
         'id: "consequence"',
-        'id: "receipt"',
       ];
       cards.forEach((card) => {
         expect(content).toContain(card);
@@ -132,13 +131,29 @@ describe("Landing page — Skeleton React Carousel", () => {
     });
 
     it("anchor word text is preserved for first and last slides", () => {
-      expect(content).toContain('main: "GAME"');
-      expect(content).toContain('main: "RECEIPTS"');
+      expect(content).toContain('anchor: "GAME"');
+      expect(content).toContain('anchor: "RECEIPTS"');
     });
 
-    it("intro line text is preserved for first slide", () => {
-      expect(content).toContain('top: "This is a"');
-      expect(content).toContain('main: "GAME"');
+    it("lead line text is preserved for first slide", () => {
+      expect(content).toContain('lead: "This is a"');
+      expect(content).toContain('anchor: "GAME"');
+    });
+
+    it("GIVE slide has explicit lead/anchor split", () => {
+      expect(content).toContain('lead: "Free to"');
+      expect(content).toContain('anchor: "GIVE"');
+    });
+
+    it("TAKE slide has explicit lead/anchor split", () => {
+      expect(content).toContain('lead: "Never free to"');
+      expect(content).toContain('anchor: "TAKE"');
+    });
+
+    it("RECEIPTS slide preserves explanatory phrase", () => {
+      expect(content).toContain("Choice has consequence");
+      expect(content).toContain("The system keeps");
+      expect(content).toContain('anchor: "RECEIPTS"');
     });
   });
 
@@ -268,9 +283,10 @@ describe("Landing page — Skeleton React Carousel", () => {
         "utf-8"
       );
       expect(css).toContain(".rules-carousel-anchor");
-      expect(css).toContain("clamp(1.1rem");
-      expect(css).toContain("8cqi");
-      expect(css).toContain("3.35rem");
+      // Anchor font is now substantially larger
+      expect(css).toContain("clamp(2.6rem");
+      expect(css).toContain("13vw");
+      expect(css).toContain("5.25rem");
     });
 
     it(".rules-carousel-anchor uses theme-aware foreground (var(--color-surface-950-50))", async () => {
@@ -507,6 +523,12 @@ describe("11. Carousel is width-constrained to prevent horizontal overflow", () 
     expect(deckBody).toContain("slidesPerMove={1}");
   });
 
+  it("carousel slide horizontal padding has been reduced", () => {
+    // Check full content since the constant is defined earlier in the file
+    // New reduced responsive padding instead of large fixed inset
+    expect(content).toContain('px-3 sm:px-4');
+  });
+
   it("Skeleton Carousel component remains in use", () => {
     const importMatch = content.match(
       /import\s+\{([^}]+)\}\s+from\s+"@skeletonlabs\/skeleton-react"/
@@ -520,10 +542,10 @@ describe("11. Carousel is width-constrained to prevent horizontal overflow", () 
     // before RulesOfTheGameDeck in the file
     expect(content).toContain("RulesCardStatement");
     expect(content).toContain("rules-carousel-anchor");
-    // The card data exists in the file
-    expect(content).toContain('main: "GAME"');
-    expect(content).toContain('main: "NEVER FREE TO TAKE"');
-    expect(content).toContain('main: "RECEIPTS"');
+    // The card data exists in the file with new lead/anchor structure
+    expect(content).toContain('anchor: "GAME"');
+    expect(content).toContain('anchor: "TAKE"');
+    expect(content).toContain('anchor: "RECEIPTS"');
   });
 
   it("anchor text uses max-width: 100% to prevent overflow", async () => {
