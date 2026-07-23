@@ -105,7 +105,7 @@ export function MenuDrawer({
   children: ReactNode
 }) {
   return (
-    <WorkhouseDrawer open={open} onOpenChange={onOpenChange} title="Menu">
+    <WorkhouseDrawer open={open} onOpenChange={onOpenChange} title="Information and Support">
       {children}
     </WorkhouseDrawer>
   )

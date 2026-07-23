@@ -5,7 +5,8 @@ import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { CommunityParticipationPanel } from "./CommunityInterestCharts";
 import type { AuditEntry } from "../lib/types";
 
-export const MENU_INTRO = "Help if you need it.";
+export const MENU_INTRO =
+  "Manage your participation, access guidance and support, and choose how to leave or preserve your experience.";
 
 export const MENU_DOCUMENTATION_SECTIONS = [
   "About this demonstrator",
@@ -115,27 +116,29 @@ export function MenuPanel({
           <button
             type="button"
             onClick={onLeaveSession}
-            className="btn preset-outlined-surface-200-800 w-full"
+            className="btn preset-filled-primary-500 w-full"
           >
-            Leave session
+            Leave Session
           </button>
           <button
             type="button"
             onClick={onResetIdentity}
-            className="btn preset-outlined-error-200-800 w-full"
+            className="btn preset-filled-error-500 w-full"
           >
-            Destroy character
+            Destroy Character
           </button>
           <button
             type="button"
             disabled={exportBusy || !canExport}
             onClick={onExportStory}
-            className="btn preset-outlined-surface-200-800 w-full"
+            className="btn preset-filled-secondary-500 w-full"
           >
-            {exportBusy ? "Generating PDF…" : "Export my story"}
+            {exportBusy ? "Generating PDF…" : "Export My Story"}
           </button>
         </div>
       </section>
+
+      <div className="my-6" aria-hidden="true" />
 
       <section className="space-y-3">
         <p className="text-base font-semibold">Guide</p>
@@ -154,23 +157,23 @@ export function MenuPanel({
           <button
             type="button"
             onClick={onStayInTouch}
-            className="btn preset-outlined-surface-200-800 w-full"
+            className="btn preset-filled-primary-500 w-full"
           >
-            Stay in touch
+            Stay in Touch
           </button>
           <button
             type="button"
             onClick={onReportIssue}
-            className="btn preset-outlined-surface-200-800 w-full"
+            className="btn preset-filled-warning-500 w-full"
           >
-            Report an issue
+            Report an Issue
           </button>
           <button
             type="button"
             onClick={onReviewExperience}
-            className="btn preset-outlined-surface-200-800 w-full"
+            className="btn preset-filled-secondary-500 w-full"
           >
-            Review this experience
+            Review This Experience
           </button>
         </div>
       </section>
