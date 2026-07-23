@@ -1799,58 +1799,66 @@ function RulesOfTheGameDeck({
   onDone: () => void;
 }) {
   return (
-    <div className="grid gap-4">
-      <Carousel
-        slideCount={cards.length}
-        slidesPerPage={1}
-        slidesPerMove={1}
-        loop
-      >
-        <Carousel.ItemGroup>
-          {cards.map((card) => (
-            <Carousel.Item key={card.id} index={cards.indexOf(card)}>
-              <div className="card preset-tonal-surface flex min-h-[130px] max-h-[160px] items-center py-2">
-                <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER}`}>
-                  <RulesCardStatement {...card} />
+    <div className="grid gap-4 w-full min-w-0 max-w-full overflow-hidden">
+      {/*
+        The Skeleton/Zag-js carousel renders all slides side-by-side with scroll-snap.
+        A position:relative overflow:hidden wrapper clips the slide track to the
+        landing-page content width. This wrapper's width is inherited from the
+        grid parent (max-w-md), preventing horizontal page overflow.
+      */}
+      <div className="relative min-h-[160px] w-full min-w-0 max-w-full overflow-hidden">
+        <Carousel
+          slideCount={cards.length}
+          slidesPerPage={1}
+          slidesPerMove={1}
+          loop
+          className="workhouse-carousel-root w-full min-w-0 max-w-full"
+          style={{ width: "100%", flexShrink: 1 }}
+        >
+          <Carousel.ItemGroup className="w-full min-w-0 max-w-full overflow-hidden">
+            {cards.map((card) => (
+              <Carousel.Item key={card.id} index={cards.indexOf(card)} className="min-w-0 max-w-full">
+                <div className="card preset-tonal-surface flex min-h-[130px] max-h-[160px] items-center py-2 w-full min-w-0 max-w-full overflow-hidden">
+                  <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER}`}>
+                    <RulesCardStatement {...card} />
+                  </div>
                 </div>
-              </div>
-            </Carousel.Item>
-          ))}
-        </Carousel.ItemGroup>
-
-        <Carousel.Control>
-          <div
-            className={`mt-3 grid grid-cols-2 gap-4 ${WORKHOUSE_PAGE_GUTTER}`}
-          >
-            <Carousel.PrevTrigger
-              type="button"
-              aria-label="Previous card"
-              className="btn preset-outlined-surface-300-700 w-full"
-            >
-              <ChevronLeftIcon className="size-4 shrink-0" aria-hidden="true" />
-              <span>Previous</span>
-            </Carousel.PrevTrigger>
-            <Carousel.NextTrigger
-              type="button"
-              aria-label="Next card"
-              className="btn preset-outlined-surface-300-700 w-full"
-            >
-              <span>Next</span>
-              <ChevronRightIcon className="size-4 shrink-0" aria-hidden="true" />
-            </Carousel.NextTrigger>
-          </div>
-        </Carousel.Control>
-
-        <Carousel.IndicatorGroup>
-          <div
-            className={`flex items-center justify-end gap-2 ${WORKHOUSE_PAGE_GUTTER}`}
-          >
-            {cards.map((_card, i) => (
-              <Carousel.Indicator key={i} index={i} />
+              </Carousel.Item>
             ))}
-          </div>
-        </Carousel.IndicatorGroup>
-      </Carousel>
+          </Carousel.ItemGroup>
+
+          <Carousel.Control>
+            <div className={`mt-3 grid grid-cols-2 gap-4 ${WORKHOUSE_PAGE_GUTTER}`}>
+              <Carousel.PrevTrigger
+                type="button"
+                aria-label="Previous card"
+                className="btn preset-outlined-surface-300-700 w-full"
+              >
+                <ChevronLeftIcon className="size-4 shrink-0" aria-hidden="true" />
+                <span>Previous</span>
+              </Carousel.PrevTrigger>
+              <Carousel.NextTrigger
+                type="button"
+                aria-label="Next card"
+                className="btn preset-outlined-surface-300-700 w-full"
+              >
+                <span>Next</span>
+                <ChevronRightIcon className="size-4 shrink-0" aria-hidden="true" />
+              </Carousel.NextTrigger>
+            </div>
+          </Carousel.Control>
+
+          <Carousel.IndicatorGroup>
+            <div
+              className={`flex items-center justify-end gap-2 ${WORKHOUSE_PAGE_GUTTER}`}
+            >
+              {cards.map((_card, i) => (
+                <Carousel.Indicator key={i} index={i} />
+              ))}
+            </div>
+          </Carousel.IndicatorGroup>
+        </Carousel>
+      </div>
 
       <button
         type="button"
@@ -2695,7 +2703,7 @@ export default function WorkhousePage() {
         <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 py-6 sm:max-w-lg">
           <WorkhouseHeader />
 
-          <div className="mt-2">
+          <div className="mt-2 min-w-0">
             <RulesOfTheGameDeck
               cards={RULES_OF_THE_GAME_CARDS}
               onDone={() => setEnteredGame(true)}

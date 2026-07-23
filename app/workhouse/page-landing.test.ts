@@ -80,6 +80,21 @@ describe("Landing page — Skeleton React Carousel", () => {
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("loop");
     });
+
+    it("autoSize prop is NOT present (removed to fix width overflow)", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+      const deckBody = content.slice(deckStart, deckEnd);
+      expect(deckBody).not.toContain("autoSize");
+    });
+
+    it("immediate parent has shrink-safe width containment", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+      const deckBody = content.slice(deckStart, deckEnd);
+      // Parent grid with width constraints
+      expect(deckBody).toContain('grid gap-4 w-full min-w-0 max-w-full overflow-hidden');
+    });
   });
 
   // ─── 3. All slides rendered from existing data ───────────────────────────────
@@ -253,8 +268,8 @@ describe("Landing page — Skeleton React Carousel", () => {
         "utf-8"
       );
       expect(css).toContain(".rules-carousel-anchor");
-      expect(css).toContain("clamp(1.4rem");
-      expect(css).toContain("10cqi");
+      expect(css).toContain("clamp(1.1rem");
+      expect(css).toContain("8cqi");
       expect(css).toContain("3.35rem");
     });
 
@@ -410,6 +425,118 @@ describe("Landing page — Skeleton React Carousel", () => {
       expect(innerBody).not.toMatch(/const\s+\[\s*\w*index\w*/);
       expect(innerBody).not.toMatch(/const\s+\[\s*\w*dragX\w*/);
     });
+  });
+});
+
+// ─── 11. Carousel width containment ───────────────────────────────────────────
+
+describe("11. Carousel is width-constrained to prevent horizontal overflow", () => {
+  let content: string;
+
+  beforeEach(() => {
+    content = readFileSync(pagePath, "utf-8");
+  });
+
+  it("carousel root wrapper uses w-full min-w-0 max-w-full and Carousel uses responsive width", () => {
+    const deckStart = content.indexOf("function RulesOfTheGameDeck");
+    const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+    const deckBody = content.slice(deckStart, deckEnd);
+    // The outer grid div wrapping the Carousel has width constraints
+    expect(deckBody).toContain('w-full min-w-0 max-w-full overflow-hidden');
+    // The Carousel root itself also uses responsive width to override fixed inline styles
+    // Includes workhouse-carousel-root for scoped CSS fallback plus width constraints
+    expect(deckBody).toContain('className="workhouse-carousel-root w-full min-w-0 max-w-full"');
+    // Style with width 100% (may include additional flexShrink property)
+    expect(deckBody).toMatch(/style=\{\{.*width:\s*"100%".*\}\}/);
+  });
+
+  it("viewport (ItemGroup) uses overflow-hidden and responsive width", () => {
+    const deckStart = content.indexOf("function RulesOfTheGameDeck");
+    const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+    const deckBody = content.slice(deckStart, deckEnd);
+    // The ItemGroup viewport must clip overflowing flex items and use responsive width
+    expect(deckBody).toContain("Carousel.ItemGroup");
+    expect(deckBody).toContain('className="w-full min-w-0 max-w-full overflow-hidden"');
+  });
+
+  it("Carousel.Item elements use shrink-safe sizing (min-w-0 max-w-full)", () => {
+    const deckStart = content.indexOf("function RulesOfTheGameDeck");
+    const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+    const deckBody = content.slice(deckStart, deckEnd);
+    // Items must be able to shrink, not expand beyond viewport
+    expect(deckBody).toContain('Carousel.Item');
+    expect(deckBody).toContain('className="min-w-0 max-w-full"');
+  });
+
+  it("inner slide card uses w-full min-w-0 max-w-full", () => {
+    const deckStart = content.indexOf("function RulesOfTheGameDeck");
+    const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+    const deckBody = content.slice(deckStart, deckEnd);
+    // The card div inside each item must not exceed its container
+    expect(deckBody).toContain('w-full min-w-0 max-w-full');
+  });
+
+  it("parent flex child has min-w-0 to allow shrinking", () => {
+    // The wrapper around RulesOfTheGameDeck in the page component
+    const pageContent = content.slice(
+      content.indexOf("export default function WorkhousePage")
+    );
+    // The div wrapping RulesOfTheGameDeck must have min-w-0
+    expect(pageContent).toContain('<div className="mt-2 min-w-0">');
+  });
+
+  it("no w-screen or fixed minimum width is introduced in the carousel", () => {
+    const deckStart = content.indexOf("function RulesOfTheGameDeck");
+    const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+    const deckBody = content.slice(deckStart, deckEnd);
+    expect(deckBody).not.toMatch(/w-screen/);
+    expect(deckBody).not.toMatch(/min-width:\s*\d+px/);
+  });
+
+  it("slidesPerPage remains 1 (one slide per page)", () => {
+    const deckStart = content.indexOf("function RulesOfTheGameDeck");
+    const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+    const deckBody = content.slice(deckStart, deckEnd);
+    expect(deckBody).toContain("slidesPerPage={1}");
+  });
+
+  it("slidesPerMove remains 1", () => {
+    const deckStart = content.indexOf("function RulesOfTheGameDeck");
+    const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+    const deckBody = content.slice(deckStart, deckEnd);
+    expect(deckBody).toContain("slidesPerMove={1}");
+  });
+
+  it("Skeleton Carousel component remains in use", () => {
+    const importMatch = content.match(
+      /import\s+\{([^}]+)\}\s+from\s+"@skeletonlabs\/skeleton-react"/
+    );
+    expect(importMatch).toBeTruthy();
+    expect(importMatch[1]).toContain("Carousel");
+  });
+
+    it("all slide content remains present after containment changes", () => {
+    // RulesCardStatement, rules-carousel-anchor, and RULES_OF_THE_GAME_CARDS are defined
+    // before RulesOfTheGameDeck in the file
+    expect(content).toContain("RulesCardStatement");
+    expect(content).toContain("rules-carousel-anchor");
+    // The card data exists in the file
+    expect(content).toContain('main: "GAME"');
+    expect(content).toContain('main: "NEVER FREE TO TAKE"');
+    expect(content).toContain('main: "RECEIPTS"');
+  });
+
+  it("anchor text uses max-width: 100% to prevent overflow", async () => {
+    const fs = await import("fs");
+    const css = fs.readFileSync(
+      "app/workhouse/semantic-identity.css",
+      "utf-8"
+    );
+    const anchorSection = css.match(
+      /\.rules-carousel-anchor\s*\{[\s\S]*?\n  \}/m
+    );
+    expect(anchorSection).toBeTruthy();
+    expect(anchorSection[0]).toContain("max-width: 100%");
   });
 });
 

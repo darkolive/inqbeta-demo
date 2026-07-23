@@ -66,8 +66,8 @@ describe("Shared styling abstractions", () => {
 
   it("carousel anchor has increased font size", () => {
     const css = readFileSync(SEMANTIC_CSS, "utf-8");
-    expect(css).toContain("clamp(1.4rem");
-    expect(css).toContain("10cqi");
+    expect(css).toContain("clamp(1.1rem");
+    expect(css).toContain("8cqi");
     expect(css).toContain("3.35rem");
   });
 });
