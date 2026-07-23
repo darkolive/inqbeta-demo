@@ -716,10 +716,14 @@ describe("Attribution footer", () => {
     expect(footerSection).toContain("This project has been developed by");
   });
 
-  it("Dark Olive logo is rendered", () => {
+  it("Dark Olive logo is rendered with link", () => {
     const footerSection = content.slice(content.indexOf("function WorkhouseAttributionFooter"));
     expect(footerSection).toContain('/images/darkolive.png');
     expect(footerSection).toContain('alt="Dark Olive logo"');
+    // Logo is wrapped in a link
+    expect(footerSection).toContain('href="https://darkolive.co.uk"');
+    expect(footerSection).toContain('target="_blank"');
+    expect(footerSection).toContain('rel="noopener noreferrer"');
   });
 
   it("footer is rendered on the landing page", () => {

@@ -1956,11 +1956,17 @@ function WorkhouseAttributionFooter({ className }: { className?: string }) {
         <p className="text-sm leading-relaxed opacity-70">
           This project has been developed by
         </p>
-        <img
-          src="/images/darkolive.png"
-          alt="Dark Olive logo"
-          className="max-w-[220px]"
-        />
+        <a
+          href="https://darkolive.co.uk"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="/images/darkolive.png"
+            alt="Dark Olive logo"
+            className="max-w-[220px]"
+          />
+        </a>
       </div>
     </footer>
   );
