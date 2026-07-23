@@ -23,6 +23,10 @@
     --wh-chart-series-primary: var(--color-primary-700-300);
     --wh-chart-series-secondary: var(--color-secondary-700-300);
     --wh-chart-series-tertiary: var(--color-surface-950-50);
+    /* Extended palette for pie chart slices - provides visual distinction */
+    --wh-chart-series-4: var(--color-success-700-300);
+    --wh-chart-series-5: var(--color-warning-700-300);
+    --wh-chart-series-6: var(--color-error-700-300);
   }
 
   .wh-semantic-self {

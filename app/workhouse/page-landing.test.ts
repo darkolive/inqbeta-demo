@@ -289,11 +289,12 @@ describe("Landing page — first-time participant experience", () => {
   // ─── 7. Skeleton primary background ─────────────────────────────────────────
 
   describe("7. Carousel uses Skeleton primary background treatment", () => {
-    it("carousel container uses bg-primary-500", () => {
+    it("carousel container uses Skeleton preset (preset-filled-primary-500)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
       const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
       const deckBody = content.slice(deckStart, deckEnd);
-      expect(deckBody).toContain("bg-primary-500");
+      // Uses Skeleton preset which applies bg-primary-500
+      expect(deckBody).toContain("preset-filled-primary-500");
     });
 
     it("carousel no longer uses surface preset classes", () => {

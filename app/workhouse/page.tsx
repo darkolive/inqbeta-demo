@@ -1866,7 +1866,7 @@ function RulesOfTheGameDeck({
 
       <div className="relative min-h-[130px] max-h-[160px]">
         {next ? (
-          <div className="card bg-primary-500 absolute inset-0 flex items-center py-2 opacity-50">
+          <div className="card preset-filled-primary-500 absolute inset-0 flex items-center py-2 opacity-50">
             <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER} text-primary-50`}>
               <RulesCardStatement {...next} />
             </div>
@@ -1874,7 +1874,7 @@ function RulesOfTheGameDeck({
         ) : null}
 
         <div
-          className="card bg-primary-500 absolute inset-0 flex items-center py-2 touch-pan-y select-none"
+          className="card preset-filled-primary-500 absolute inset-0 flex items-center py-2 touch-pan-y select-none"
           role="group"
           aria-label="Rules cards"
           onPointerDown={onPointerDown}

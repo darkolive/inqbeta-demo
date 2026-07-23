@@ -47,12 +47,12 @@ describe("MenuPanel drawer changes", () => {
   });
 
   describe("3. Actions buttons use correct Skeleton styling", () => {
-    it("Leave Session uses primary styling", () => {
+    it("Leave Session uses secondary styling (significant but not primary forward action)", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
       // Find Leave Session button and check its class
-      expect(content).toContain("preset-filled-primary-500");
+      expect(content).toContain("preset-filled-secondary-500");
       // Verify it's in the Actions section context
-      const actionsSection = content.match(/Actions[\s\S]*?preset-filled-primary-500/);
+      const actionsSection = content.match(/Actions[\s\S]*?preset-filled-secondary-500/);
       expect(actionsSection).toBeTruthy();
     });
 
@@ -77,12 +77,12 @@ describe("MenuPanel drawer changes", () => {
   });
 
   describe("5. Help buttons use correct Skeleton styling", () => {
-    it("Stay in Touch uses primary styling", () => {
+    it("Stay in Touch uses secondary styling (meaningful but not primary forward action)", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
-      // Primary appears twice (once for Actions Leave Session, once for Help)
+      // Secondary appears for Help buttons
       // We check for the button text
       expect(content).toContain("Stay in Touch");
-      expect(content).toContain("preset-filled-primary-500");
+      expect(content).toContain("preset-filled-secondary-500");
     });
 
     it("Report an Issue uses warning styling", () => {

@@ -116,7 +116,7 @@ export function MenuPanel({
           <button
             type="button"
             onClick={onLeaveSession}
-            className="btn preset-filled-primary-500 w-full"
+            className="btn preset-filled-secondary-500 w-full"
           >
             Leave Session
           </button>
@@ -157,7 +157,7 @@ export function MenuPanel({
           <button
             type="button"
             onClick={onStayInTouch}
-            className="btn preset-filled-primary-500 w-full"
+            className="btn preset-filled-secondary-500 w-full"
           >
             Stay in Touch
           </button>

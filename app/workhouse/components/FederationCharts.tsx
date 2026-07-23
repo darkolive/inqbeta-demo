@@ -20,13 +20,18 @@ import {
 } from "@/components/ui/chart";
 import type { AssetShareEntry, FederationTimePoint } from "../lib/types";
 
+/**
+ * Semantic palette for pie chart slices.
+ * Uses Skeleton theme variables via CSS for light/dark mode compatibility.
+ * Extended palette provides sufficient distinction between slices.
+ */
 const PIE_SLICE_COLORS = [
-  "var(--color-primary)",
-  "var(--color-secondary)",
-  "#6366f1",
-  "#22c55e",
-  "#f59e0b",
-  "#64748b",
+  "var(--wh-chart-series-primary)",
+  "var(--wh-chart-series-secondary)",
+  "var(--wh-chart-series-tertiary)",
+  "var(--wh-chart-series-4)",
+  "var(--wh-chart-series-5)",
+  "var(--wh-chart-series-6)",
 ];
 
 const wealthChartConfig = {
