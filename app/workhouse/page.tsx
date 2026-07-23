@@ -3729,7 +3729,7 @@ export default function WorkhousePage() {
       ) : null}
 
       <div ref={activityRef}>
-        <p className="mt-8 border-t-2 border-surface-200-800 pt-6 pb-2 opacity-60">
+        <p className="mt-12 border-t-2 border-surface-200-800 pt-8 pb-4 opacity-60">
           Below is a record of every interaction you have made, secured by
           encrypted, tamper-evident, hash-verified receipts.
         </p>
