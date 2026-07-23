@@ -1828,7 +1828,7 @@ function RulesOfTheGameDeck({
           </Carousel.ItemGroup>
 
           <Carousel.Control>
-            <div className={`mt-3 grid grid-cols-2 gap-4 ${WORKHOUSE_PAGE_GUTTER}`}>
+            <div className={`mt-2 grid grid-cols-2 gap-3 ${WORKHOUSE_PAGE_GUTTER}`}>
               <Carousel.PrevTrigger
                 type="button"
                 aria-label="Previous card"

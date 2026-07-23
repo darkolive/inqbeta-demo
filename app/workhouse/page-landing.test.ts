@@ -286,10 +286,10 @@ describe("Landing page — Skeleton React Carousel", () => {
         "utf-8"
       );
       expect(css).toContain(".rules-carousel-anchor");
-      // Anchor font is now substantially larger
-      expect(css).toContain("clamp(2.6rem");
-      expect(css).toContain("13vw");
-      expect(css).toContain("5.25rem");
+      // Anchor font is reduced to fit CONSEQUENCE
+      expect(css).toContain("clamp(2.1rem");
+      expect(css).toContain("10.5vw");
+      expect(css).toContain("4.2rem");
     });
 
     it(".rules-carousel-anchor uses theme-aware foreground (var(--color-surface-950-50))", async () => {
@@ -541,6 +541,15 @@ describe("11. Carousel is width-constrained to prevent horizontal overflow", () 
     expect(content).toContain('px-3 sm:px-4');
   });
 
+  it("navigation spacing is reduced (mt-2, gap-3)", () => {
+    const deckStart = content.indexOf("function RulesOfTheGameDeck");
+    const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+    const deckBody = content.slice(deckStart, deckEnd);
+    // Reduced spacing between statement and navigation
+    expect(deckBody).toContain('mt-2');
+    expect(deckBody).toContain('gap-3');
+  });
+
   it("Skeleton Carousel component remains in use", () => {
     const importMatch = content.match(
       /import\s+\{([^}]+)\}\s+from\s+"@skeletonlabs\/skeleton-react"/
@@ -599,7 +608,7 @@ describe("11. Carousel is width-constrained to prevent horizontal overflow", () 
     // Lead inherits text-align from parent, no need to check
   });
 
-  it("lead font size has increased by ~30%", async () => {
+  it("lead font size has increased from previous value", async () => {
     const fs = await import("fs");
     const css = fs.readFileSync(
       "app/workhouse/semantic-identity.css",
@@ -609,9 +618,10 @@ describe("11. Carousel is width-constrained to prevent horizontal overflow", () 
       /\.rules-carousel-lead\s*\{[\s\S]*?\n  \}/m
     );
     expect(leadSection).toBeTruthy();
-    expect(leadSection[0]).toContain("clamp(1.3rem");
-    expect(leadSection[0]).toContain("4.5vw");
-    expect(leadSection[0]).toContain("1.7rem");
+    // Updated values: ~20% increase from previous
+    expect(leadSection[0]).toContain("clamp(1.55rem");
+    expect(leadSection[0]).toContain("5.4vw");
+    expect(leadSection[0]).toContain("2rem");
   });
 });
 
