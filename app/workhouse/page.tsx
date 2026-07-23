@@ -2985,6 +2985,17 @@ export default function WorkhousePage() {
                 Cancel
               </button>
             </div>
+
+            <div className="mt-6 flex flex-col items-center gap-3 border-t border-surface-200-800/50 pt-6">
+              <p className="text-center text-sm opacity-80">
+                If your friend hasn't joined yet, let them scan this QR code.
+              </p>
+              <img
+                src="/images/qr-code.png"
+                alt="QR code for a friend to join this shared experience"
+                className="h-40 w-40 max-w-[200px] sm:h-48 sm:max-w-[200px]"
+              />
+            </div>
           </div>
         </section>
       ) : offerFormStep === "give" ? (

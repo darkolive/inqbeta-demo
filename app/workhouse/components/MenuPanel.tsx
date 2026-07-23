@@ -115,6 +115,14 @@ export function MenuPanel({
         <div className="grid gap-2">
           <button
             type="button"
+            disabled={exportBusy || !canExport}
+            onClick={onExportStory}
+            className="btn preset-filled-secondary-500 w-full"
+          >
+            {exportBusy ? "Generating PDF…" : "Export My Story"}
+          </button>
+          <button
+            type="button"
             onClick={onLeaveSession}
             className="btn preset-filled-secondary-500 w-full"
           >
@@ -126,14 +134,6 @@ export function MenuPanel({
             className="btn preset-filled-error-500 w-full"
           >
             Destroy Character
-          </button>
-          <button
-            type="button"
-            disabled={exportBusy || !canExport}
-            onClick={onExportStory}
-            className="btn preset-filled-secondary-500 w-full"
-          >
-            {exportBusy ? "Generating PDF…" : "Export My Story"}
           </button>
         </div>
       </section>

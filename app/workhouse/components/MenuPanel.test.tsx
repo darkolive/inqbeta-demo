@@ -180,3 +180,49 @@ describe("Test imports work", () => {
     expect(typeof vi.fn()).toBe("function");
   });
 });
+
+describe("9. Action button order is Export My Story, Leave Session, Destroy Character", () => {
+  const menuPanelPath = join(process.cwd(), "app/workhouse/components/MenuPanel.tsx");
+
+  it("Actions section renders buttons in correct order", () => {
+    const content = readFileSync(menuPanelPath, "utf-8");
+    // Find the Actions section
+    const actionsSectionMatch = content.match(/<section className="space-y-3">[\s\S]*?<p className="text-base font-semibold">Actions<\/p>[\s\S]*?<div className="grid gap-2">([\s\S]*?)<\/div>/);
+    expect(actionsSectionMatch).toBeTruthy();
+    const actionsDiv = actionsSectionMatch[1];
+
+    // Check order: Export My Story should come before Leave Session, which should come before Destroy Character
+    const exportMyStoryIdx = actionsDiv.indexOf("Export My Story");
+    const leaveSessionIdx = actionsDiv.indexOf("Leave Session");
+    const destroyCharacterIdx = actionsDiv.indexOf("Destroy Character");
+
+    expect(exportMyStoryIdx).toBeGreaterThanOrEqual(0);
+    expect(leaveSessionIdx).toBeGreaterThanOrEqual(0);
+    expect(destroyCharacterIdx).toBeGreaterThanOrEqual(0);
+
+    expect(exportMyStoryIdx).toBeLessThan(leaveSessionIdx);
+    expect(leaveSessionIdx).toBeLessThan(destroyCharacterIdx);
+  });
+
+  it("Export My Story button has onClick handler preserved", () => {
+    const content = readFileSync(menuPanelPath, "utf-8");
+    // Find Export My Story button and verify it has onClick={onExportStory}
+    const exportButtonMatch = content.match(/<button[\s\S]*?Export My Story[\s\S]*?<\/button>/);
+    expect(exportButtonMatch).toBeTruthy();
+    expect(exportButtonMatch[0]).toContain("onClick={onExportStory}");
+  });
+
+  it("Leave Session button has onClick handler preserved", () => {
+    const content = readFileSync(menuPanelPath, "utf-8");
+    const leaveButtonMatch = content.match(/<button[\s\S]*?Leave Session[\s\S]*?<\/button>/);
+    expect(leaveButtonMatch).toBeTruthy();
+    expect(leaveButtonMatch[0]).toContain("onClick={onLeaveSession}");
+  });
+
+  it("Destroy Character button has onClick handler preserved", () => {
+    const content = readFileSync(menuPanelPath, "utf-8");
+    const destroyButtonMatch = content.match(/<button[\s\S]*?Destroy Character[\s\S]*?<\/button>/);
+    expect(destroyButtonMatch).toBeTruthy();
+    expect(destroyButtonMatch[0]).toContain("onClick={onResetIdentity}");
+  });
+});

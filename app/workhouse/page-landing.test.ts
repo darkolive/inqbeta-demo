@@ -457,3 +457,95 @@ describe("Test imports work", () => {
     expect(typeof vi.fn()).toBe("function");
   });
 });
+
+// ─── 11. Find a Friend offer flow QR block ───────────────────────────────────
+
+describe("11. Find a Friend offer flow includes QR code for joining", () => {
+  let content: string;
+
+  beforeEach(() => {
+    content = readFileSync(pagePath, "utf-8");
+  });
+
+  it("the Find a Friend step includes the QR code sentence", () => {
+    // The QR code sentence should appear after the Cancel button in the friend step
+    const cancelButtonIdx = content.indexOf("Cancel");
+    const qrSentenceIdx = content.indexOf("If your friend hasn't joined yet, let them scan this QR code.");
+    // Both should exist and QR sentence should come after Cancel
+    expect(cancelButtonIdx).toBeGreaterThanOrEqual(0);
+    expect(qrSentenceIdx).toBeGreaterThan(cancelButtonIdx);
+  });
+
+  it("the Find a Friend step uses the existing /images/qr-code.png asset", () => {
+    // Find the new QR code block (different from the landing page QR)
+    // Look for the sentence we added, then find QR after it
+    const qrSentence = "If your friend hasn't joined yet";
+    const sentenceIdx = content.indexOf(qrSentence);
+    expect(sentenceIdx).toBeGreaterThan(0);
+    // The QR code src should appear after that sentence
+    const afterSentence = content.slice(sentenceIdx);
+    expect(afterSentence).toContain('src="/images/qr-code.png"');
+  });
+
+  it("the QR image in Find a Friend step has appropriate alt text for accessibility", () => {
+    const qrSentence = "If your friend hasn't joined yet";
+    const sentenceIdx = content.indexOf(qrSentence);
+    const afterSentence = content.slice(sentenceIdx);
+    expect(afterSentence).toContain('alt="QR code for a friend to join this shared experience"');
+  });
+
+  it("the QR block appears after the Continue and Cancel buttons in source order", () => {
+    // Search within the Find a Friend step range to avoid finding other Cancel buttons
+    const friendStepStart = content.indexOf('offerFormStep === "friend"');
+    const giveStepStart = content.indexOf('offerFormStep === "give"');
+    const friendStepSection = content.slice(friendStepStart, giveStepStart);
+
+    // In the friend step section, find the Cancel button and QR wrapper
+    const cancelIdxInStep = friendStepSection.indexOf("Cancel");
+    const qrWrapperIdxInStep = friendStepSection.indexOf('className="mt-6 flex flex-col items-center gap-3 border-t');
+
+    expect(cancelIdxInStep).toBeGreaterThanOrEqual(0);
+    expect(qrWrapperIdxInStep).toBeGreaterThan(cancelIdxInStep);
+  });
+
+  it("the QR block uses responsive sizing (h-40 w-40 max-w-[200px])", () => {
+    const qrSentence = "If your friend hasn't joined yet";
+    const sentenceIdx = content.indexOf(qrSentence);
+    const afterSentence = content.slice(sentenceIdx, sentenceIdx + 500);
+    expect(afterSentence).toContain('h-40');
+    expect(afterSentence).toContain('w-40');
+    expect(afterSentence).toContain('max-w-[200px]');
+  });
+
+  it("Continue button behavior is preserved (setOfferFormStep('give'))", () => {
+    // Find the friend step's Continue button and verify its handler
+    // Use more characters to capture the full section
+    const friendStepStart = content.indexOf('offerFormStep === "friend"');
+    const friendStepSection = content.slice(friendStepStart, friendStepStart + 3000);
+    expect(friendStepSection).toContain('setOfferFormStep("give")');
+  });
+
+  it("Cancel button behavior is preserved (closeOfferForm)", () => {
+    const friendStepStart = content.indexOf('offerFormStep === "friend"');
+    const friendStepSection = content.slice(friendStepStart, friendStepStart + 3000);
+    expect(friendStepSection).toContain("closeOfferForm");
+  });
+
+  it("no duplicate QR asset - only one reference to /images/qr-code.png in Find a Friend step", () => {
+    // The Find a Friend section (between friend step and give step) should have exactly 1 QR
+    const friendStepStart = content.indexOf('offerFormStep === "friend"');
+    const giveStepStart = content.indexOf('offerFormStep === "give"');
+    const friendStepSection = content.slice(friendStepStart, giveStepStart);
+    const qrCount = (friendStepSection.match(/qr-code\.png/g) || []).length;
+    expect(qrCount).toBe(1);
+  });
+
+  it("QR block has vertical separation from buttons (mt-6 and border-t)", () => {
+    // The QR wrapper div has mt-6 and border-t classes
+    const qrWrapperIdx = content.indexOf('className="mt-6 flex flex-col items-center gap-3 border-t');
+    expect(qrWrapperIdx).toBeGreaterThan(0);
+    // Verify both spacing classes are present
+    expect(content.slice(qrWrapperIdx, qrWrapperIdx + 80)).toContain("mt-6");
+    expect(content.slice(qrWrapperIdx, qrWrapperIdx + 80)).toContain("border-t");
+  });
+});
