@@ -86,11 +86,11 @@
     display: block;
     max-width: 100%;
     overflow-wrap: anywhere;
-    text-align: center;
+    text-align: left;
   }
 
   .rules-carousel-lead {
-    font-size: clamp(1rem, 3.5vw, 1.3rem);
+    font-size: clamp(1.3rem, 4.5vw, 1.7rem);
     line-height: 1.25;
     font-weight: 500;
     color: var(--color-surface-950-50);

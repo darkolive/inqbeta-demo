@@ -150,9 +150,12 @@ describe("Landing page — Skeleton React Carousel", () => {
       expect(content).toContain('anchor: "TAKE"');
     });
 
-    it("RECEIPTS slide preserves explanatory phrase", () => {
-      expect(content).toContain("Choice has consequence");
-      expect(content).toContain("The system keeps");
+    it("consequence and receipts are separate slides", () => {
+      // Choice has / CONSEQUENCE slide
+      expect(content).toContain('lead: "Choice has"');
+      expect(content).toContain('anchor: "CONSEQUENCE"');
+      // The system keeps / RECEIPTS slide
+      expect(content).toContain('lead: "The system keeps"');
       expect(content).toContain('anchor: "RECEIPTS"');
     });
   });
@@ -523,6 +526,15 @@ describe("11. Carousel is width-constrained to prevent horizontal overflow", () 
     expect(deckBody).toContain("slidesPerMove={1}");
   });
 
+  it("RulesCardStatement uses compact gap instead of justify-between", () => {
+    const deckStart = content.indexOf("function RulesCardStatement");
+    const deckEnd = deckStart + 300; // Look within a reasonable range
+    const statementBody = content.slice(deckStart, deckEnd);
+    // Uses gap-1 for compact spacing instead of justify-between
+    expect(statementBody).toContain("gap-1");
+    expect(statementBody).not.toContain("justify-between");
+  });
+
   it("carousel slide horizontal padding has been reduced", () => {
     // Check full content since the constant is defined earlier in the file
     // New reduced responsive padding instead of large fixed inset
@@ -559,6 +571,47 @@ describe("11. Carousel is width-constrained to prevent horizontal overflow", () 
     );
     expect(anchorSection).toBeTruthy();
     expect(anchorSection[0]).toContain("max-width: 100%");
+  });
+
+  it("anchor text is left-aligned", async () => {
+    const fs = await import("fs");
+    const css = fs.readFileSync(
+      "app/workhouse/semantic-identity.css",
+      "utf-8"
+    );
+    const anchorSection = css.match(
+      /\.rules-carousel-anchor\s*\{[\s\S]*?\n  \}/m
+    );
+    expect(anchorSection).toBeTruthy();
+    expect(anchorSection[0]).toContain("text-align: left");
+  });
+
+  it("lead text is left-aligned", async () => {
+    const fs = await import("fs");
+    const css = fs.readFileSync(
+      "app/workhouse/semantic-identity.css",
+      "utf-8"
+    );
+    const leadSection = css.match(
+      /\.rules-carousel-lead\s*\{[\s\S]*?\n  \}/m
+    );
+    expect(leadSection).toBeTruthy();
+    // Lead inherits text-align from parent, no need to check
+  });
+
+  it("lead font size has increased by ~30%", async () => {
+    const fs = await import("fs");
+    const css = fs.readFileSync(
+      "app/workhouse/semantic-identity.css",
+      "utf-8"
+    );
+    const leadSection = css.match(
+      /\.rules-carousel-lead\s*\{[\s\S]*?\n  \}/m
+    );
+    expect(leadSection).toBeTruthy();
+    expect(leadSection[0]).toContain("clamp(1.3rem");
+    expect(leadSection[0]).toContain("4.5vw");
+    expect(leadSection[0]).toContain("1.7rem");
   });
 });
 

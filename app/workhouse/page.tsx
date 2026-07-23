@@ -1776,12 +1776,13 @@ const RULES_OF_THE_GAME_CARDS: RulesGameCard[] = [
   { id: "bargain", lead: "You can", anchor: "BARGAIN" },
   { id: "give", lead: "Free to", anchor: "GIVE" },
   { id: "take", lead: "Never free to", anchor: "TAKE" },
-  { id: "consequence", lead: "Choice has consequence.\nThe system keeps", anchor: "RECEIPTS" },
+  { id: "consequence", lead: "Choice has", anchor: "CONSEQUENCE" },
+  { id: "receipts", lead: "The system keeps", anchor: "RECEIPTS" },
 ];
 
 function RulesCardStatement({ lead, anchor }: RulesGameCard) {
   return (
-    <div className="rules-carousel-statement flex min-h-[130px] flex-col justify-between py-3 text-left">
+    <div className="rules-carousel-statement flex min-h-[130px] flex-col gap-1 py-3 text-left">
       {lead ? (
         <p className="rules-carousel-lead whitespace-pre-wrap">{lead}</p>
       ) : null}
