@@ -1416,9 +1416,9 @@ function BalancePanel({
   return (
     <div className="mb-12 grid gap-4">
       <p>
-        In this section you can see a complete record of all your
-        interactions within this space, secured by encrypted,
-        tamper-evident, hash-verified receipts.
+        In this section you can see a complete record of all your interactions
+        within this space, secured by encrypted, tamper-evident, hash-verified
+        receipts.
       </p>
 
       <section className="mt-6 space-y-4">
@@ -1817,7 +1817,11 @@ function RulesOfTheGameDeck({
         >
           <Carousel.ItemGroup className="w-full min-w-0 max-w-full overflow-hidden">
             {cards.map((card) => (
-              <Carousel.Item key={card.id} index={cards.indexOf(card)} className="min-w-0 max-w-full">
+              <Carousel.Item
+                key={card.id}
+                index={cards.indexOf(card)}
+                className="min-w-0 max-w-full"
+              >
                 <div className="card preset-tonal-surface flex min-h-[130px] max-h-[160px] items-center py-2 w-full min-w-0 max-w-full overflow-hidden">
                   <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER}`}>
                     <RulesCardStatement {...card} />
@@ -1828,13 +1832,18 @@ function RulesOfTheGameDeck({
           </Carousel.ItemGroup>
 
           <Carousel.Control>
-            <div className={`mt-2 grid grid-cols-2 gap-3 ${WORKHOUSE_PAGE_GUTTER}`}>
+            <div
+              className={`mt-2 grid grid-cols-2 gap-3 ${WORKHOUSE_PAGE_GUTTER}`}
+            >
               <Carousel.PrevTrigger
                 type="button"
                 aria-label="Previous card"
                 className="btn preset-outlined-surface-300-700 w-full"
               >
-                <ChevronLeftIcon className="size-4 shrink-0" aria-hidden="true" />
+                <ChevronLeftIcon
+                  className="size-4 shrink-0"
+                  aria-hidden="true"
+                />
                 <span>Previous</span>
               </Carousel.PrevTrigger>
               <Carousel.NextTrigger
@@ -1843,7 +1852,10 @@ function RulesOfTheGameDeck({
                 className="btn preset-outlined-surface-300-700 w-full"
               >
                 <span>Next</span>
-                <ChevronRightIcon className="size-4 shrink-0" aria-hidden="true" />
+                <ChevronRightIcon
+                  className="size-4 shrink-0"
+                  aria-hidden="true"
+                />
               </Carousel.NextTrigger>
             </div>
           </Carousel.Control>
@@ -1893,7 +1905,8 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
         <div className="space-y-2">
           <h2 className="text-base font-semibold">What is this?</h2>
           <p className="leading-relaxed opacity-80">
-            This is an early-stage demonstration of evidence-based exchange.
+            This is an early-stage concept of evidence-based exchange.{"\n"}
+            {"\n"}
             When two people agree that something has happened, a shared receipt
             is created. Those receipts allow people to exchange value with
             confidence, without relying on any organisation or authority to own
@@ -1904,20 +1917,26 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
         <div className="space-y-2">
           <h2 className="text-base font-semibold">Your data stays yours</h2>
           <p className="leading-relaxed opacity-80">
-            The receipts you create are stored on your own device, not in a
+            The receipts you create will be stored on your own device, not in a
             central database. Only you decide when to share them. They are
-            protected using modern cryptography, so only someone with the correct
-            keys can reveal their contents. We call this sovereign data—information
-            that remains under your control.
+            protected using modern cryptography, so only someone with the
+            correct keys can reveal their contents.{"\n"}
+            {"\n"}
+            We call this sovereign data, where information remains under your
+            control.
           </p>
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-base font-semibold">Built around people, not platforms</h2>
+          <h2 className="text-base font-semibold">
+            Built around people, not platforms
+          </h2>
           <p className="leading-relaxed opacity-80">
             Technology should help people cooperate without asking them to
             surrender ownership of their identity, their relationships or their
-            data.
+            data.{"\n"}
+            {"\n"}
+            This is not decentralisation, but localisation.
           </p>
         </div>
       </div>
@@ -2800,7 +2819,10 @@ export default function WorkhousePage() {
     1,
     Math.ceil(filteredAudit.length / EVIDENCE_PAGE_SIZE),
   );
-  const safeEvidencePage = Math.max(1, Math.min(evidencePage, evidencePageCount));
+  const safeEvidencePage = Math.max(
+    1,
+    Math.min(evidencePage, evidencePageCount),
+  );
   const paginatedAudit = filteredAudit.slice(
     (safeEvidencePage - 1) * EVIDENCE_PAGE_SIZE,
     safeEvidencePage * EVIDENCE_PAGE_SIZE,
