@@ -2745,7 +2745,7 @@ export default function WorkhousePage() {
 
         <WorkhouseParticipantHeader />
 
-        <section className={`mt-5 grid gap-5 ${WORKHOUSE_PAGE_GUTTER}`}>
+        <section className={`mt-5 mb-8 grid gap-5 ${WORKHOUSE_PAGE_GUTTER}`}>
           <p className={RULES_SECTION_TITLE_CLASS}>Who are you going to be</p>
 
           <form onSubmit={handleEnter} className="grid gap-5">
@@ -2771,7 +2771,9 @@ export default function WorkhousePage() {
                 className="shrink-0 opacity-70"
                 aria-hidden
               />
-              <p>You start with 5 credits — spend them to make offers to others</p>
+              <p>
+                You start with 5 credits — spend them to make offers to others
+              </p>
             </div>
             <div className="grid gap-4 pt-3">
               <button
