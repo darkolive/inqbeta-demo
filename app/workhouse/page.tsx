@@ -3688,10 +3688,6 @@ export default function WorkhousePage() {
       ) : null}
 
       <div ref={activityRef}>
-        <p className="opacity-60">
-          Below is a record of every interaction you have made, secured by
-          encrypted, tamper-evident, hash-verified receipts.
-        </p>
         <details
           className="group mt-8 border-t-2 border-surface-200-800 pt-6"
           open={activityOpen}
@@ -3713,6 +3709,10 @@ export default function WorkhousePage() {
             <p className="text-lg font-bold">{ACTIVITY_HEADING}</p>
           </summary>
           <div className="mt-3 grid gap-4">
+            <p className="opacity-60">
+              Below is a record of every interaction you have made, secured by
+              encrypted, tamper-evident, hash-verified receipts.
+            </p>
             <div className="flex flex-wrap items-center gap-2">
               <input
                 type="search"
