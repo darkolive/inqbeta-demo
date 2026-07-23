@@ -207,7 +207,7 @@ export function computeFederationWindowProgress(
     };
   }
 
-  const progress = clamp01((nowMs - startMs) / (endMs - startMs));
+  const progress = clamp01((endMs - nowMs) / (endMs - startMs));
   const timingMode: FederationTimingMode = "live_bounded";
   const qualitative =
     progress < 0.33
