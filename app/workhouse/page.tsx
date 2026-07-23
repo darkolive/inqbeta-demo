@@ -1950,23 +1950,17 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
 function WorkhouseAttributionFooter({ className }: { className?: string }) {
   return (
     <footer
-      className={`mt-auto border-t border-surface-300-700 pt-8 ${WORKHOUSE_PAGE_GUTTER}${className ? ` ${className}` : ""}`}
+      className={`mt-10 pb-8 text-center ${WORKHOUSE_PAGE_GUTTER}${className ? ` ${className}` : ""}`}
     >
-      <div className="grid gap-1.5 text-xs leading-relaxed opacity-70">
-        <p className="font-semibold">Demonstration project</p>
-        <p>Dark Olive CIC · inQbeta</p>
-        <p className="opacity-80">Designed by Darren Knipe</p>
-        <p>
-          <a
-            href="https://github.com/darkolive/inQbeta"
-            className="underline underline-offset-2 opacity-80 hover:opacity-100"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            inQbeta on GitHub
-          </a>
+      <div className="flex flex-col items-center gap-4">
+        <p className="text-sm leading-relaxed opacity-70">
+          This project has been developed by
         </p>
-        <p className="opacity-60">Demonstration use only</p>
+        <img
+          src="/images/darkolive.png"
+          alt="Dark Olive logo"
+          className="max-w-[220px]"
+        />
       </div>
     </footer>
   );

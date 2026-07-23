@@ -694,6 +694,40 @@ describe("Find a Friend QR block unchanged", () => {
   });
 });
 
+// ─── Attribution footer ───────────────────────────────────────────────────
+
+describe("Attribution footer", () => {
+  let content: string;
+
+  beforeEach(() => {
+    content = readFileSync(pagePath, "utf-8");
+  });
+
+  it("old footer wording no longer exists", () => {
+    const footerSection = content.slice(content.indexOf("function WorkhouseAttributionFooter"));
+    expect(footerSection).not.toContain("Demonstration project");
+    expect(footerSection).not.toContain("Designed by");
+    expect(footerSection).not.toContain("GitHub");
+    expect(footerSection).not.toContain("Archive");
+  });
+
+  it("new attribution text is rendered", () => {
+    const footerSection = content.slice(content.indexOf("function WorkhouseAttributionFooter"));
+    expect(footerSection).toContain("This project has been developed by");
+  });
+
+  it("Dark Olive logo is rendered", () => {
+    const footerSection = content.slice(content.indexOf("function WorkhouseAttributionFooter"));
+    expect(footerSection).toContain('/images/darkolive.png');
+    expect(footerSection).toContain('alt="Dark Olive logo"');
+  });
+
+  it("footer is rendered on the landing page", () => {
+    const pageContent = content.slice(content.indexOf("export default function WorkhousePage"));
+    expect(pageContent).toContain("<WorkhouseAttributionFooter");
+  });
+});
+
 describe("Test imports work", () => {
   it("can import vitest", () => {
     expect(typeof vi.fn()).toBe("function");
