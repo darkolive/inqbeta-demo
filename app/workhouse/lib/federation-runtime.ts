@@ -1,11 +1,12 @@
 const FEDERATION_STARTED_AT_ENV = "NEXT_PUBLIC_WORKHOUSE_FEDERATION_STARTED_AT";
+const BUILD_TIMESTAMP_ENV = "NEXT_PUBLIC_BUILD_TIMESTAMP";
 const FEDERATION_ENDS_AT_ENV = "NEXT_PUBLIC_WORKHOUSE_FEDERATION_ENDS_AT";
 const FEDERATION_PUBLISHED_ENV = "NEXT_PUBLIC_WORKHOUSE_FEDERATION_PUBLISHED";
 
 const OPEN_ENDED_SENTINELS = new Set(["open", "none", ""]);
 
 export const DEFAULT_FEDERATION_STARTED_AT = "2026-06-19T07:00:00.000Z";
-export const DEFAULT_FEDERATION_ENDS_AT = "2026-06-21T16:00:00.000Z";
+export const DEFAULT_FEDERATION_ENDS_AT = "2026-07-27T00:00:00.000+01:00";
 
 export type FederationWindow = {
   federationStartedAt: string;
@@ -29,10 +30,17 @@ function readConfiguredIso(envKey: string, fallback: string): string {
 
 export function getFederationStartedAt(): string {
   if (!cachedStartedAt) {
-    cachedStartedAt = readConfiguredIso(
-      FEDERATION_STARTED_AT_ENV,
-      DEFAULT_FEDERATION_STARTED_AT,
-    );
+    // Priority: BUILD_TIMESTAMP (injected at build time) > FEDERATION_STARTED_AT env >
+    // DEFAULT_FEDERATION_STARTED_AT.
+    const fromBuild = process.env[BUILD_TIMESTAMP_ENV]?.trim();
+    if (fromBuild && !Number.isNaN(Date.parse(fromBuild))) {
+      cachedStartedAt = new Date(fromBuild).toISOString();
+    } else {
+      cachedStartedAt = readConfiguredIso(
+        FEDERATION_STARTED_AT_ENV,
+        DEFAULT_FEDERATION_STARTED_AT,
+      );
+    }
   }
   return cachedStartedAt;
 }

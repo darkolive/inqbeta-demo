@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build",
+    "build": "NEXT_PUBLIC_BUILD_TIMESTAMP=$(date -u +\"%Y-%m-%dT%H:%M:%S.000Z\") next build",
     "start": "next start",
     "test": "vitest run",
     "test:watch": "vitest"

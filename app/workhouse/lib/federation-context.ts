@@ -2,7 +2,7 @@ const FEDERATION_NAME_ENV = "NEXT_PUBLIC_WORKHOUSE_FEDERATION_NAME";
 const FEDERATION_DESCRIPTION_ENV =
   "NEXT_PUBLIC_WORKHOUSE_FEDERATION_DESCRIPTION";
 
-export const DEFAULT_FEDERATION_NAME = "Workhouse Festival";
+export const DEFAULT_FEDERATION_NAME = "Landed Festival";
 export const DEFAULT_FEDERATION_DESCRIPTION =
   "A shared festival space for playful exchange — credits, offers, and the receipt of what happened.";
 
