@@ -40,20 +40,40 @@ export async function clearSessionsForUsername(usernameRaw: string): Promise<voi
 }
 
 export function setSessionCookie(response: NextResponse, sessionId: string): void {
-  response.cookies.set(WORKHOUSE_SESSION_COOKIE, sessionId, {
-    httpOnly: true,
-    sameSite: 'lax',
-    path: '/api/workhouse',
-    maxAge: WORKHOUSE_SESSION_MAX_AGE,
-  })
-}
-
-export function clearSessionCookie(response: NextResponse): void {
+  // Clear legacy cookie with old path to ensure clean migration
   response.cookies.set(WORKHOUSE_SESSION_COOKIE, '', {
     httpOnly: true,
     sameSite: 'lax',
     path: '/api/workhouse',
     maxAge: 0,
+    secure: process.env.NODE_ENV === 'production',
+  })
+  // Set new cookie with root path
+  response.cookies.set(WORKHOUSE_SESSION_COOKIE, sessionId, {
+    httpOnly: true,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: WORKHOUSE_SESSION_MAX_AGE,
+    secure: process.env.NODE_ENV === 'production',
+  })
+}
+
+export function clearSessionCookie(response: NextResponse): void {
+  // Clear cookie with root path
+  response.cookies.set(WORKHOUSE_SESSION_COOKIE, '', {
+    httpOnly: true,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 0,
+    secure: process.env.NODE_ENV === 'production',
+  })
+  // Also clear legacy cookie path
+  response.cookies.set(WORKHOUSE_SESSION_COOKIE, '', {
+    httpOnly: true,
+    sameSite: 'lax',
+    path: '/api/workhouse',
+    maxAge: 0,
+    secure: process.env.NODE_ENV === 'production',
   })
 }
 
