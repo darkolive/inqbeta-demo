@@ -10,7 +10,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@skeletonlabs/skeleton-react": "^4.15.2",
+    "@fontsource/lexend": "^5.3.0",
+    "@skeletonlabs/skeleton-react": "^5.0.0",
     "@vercel/kv": "^3.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -25,7 +26,7 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
-    "@skeletonlabs/skeleton": "^4.15.2",
+    "@skeletonlabs/skeleton": "^5.0.0",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/postcss": "^4.3.1",
     "@types/node": "^22.0.0",
