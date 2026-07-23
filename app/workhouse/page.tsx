@@ -1905,8 +1905,9 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
         <div className="space-y-2">
           <h2 className="text-base font-semibold">What is this?</h2>
           <p className="leading-relaxed opacity-80">
-            This is an early-stage concept of evidence-based exchange.{"\n"}
-            {"\n"}
+            This is an early-stage concept of evidence-based exchange.
+          </p>
+          <p className="leading-relaxed opacity-80">
             When two people agree that something has happened, a shared receipt
             is created. Those receipts allow people to exchange value with
             confidence, without relying on any organisation or authority to own
@@ -1920,8 +1921,9 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
             The receipts you create will be stored on your own device, not in a
             central database. Only you decide when to share them. They are
             protected using modern cryptography, so only someone with the
-            correct keys can reveal their contents.{"\n"}
-            {"\n"}
+            correct keys can reveal their contents.
+          </p>
+          <p className="leading-relaxed opacity-80">
             We call this sovereign data, where information remains under your
             control.
           </p>
@@ -1934,8 +1936,9 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
           <p className="leading-relaxed opacity-80">
             Technology should help people cooperate without asking them to
             surrender ownership of their identity, their relationships or their
-            data.{"\n"}
-            {"\n"}
+            data.
+          </p>
+          <p className="leading-relaxed opacity-80">
             This is not decentralisation, but localisation.
           </p>
         </div>
