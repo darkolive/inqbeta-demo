@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { Pagination, Steps } from "@/components/ui/skeleton-react";
 import {
   ChevronDownIcon,
@@ -261,7 +268,10 @@ function cannotAffordCreditOffer(
   offer: WorkhouseOffer,
   availableCredits: number,
 ): offer is WorkhouseOffer & { returnType: "credits"; creditAmount: number } {
-  return offer.returnType === "credits" && (offer.creditAmount ?? 0) > availableCredits;
+  return (
+    offer.returnType === "credits" &&
+    (offer.creditAmount ?? 0) > availableCredits
+  );
 }
 
 function clampCreditAmount(value: number, maxCredits: number): number {
@@ -312,7 +322,9 @@ function openCounterForm(
   setters.setCounterMoneyAmount("");
   if (preferCredits && availableCredits > 0 && allowed.includes("credits")) {
     setters.setCounterReturnType("credits");
-    setters.setCounterCreditAmount(clampCreditAmount(availableCredits, availableCredits));
+    setters.setCounterCreditAmount(
+      clampCreditAmount(availableCredits, availableCredits),
+    );
   } else {
     setters.setCounterReturnType(
       allowed.includes("asset") ? "asset" : allowed[0],
@@ -784,7 +796,8 @@ function formatActivityMessage(
         return (
           <>
             <ActivityName name={actor} currentUser={currentUser} /> accepted{" "}
-            <N name={from} />'s offer of <ActivityTerm>{gesture}</ActivityTerm> in exchange for{" "}
+            <N name={from} />
+            's offer of <ActivityTerm>{gesture}</ActivityTerm> in exchange for{" "}
             <ActivityTerm>{terms}</ActivityTerm>.
           </>
         );
@@ -1382,12 +1395,19 @@ function BalancePanel({
   const assetRows = user ? buildAssetExchangeHistory(audit, user.username) : [];
   const assetSummary = summarizeAssetExchange(assetRows);
   const assetActivitySeries = buildAssetActivitySeries(assetRows);
-  const assetsReceived = assetRows.filter((row) => row.direction === "received");
+  const assetsReceived = assetRows.filter(
+    (row) => row.direction === "received",
+  );
   const assetsSent = assetRows.filter((row) => row.direction === "sent");
   const cashRows = user ? buildCashExchangeHistory(audit, user.username) : [];
-  const cashReceivedRows = cashRows.filter((row) => row.direction === "received");
+  const cashReceivedRows = cashRows.filter(
+    (row) => row.direction === "received",
+  );
   const cashSentRows = cashRows.filter((row) => row.direction === "sent");
-  const cashReceivedTotal = cashReceivedRows.reduce((sum, row) => sum + row.amount, 0);
+  const cashReceivedTotal = cashReceivedRows.reduce(
+    (sum, row) => sum + row.amount,
+    0,
+  );
   const cashSentTotal = cashSentRows.reduce((sum, row) => sum + row.amount, 0);
   const helpSent = helpReceipts;
   const helpReceived: AuditEntry[] = [];
@@ -1509,7 +1529,9 @@ function BalancePanel({
               {assetsReceived.map((row) => (
                 <BalanceExchangeRow
                   key={`received-${row.hash}-${row.timestamp}-${row.gesture}`}
-                  title={<ActivityTerm>{displayItem(row.gesture)}</ActivityTerm>}
+                  title={
+                    <ActivityTerm>{displayItem(row.gesture)}</ActivityTerm>
+                  }
                   detail={
                     <>
                       from{" "}
@@ -1538,7 +1560,9 @@ function BalancePanel({
               {assetsSent.map((row) => (
                 <BalanceExchangeRow
                   key={`sent-${row.hash}-${row.timestamp}-${row.gesture}`}
-                  title={<ActivityTerm>{displayItem(row.gesture)}</ActivityTerm>}
+                  title={
+                    <ActivityTerm>{displayItem(row.gesture)}</ActivityTerm>
+                  }
                   detail={
                     <>
                       to{" "}
@@ -1613,7 +1637,9 @@ function BalancePanel({
                           <>
                             {" "}
                             · for{" "}
-                            <ActivityTerm>{displayItem(row.context)}</ActivityTerm>
+                            <ActivityTerm>
+                              {displayItem(row.context)}
+                            </ActivityTerm>
                           </>
                         ) : null}
                       </>
@@ -1649,7 +1675,9 @@ function BalancePanel({
                           <>
                             {" "}
                             · for{" "}
-                            <ActivityTerm>{displayItem(row.context)}</ActivityTerm>
+                            <ActivityTerm>
+                              {displayItem(row.context)}
+                            </ActivityTerm>
                           </>
                         ) : null}
                       </>
@@ -1751,9 +1779,7 @@ const RULES_OF_THE_GAME_CARDS: RulesGameCard[] = [
 function RulesCardStatement({ top, main }: RulesGameCard) {
   return (
     <div className="rules-carousel-statement grid gap-2 text-left">
-      {top ? (
-        <p className={RULES_INTRO_LINE_CLASS}>{top}</p>
-      ) : null}
+      {top ? <p className={RULES_INTRO_LINE_CLASS}>{top}</p> : null}
       <p className="rules-carousel-anchor">{main}</p>
     </div>
   );
@@ -1940,8 +1966,7 @@ export default function WorkhousePage() {
   const [globeOpen, setGlobeOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [resetDialogOpen, setResetDialogOpen] = useState(false);
-  const [stayInTouchDialogOpen, setStayInTouchDialogOpen] =
-    useState(false);
+  const [stayInTouchDialogOpen, setStayInTouchDialogOpen] = useState(false);
   const [reportIssueDialogOpen, setReportIssueDialogOpen] = useState(false);
   const [reviewExperienceDialogOpen, setReviewExperienceDialogOpen] =
     useState(false);
@@ -2010,7 +2035,12 @@ export default function WorkhousePage() {
       ...previousFriends,
     ];
     return activeParticipantCanonicalNames(context, names);
-  }, [state?.characterDisplayContext, state?.communityParticipationAudit, state?.audit, previousFriends]);
+  }, [
+    state?.characterDisplayContext,
+    state?.communityParticipationAudit,
+    state?.audit,
+    previousFriends,
+  ]);
 
   const friendSearch = useMemo(
     () =>
@@ -2133,7 +2163,10 @@ export default function WorkhousePage() {
     };
     window.addEventListener(HELP_SIGNALS_UPDATED_EVENT, refreshHelpActivity);
     return () =>
-      window.removeEventListener(HELP_SIGNALS_UPDATED_EVENT, refreshHelpActivity);
+      window.removeEventListener(
+        HELP_SIGNALS_UPDATED_EVENT,
+        refreshHelpActivity,
+      );
   }, []);
 
   useEffect(() => {
@@ -2698,7 +2731,11 @@ export default function WorkhousePage() {
               />
             </label>
             <div className="flex items-center gap-2.5 text-sm opacity-90">
-              <CoinsIcon size={18} className="shrink-0 opacity-70" aria-hidden />
+              <CoinsIcon
+                size={18}
+                className="shrink-0 opacity-70"
+                aria-hidden
+              />
               <p>You receive 5 credits on joining</p>
             </div>
             <div className="grid gap-4 pt-3">
@@ -2741,7 +2778,10 @@ export default function WorkhousePage() {
   const federationData = state?.federationData;
   const audit = state?.audit ?? [];
   const activitySearchActive = activitySearch.trim().length > 0;
-  const filteredAudit = filterActivityByProofSearch(mergedAudit, activitySearch);
+  const filteredAudit = filterActivityByProofSearch(
+    mergedAudit,
+    activitySearch,
+  );
   const evidencePageCount = Math.max(
     1,
     Math.ceil(mergedAudit.length / EVIDENCE_PAGE_SIZE),
@@ -2871,11 +2911,7 @@ export default function WorkhousePage() {
             </label>
             {friendSearch.status === "not_found" ||
             friendSearch.status === "self" ? (
-              <div
-                className="grid gap-2 py-1"
-                role="status"
-                aria-live="polite"
-              >
+              <div className="grid gap-2 py-1" role="status" aria-live="polite">
                 <p className="text-base font-medium">
                   {friendNotFoundHeading(friendSearch.queryDisplay)}
                 </p>
@@ -3379,7 +3415,11 @@ export default function WorkhousePage() {
                         ) : (
                           <>
                             You accepted{" "}
-                            <ActivityName name={offer.from} currentUser={username} />'s offer of{" "}
+                            <ActivityName
+                              name={offer.from}
+                              currentUser={username}
+                            />
+                            's offer of{" "}
                             <ActivityTerm>{giveTermsText(offer)}</ActivityTerm>{" "}
                             in exchange for{" "}
                             <ActivityTerm>
@@ -3473,69 +3513,69 @@ export default function WorkhousePage() {
                             allowedTypes={allowedCounterReturns}
                             ariaLabel="Counteroffer return type"
                           />
-                        {counterReturnType === "credits" ? (
-                          <label className="label">
-                            <span className="label-text">Amount</span>
-                            <select
-                              value={clampCreditAmount(
-                                counterCreditAmount,
-                                availableForOffer,
-                              )}
-                              onChange={(e) =>
-                                setCounterCreditAmount(Number(e.target.value))
-                              }
-                              className="select"
-                            >
-                              {Array.from(
-                                { length: Math.max(availableForOffer, 1) },
-                                (_, i) => i + 1,
-                              ).map((n) => (
-                                <option key={n} value={n}>
-                                  {n}
-                                </option>
-                              ))}
-                            </select>
-                          </label>
-                        ) : null}
-                        {counterReturnType === "asset" ? (
-                          <label
-                            htmlFor={`counter-offer-${offer.id}`}
-                            className="grid gap-1.5"
-                          >
-                            Action
-                            <input
-                              id={`counter-offer-${offer.id}`}
-                              value={counterOfferValue}
-                              onChange={(e) =>
-                                setCounterOfferValue(e.target.value)
-                              }
-                              placeholder="e.g. Walk a dog"
-                              className="input"
-                            />
-                          </label>
-                        ) : null}
-                        {counterReturnType === "money" ? (
-                          <label
-                            htmlFor={`counter-money-${offer.id}`}
-                            className="grid gap-1.5"
-                          >
-                            Amount
-                            <div className="flex items-center gap-2">
-                              <span>£</span>
-                              <input
-                                id={`counter-money-${offer.id}`}
-                                type="number"
-                                min={0.01}
-                                step={0.01}
-                                value={counterMoneyAmount}
+                          {counterReturnType === "credits" ? (
+                            <label className="label">
+                              <span className="label-text">Amount</span>
+                              <select
+                                value={clampCreditAmount(
+                                  counterCreditAmount,
+                                  availableForOffer,
+                                )}
                                 onChange={(e) =>
-                                  setCounterMoneyAmount(e.target.value)
+                                  setCounterCreditAmount(Number(e.target.value))
                                 }
+                                className="select"
+                              >
+                                {Array.from(
+                                  { length: Math.max(availableForOffer, 1) },
+                                  (_, i) => i + 1,
+                                ).map((n) => (
+                                  <option key={n} value={n}>
+                                    {n}
+                                  </option>
+                                ))}
+                              </select>
+                            </label>
+                          ) : null}
+                          {counterReturnType === "asset" ? (
+                            <label
+                              htmlFor={`counter-offer-${offer.id}`}
+                              className="grid gap-1.5"
+                            >
+                              Action
+                              <input
+                                id={`counter-offer-${offer.id}`}
+                                value={counterOfferValue}
+                                onChange={(e) =>
+                                  setCounterOfferValue(e.target.value)
+                                }
+                                placeholder="e.g. Walk a dog"
                                 className="input"
                               />
-                            </div>
-                          </label>
-                        ) : null}
+                            </label>
+                          ) : null}
+                          {counterReturnType === "money" ? (
+                            <label
+                              htmlFor={`counter-money-${offer.id}`}
+                              className="grid gap-1.5"
+                            >
+                              Amount
+                              <div className="flex items-center gap-2">
+                                <span>£</span>
+                                <input
+                                  id={`counter-money-${offer.id}`}
+                                  type="number"
+                                  min={0.01}
+                                  step={0.01}
+                                  value={counterMoneyAmount}
+                                  onChange={(e) =>
+                                    setCounterMoneyAmount(e.target.value)
+                                  }
+                                  className="input"
+                                />
+                              </div>
+                            </label>
+                          ) : null}
                         </div>
                         <div className="btn-group flex w-full flex-col sm:flex-row sm:flex-wrap">
                           <button
@@ -3548,7 +3588,8 @@ export default function WorkhousePage() {
                                   creditAmount: counterCreditAmount,
                                   availableCredits: availableForOffer,
                                   creditBalance: offerCreditContext.balance,
-                                  committedCredits: offerCreditContext.committed,
+                                  committedCredits:
+                                    offerCreditContext.committed,
                                 });
                               if (validationError) {
                                 setError(validationError);
@@ -3688,19 +3729,18 @@ export default function WorkhousePage() {
       ) : null}
 
       <div ref={activityRef}>
+        <p className="mt-8 border-t-2 border-surface-200-800 pt-6 pb-2 opacity-60">
+          Below is a record of every interaction you have made, secured by
+          encrypted, tamper-evident, hash-verified receipts.
+        </p>
+
         <details
-          className="group mt-8 border-t-2 border-surface-200-800 pt-6"
+          className="group"
           open={activityOpen}
           onToggle={(event) =>
-            setActivityOpen(
-              (event.currentTarget as HTMLDetailsElement).open,
-            )
+            setActivityOpen((event.currentTarget as HTMLDetailsElement).open)
           }
         >
-          <p className="pt-4 pb-2 opacity-60">
-            Below is a record of every interaction you have made, secured by
-            encrypted, tamper-evident, hash-verified receipts.
-          </p>
           <summary className="flex cursor-pointer list-none items-center gap-2 marker:content-none [&::-webkit-details-marker]:hidden">
             <ChevronRightIcon
               className="size-4 shrink-0 opacity-60 group-open:hidden"
@@ -3743,7 +3783,8 @@ export default function WorkhousePage() {
                   currentUser={username}
                   characterDisplayContext={state?.characterDisplayContext}
                 />
-                {!activitySearchActive && mergedAudit.length > EVIDENCE_PAGE_SIZE ? (
+                {!activitySearchActive &&
+                mergedAudit.length > EVIDENCE_PAGE_SIZE ? (
                   <Pagination
                     count={mergedAudit.length}
                     pageSize={EVIDENCE_PAGE_SIZE}
