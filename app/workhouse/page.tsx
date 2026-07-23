@@ -3790,36 +3790,38 @@ export default function WorkhousePage() {
                   characterDisplayContext={state?.characterDisplayContext}
                 />
                 {filteredAudit.length > EVIDENCE_PAGE_SIZE ? (
-                  <Pagination
-                    count={filteredAudit.length}
-                    pageSize={EVIDENCE_PAGE_SIZE}
-                    page={safeEvidencePage}
-                    onPageChange={(event) =>
-                      handleEvidencePageChange(event.page)
-                    }
-                  >
-                    <Pagination.PrevTrigger>
-                      <ChevronLeftIcon className="size-4" />
-                    </Pagination.PrevTrigger>
-                    <Pagination.Context>
-                      {(pagination) =>
-                        pagination.pages.map((page, index) =>
-                          page.type === "page" ? (
-                            <Pagination.Item key={index} {...page}>
-                              {page.value}
-                            </Pagination.Item>
-                          ) : (
-                            <Pagination.Ellipsis key={index} index={index}>
-                              …
-                            </Pagination.Ellipsis>
-                          ),
-                        )
+                  <div className="flex justify-center pt-6">
+                    <Pagination
+                      count={filteredAudit.length}
+                      pageSize={EVIDENCE_PAGE_SIZE}
+                      page={safeEvidencePage}
+                      onPageChange={(event) =>
+                        handleEvidencePageChange(event.page)
                       }
-                    </Pagination.Context>
-                    <Pagination.NextTrigger>
-                      <ChevronRightIcon className="size-4" />
-                    </Pagination.NextTrigger>
-                  </Pagination>
+                    >
+                      <Pagination.PrevTrigger>
+                        <ChevronLeftIcon className="size-4" />
+                      </Pagination.PrevTrigger>
+                      <Pagination.Context>
+                        {(pagination) =>
+                          pagination.pages.map((page, index) =>
+                            page.type === "page" ? (
+                              <Pagination.Item key={index} {...page}>
+                                {page.value}
+                              </Pagination.Item>
+                            ) : (
+                              <Pagination.Ellipsis key={index} index={index}>
+                                …
+                              </Pagination.Ellipsis>
+                            ),
+                          )
+                        }
+                      </Pagination.Context>
+                      <Pagination.NextTrigger>
+                        <ChevronRightIcon className="size-4" />
+                      </Pagination.NextTrigger>
+                    </Pagination>
+                  </div>
                 ) : null}
               </>
             )}
