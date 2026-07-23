@@ -2756,7 +2756,6 @@ export default function WorkhousePage() {
                 name="username"
                 value={loginInput}
                 onChange={(e) => setLoginInput(e.target.value)}
-                placeholder="e.g. Fox / Darren / BlueTent"
                 autoComplete="username"
                 autoCapitalize="none"
                 autoCorrect="off"
@@ -2772,7 +2771,7 @@ export default function WorkhousePage() {
                 className="shrink-0 opacity-70"
                 aria-hidden
               />
-              <p>You receive 5 credits on joining</p>
+              <p>You start with 5 credits — spend them to make offers to others</p>
             </div>
             <div className="grid gap-4 pt-3">
               <button
@@ -2790,9 +2789,6 @@ export default function WorkhousePage() {
                 CANCEL
               </button>
             </div>
-            <p className="text-sm opacity-80">
-              Leave any time by leaving the inQbeta Wi-Fi.
-            </p>
           </form>
 
           {error ? (
