@@ -8,7 +8,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { Pagination, Steps } from "@/components/ui/skeleton-react";
+import { Pagination } from "@skeletonlabs/skeleton-react";
+import { Steps } from "@/components/ui/skeleton-react";
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -3797,9 +3798,6 @@ export default function WorkhousePage() {
                       handleEvidencePageChange(event.page)
                     }
                   >
-                    <Pagination.FirstTrigger>
-                      <ChevronsLeftIcon className="size-4" />
-                    </Pagination.FirstTrigger>
                     <Pagination.PrevTrigger>
                       <ChevronLeftIcon className="size-4" />
                     </Pagination.PrevTrigger>
@@ -3821,9 +3819,6 @@ export default function WorkhousePage() {
                     <Pagination.NextTrigger>
                       <ChevronRightIcon className="size-4" />
                     </Pagination.NextTrigger>
-                    <Pagination.LastTrigger>
-                      <ChevronsRightIcon className="size-4" />
-                    </Pagination.LastTrigger>
                   </Pagination>
                 ) : null}
               </>
