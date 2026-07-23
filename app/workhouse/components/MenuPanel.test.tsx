@@ -36,13 +36,41 @@ describe("MenuPanel drawer changes", () => {
     it("MENU_INTRO contains new sentence", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
       expect(content).toContain(
-        "Manage your participation, access guidance and support, and choose how to leave or preserve your experience."
+        "Manage your participation, access support, and choose how to leave or preserve your experience."
       );
     });
 
     it("old MENU_INTRO is removed", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
       expect(content).not.toContain("Help if you need it.");
+    });
+  });
+
+  describe("2b. Guide section is removed", () => {
+    it("MenuPanel does not render a Guide heading", () => {
+      const content = readFileSync(menuPanelPath, "utf-8");
+      expect(content).not.toContain("Guide");
+    });
+
+    it("MenuDocAccordion is no longer defined", () => {
+      const content = readFileSync(menuPanelPath, "utf-8");
+      expect(content).not.toContain("MenuDocAccordion");
+    });
+
+    it("MENU_DOCUMENTATION is no longer defined", () => {
+      const content = readFileSync(menuPanelPath, "utf-8");
+      expect(content).not.toContain("MENU_DOCUMENTATION");
+    });
+
+    it("MENU_DOCUMENTATION_SECTIONS is no longer defined", () => {
+      const content = readFileSync(menuPanelPath, "utf-8");
+      expect(content).not.toContain("MENU_DOCUMENTATION_SECTIONS");
+    });
+
+    it("the spacer between Actions and Help is removed", () => {
+      const content = readFileSync(menuPanelPath, "utf-8");
+      expect(content).not.toContain('className="my-6"');
+      expect(content).not.toContain('aria-hidden="true"');
     });
   });
 
@@ -72,16 +100,7 @@ describe("MenuPanel drawer changes", () => {
     });
   });
 
-  describe("4. Spacing before Guide section", () => {
-    it("has my-6 spacer between Actions and Guide", () => {
-      const content = readFileSync(menuPanelPath, "utf-8");
-      // Check for the spacer element
-      expect(content).toContain('className="my-6"');
-      expect(content).toContain('aria-hidden="true"');
-    });
-  });
-
-  describe("5. Help buttons use correct Skeleton styling", () => {
+  describe("4. Help buttons use correct Skeleton styling", () => {
     it("Stay in Touch uses tonal-primary styling (soft supportive action)", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
       // Find Stay in Touch button and verify it uses tonal-primary
@@ -110,7 +129,7 @@ describe("MenuPanel drawer changes", () => {
     });
   });
 
-  describe("6. All button handlers preserved", () => {
+  describe("5. All button handlers preserved", () => {
     it("onLeaveSession prop exists", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
       expect(content).toContain("onLeaveSession:");
@@ -142,7 +161,7 @@ describe("MenuPanel drawer changes", () => {
     });
   });
 
-  describe("7. Community Participation unchanged", () => {
+  describe("6. Community Participation unchanged", () => {
     it("CommunityParticipationPanel still rendered", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
       expect(content).toContain("CommunityParticipationPanel");
@@ -154,7 +173,7 @@ describe("MenuPanel drawer changes", () => {
     });
   });
 
-  describe("8. Button text uses title case", () => {
+  describe("7. Button text uses title case", () => {
     it("Leave Session has title case", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
       expect(content).toContain("Leave Session");
@@ -193,7 +212,7 @@ describe("Test imports work", () => {
   });
 });
 
-describe("9. Action button order is Export My Story, Leave Session, Destroy Character", () => {
+describe("8. Action button order is Export My Story, Leave Session, Destroy Character", () => {
   const menuPanelPath = join(process.cwd(), "app/workhouse/components/MenuPanel.tsx");
 
   it("Actions section renders buttons in correct order", () => {

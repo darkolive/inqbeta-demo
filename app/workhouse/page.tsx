@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { Pagination } from "@skeletonlabs/skeleton-react";
+import { Carousel, Pagination } from "@skeletonlabs/skeleton-react";
 import { Steps } from "@/components/ui/skeleton-react";
 import {
   ChevronDownIcon,
@@ -1764,7 +1764,8 @@ const WORKHOUSE_PAGE_GUTTER = "px-1";
 const WORKHOUSE_CAROUSEL_GUTTER = "pl-8 pr-6";
 
 const RULES_SECTION_TITLE_CLASS = "text-xl font-bold leading-tight";
-const RULES_INTRO_LINE_CLASS = "text-2xl font-medium leading-snug text-primary-50 opacity-80";
+const RULES_INTRO_LINE_CLASS =
+  "text-2xl font-medium leading-snug text-surface-950-50 opacity-80";
 
 const RULES_OF_THE_GAME_CARDS: RulesGameCard[] = [
   { id: "game", top: "This is a", main: "GAME" },
@@ -1797,123 +1798,59 @@ function RulesOfTheGameDeck({
   cards: RulesGameCard[];
   onDone: () => void;
 }) {
-  const [index, setIndex] = useState(0);
-  const [dragX, setDragX] = useState(0);
-  const startXRef = useRef<number | null>(null);
-  const draggingRef = useRef(false);
-
-  const lastIndex = Math.max(0, cards.length - 1);
-  const safeIndex = Math.min(Math.max(0, index), lastIndex);
-  const atFirst = safeIndex <= 0;
-  const atLast = safeIndex >= lastIndex;
-
-  const goPrev = useCallback(() => {
-    setIndex((i) => Math.max(0, i - 1));
-    setDragX(0);
-  }, []);
-
-  const goNext = useCallback(() => {
-    setIndex((i) => Math.min(lastIndex, i + 1));
-    setDragX(0);
-  }, [lastIndex]);
-
-  const onPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    draggingRef.current = true;
-    startXRef.current = e.clientX;
-    setDragX(0);
-    (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
-  }, []);
-
-  const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggingRef.current) return;
-    if (startXRef.current === null) return;
-    const delta = e.clientX - startXRef.current;
-    setDragX(delta);
-  }, []);
-
-  const finishDrag = useCallback(() => {
-    const threshold = 64;
-    const delta = dragX;
-    draggingRef.current = false;
-    startXRef.current = null;
-    setDragX(0);
-    if (Math.abs(delta) < threshold) return;
-    if (delta < 0) {
-      if (!atLast) goNext();
-      return;
-    }
-    if (!atFirst) goPrev();
-  }, [dragX, atFirst, atLast, goNext, goPrev]);
-
-  const onPointerUp = useCallback(() => finishDrag(), [finishDrag]);
-  const onPointerCancel = useCallback(() => finishDrag(), [finishDrag]);
-
-  const current = cards[safeIndex];
-  const next = !atLast ? cards[safeIndex + 1] : null;
-
-  const progressLabel = `${safeIndex + 1} / ${cards.length}`;
-  const dragRotation = Math.max(-4, Math.min(4, dragX / 40));
-
   return (
     <div className="grid gap-4">
-      <div
-        className={`flex items-center justify-end ${WORKHOUSE_PAGE_GUTTER}`}
+      <Carousel
+        slideCount={cards.length}
+        slidesPerPage={1}
+        slidesPerMove={1}
+        loop
       >
-        <p className="text-sm font-semibold tabular-nums opacity-70">
-          {progressLabel}
-        </p>
-      </div>
+        <Carousel.ItemGroup>
+          {cards.map((card) => (
+            <Carousel.Item key={card.id} index={cards.indexOf(card)}>
+              <div className="card preset-tonal-surface flex min-h-[130px] max-h-[160px] items-center py-2">
+                <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER}`}>
+                  <RulesCardStatement {...card} />
+                </div>
+              </div>
+            </Carousel.Item>
+          ))}
+        </Carousel.ItemGroup>
 
-      <div className="relative min-h-[130px] max-h-[160px]">
-        {next ? (
-          <div className="card preset-filled-primary-500 absolute inset-0 flex items-center py-2 opacity-50">
-            <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER} text-primary-50`}>
-              <RulesCardStatement {...next} />
-            </div>
+        <Carousel.Control>
+          <div
+            className={`mt-3 grid grid-cols-2 gap-4 ${WORKHOUSE_PAGE_GUTTER}`}
+          >
+            <Carousel.PrevTrigger
+              type="button"
+              aria-label="Previous card"
+              className="btn preset-outlined-surface-300-700 w-full"
+            >
+              <ChevronLeftIcon className="size-4 shrink-0" aria-hidden="true" />
+              <span>Previous</span>
+            </Carousel.PrevTrigger>
+            <Carousel.NextTrigger
+              type="button"
+              aria-label="Next card"
+              className="btn preset-outlined-surface-300-700 w-full"
+            >
+              <span>Next</span>
+              <ChevronRightIcon className="size-4 shrink-0" aria-hidden="true" />
+            </Carousel.NextTrigger>
           </div>
-        ) : null}
+        </Carousel.Control>
 
-        <div
-          className="card preset-filled-primary-500 absolute inset-0 flex items-center py-2 touch-pan-y select-none"
-          role="group"
-          aria-label="Rules cards"
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          onPointerCancel={onPointerCancel}
-          style={{
-            transform: `translateX(${dragX}px) rotate(${dragRotation}deg)`,
-            transition: draggingRef.current ? "none" : "transform 160ms ease",
-          }}
-        >
-          <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER} text-primary-50`}>
-            <RulesCardStatement {...current} />
+        <Carousel.IndicatorGroup>
+          <div
+            className={`flex items-center justify-end gap-2 ${WORKHOUSE_PAGE_GUTTER}`}
+          >
+            {cards.map((_card, i) => (
+              <Carousel.Indicator key={i} index={i} />
+            ))}
           </div>
-        </div>
-      </div>
-
-      <div className={`mt-3 grid grid-cols-2 gap-4 ${WORKHOUSE_PAGE_GUTTER}`}>
-        <button
-          type="button"
-          onClick={goPrev}
-          disabled={atFirst}
-          aria-label="Previous card"
-          className="btn preset-outlined-primary-500 w-full"
-        >
-          <ChevronLeftIcon className="size-4 shrink-0" aria-hidden="true" />
-          <span>Previous</span>
-        </button>
-        <button
-          type="button"
-          onClick={goNext}
-          disabled={atLast}
-          aria-label="Next card"
-          className="btn preset-outlined-primary-500 w-full"
-        >
-          <span>Next</span>
-          <ChevronRightIcon className="size-4 shrink-0" aria-hidden="true" />
-        </button>
-      </div>
+        </Carousel.IndicatorGroup>
+      </Carousel>
 
       <button
         type="button"

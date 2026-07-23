@@ -80,7 +80,7 @@
 
   .rules-carousel-anchor {
     @apply font-extrabold uppercase leading-none tracking-tight;
-    color: var(--color-primary-50);
+    color: var(--color-surface-950-50);
     font-size: clamp(1.4rem, 10cqi, 3.35rem);
     white-space: nowrap;
     max-width: 100%;
