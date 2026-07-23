@@ -4,8 +4,12 @@
  *   1. "Rules of the Game" heading is removed
  *   2. QR code renders with correct asset path
  *   3. QR caption renders
- *   4. Previous/Next buttons use outlined Skeleton style
+ *   4. Previous/Next buttons use outlined Skeleton style on primary bg
  *   5. Carousel behaviour preserved (goPrev/goNext exist, progress label present)
+ *   6. Spacing is comfortable
+ *   7. Carousel uses Skeleton primary background with theme-aware foreground
+ *   8. Carousel typography is increased
+ *   9. Carousel height is reduced to fit more in viewport
  *
  * Run with: npm test page-landing
  */
@@ -177,11 +181,18 @@ describe("Landing page — first-time participant experience", () => {
       expect(deckBody).toContain("ChevronRightIcon");
     });
 
-    it("both buttons use outlined Skeleton style (preset-outlined-surface-200-800)", () => {
+    it("both buttons use outlined Skeleton style on primary bg (preset-outlined-primary-950-50)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
       const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
       const deckBody = content.slice(deckStart, deckEnd);
-      expect(deckBody).toContain("preset-outlined-surface-200-800");
+      expect(deckBody).toContain("preset-outlined-primary-950-50");
+    });
+
+    it("nav buttons use primary-950-50 color for contrast on primary background", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      expect(deckBody).toContain("primary-950-50");
     });
   });
 
@@ -272,6 +283,170 @@ describe("Landing page — first-time participant experience", () => {
       const deckBody = content.slice(deckStart, deckEnd);
       // The Enter button should NOT have mb-12
       expect(deckBody).not.toContain("mb-12");
+    });
+  });
+
+  // ─── 7. Skeleton primary background ─────────────────────────────────────────
+
+  describe("7. Carousel uses Skeleton primary background treatment", () => {
+    it("carousel container uses bg-primary-500", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      expect(deckBody).toContain("bg-primary-500");
+    });
+
+    it("carousel no longer uses surface preset classes", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      // preset-filled-surface-50-950 should be gone from the carousel
+      expect(deckBody).not.toContain("preset-filled-surface-50-950");
+      expect(deckBody).not.toContain("preset-outlined-surface-200-800");
+    });
+
+    it("intro line uses fixed text-primary-50 (no dark: variant)", () => {
+      expect(content).toContain(
+        "text-2xl font-medium leading-snug text-primary-50 opacity-80"
+      );
+      // Must not contain dark: variant (foreground stays light in both modes)
+      expect(content).not.toContain("dark:text-primary-950");
+    });
+
+    it("carousel card inner div uses fixed text-primary-50 (no dark: variant)", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      expect(deckBody).toContain("text-primary-50");
+      // No dark: variant inside the carousel
+      expect(deckBody).not.toMatch(/carousel[\s\S]*dark:text-primary-950/);
+    });
+
+    it("carousel foreground uses fixed text-primary-50 throughout (no dark: switch)", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      // Every text-primary-50 occurrence should NOT be followed by dark:text-primary-950
+      expect(deckBody).not.toContain("dark:text-primary-950");
+    });
+  });
+
+  // ─── 8. Typography increased ────────────────────────────────────────────────
+
+  describe("8. Carousel typography is increased for readability", () => {
+    it("RULES_INTRO_LINE_CLASS uses text-2xl (up from text-xl)", () => {
+      expect(content).toContain(
+        'text-2xl font-medium leading-snug text-primary-50 opacity-80'
+      );
+    });
+
+    it(".rules-carousel-anchor font-size range is increased in semantic-identity.css", async () => {
+      const fs = await import("fs");
+      const css = fs.readFileSync(
+        "app/workhouse/semantic-identity.css",
+        "utf-8"
+      );
+      // Should have a larger clamp range
+      expect(css).toContain("clamp(1.25rem");
+      expect(css).toContain("9cqi");
+      expect(css).toContain("3rem");
+    });
+
+    it("rules-carousel-anchor uses var(--color-primary-950-50) for theme-aware foreground", async () => {
+      const fs = await import("fs");
+      const css = fs.readFileSync(
+        "app/workhouse/semantic-identity.css",
+        "utf-8"
+      );
+      const anchorSection = css.match(
+        /\.rules-carousel-anchor\s*\{[\s\S]*?\n  \}/m
+      );
+      expect(anchorSection).toBeTruthy();
+      const anchorText = anchorSection?.[0] ?? "";
+      // Uses the Skeleton light-dark variable for light foreground on primary background
+      expect(anchorText).toContain("var(--color-primary-50)");
+      // Must not contain hex or rgb white
+      expect(anchorText).not.toMatch(/#[fF0-9aAbBcCdD]{3,6}/);
+      expect(anchorText).not.toMatch(/rgba?\(/);
+    });
+  });
+
+  // ─── 9. Carousel height reduced ─────────────────────────────────────────────
+
+  describe("9. Carousel has reduced vertical footprint", () => {
+    it("carousel container no longer has fixed h-[200px] height", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      expect(deckBody).not.toContain("h-[200px]");
+    });
+
+    it("carousel container uses min-h-[130px] max-h-[160px]", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      expect(deckBody).toContain("min-h-[130px] max-h-[160px]");
+    });
+
+    it("card vertical padding is reduced (py-2, down from py-4)", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      expect(deckBody).toContain("py-2");
+      expect(deckBody).not.toContain("py-4");
+    });
+
+    it("logo-to-carousel gap is reduced (mt-2, down from mt-5)", () => {
+      // Check the landing page layout wrapper
+      const landingLayoutIdx = content.indexOf(
+        'className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 py-6 sm:max-w-lg">'
+      );
+      const deckSection = content.slice(
+        landingLayoutIdx,
+        landingLayoutIdx + 200
+      );
+      expect(deckSection).toContain('className="mt-2"');
+      expect(deckSection).not.toContain('className="mt-5"');
+    });
+
+    it("nav-to-Enter gap is reduced (mt-3, down from mt-6)", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      // The grid div that holds Previous/Next buttons has mt-3
+      expect(deckBody).toContain('mt-3 grid grid-cols-2 gap-4');
+    });
+  });
+
+  // ─── 10. No hard-coded foreground colors ─────────────────────────────────────
+
+  describe("10. No hard-coded hex or white foreground in carousel", () => {
+    it("RulesOfTheGameDeck does not contain rgb( or rgba( for text color", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      expect(deckBody).not.toMatch(/rgba?\(/);
+    });
+
+    it("RulesOfTheGameDeck does not contain #fff or #ffffff", () => {
+      const deckStart = content.indexOf("function RulesOfTheGameDeck");
+      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckBody = content.slice(deckStart, deckEnd);
+      expect(deckBody).not.toMatch(/#fff|#ffffff|#FFFFFF|#FFF/i);
+    });
+
+    it(".rules-carousel-anchor in CSS uses Skeleton color classes only", async () => {
+      const fs = await import("fs");
+      const css = fs.readFileSync(
+        "app/workhouse/semantic-identity.css",
+        "utf-8"
+      );
+      const anchorSection = css.match(
+        /\.rules-carousel-anchor\s*\{[\s\S]*?\n  \}/m
+      );
+      const anchorText = anchorSection?.[0] ?? "";
+      expect(anchorText).not.toMatch(/#[fF0-9aAbBcCdD]{3,6}/);
+      expect(anchorText).not.toMatch(/rgba?\(/);
     });
   });
 });

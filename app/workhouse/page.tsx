@@ -1764,7 +1764,7 @@ const WORKHOUSE_PAGE_GUTTER = "px-1";
 const WORKHOUSE_CAROUSEL_GUTTER = "pl-8 pr-6";
 
 const RULES_SECTION_TITLE_CLASS = "text-xl font-bold leading-tight";
-const RULES_INTRO_LINE_CLASS = "text-xl font-medium leading-snug opacity-70";
+const RULES_INTRO_LINE_CLASS = "text-2xl font-medium leading-snug text-primary-50 opacity-80";
 
 const RULES_OF_THE_GAME_CARDS: RulesGameCard[] = [
   { id: "game", top: "This is a", main: "GAME" },
@@ -1864,17 +1864,17 @@ function RulesOfTheGameDeck({
         </p>
       </div>
 
-      <div className="relative h-[200px]">
+      <div className="relative min-h-[130px] max-h-[160px]">
         {next ? (
-          <div className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 absolute inset-0 flex items-center py-4 opacity-50">
-            <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER}`}>
+          <div className="card bg-primary-500 absolute inset-0 flex items-center py-2 opacity-50">
+            <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER} text-primary-50`}>
               <RulesCardStatement {...next} />
             </div>
           </div>
         ) : null}
 
         <div
-          className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 absolute inset-0 flex items-center py-4 touch-pan-y select-none"
+          className="card bg-primary-500 absolute inset-0 flex items-center py-2 touch-pan-y select-none"
           role="group"
           aria-label="Rules cards"
           onPointerDown={onPointerDown}
@@ -1886,19 +1886,19 @@ function RulesOfTheGameDeck({
             transition: draggingRef.current ? "none" : "transform 160ms ease",
           }}
         >
-          <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER}`}>
+          <div className={`w-full ${WORKHOUSE_CAROUSEL_GUTTER} text-primary-50`}>
             <RulesCardStatement {...current} />
           </div>
         </div>
       </div>
 
-      <div className={`mt-6 grid grid-cols-2 gap-4 ${WORKHOUSE_PAGE_GUTTER}`}>
+      <div className={`mt-3 grid grid-cols-2 gap-4 ${WORKHOUSE_PAGE_GUTTER}`}>
         <button
           type="button"
           onClick={goPrev}
           disabled={atFirst}
           aria-label="Previous card"
-          className="btn preset-outlined-surface-200-800 w-full"
+          className="btn preset-outlined-primary-950-50 w-full"
         >
           <ChevronLeftIcon className="size-4 shrink-0" aria-hidden="true" />
           <span>Previous</span>
@@ -1908,7 +1908,7 @@ function RulesOfTheGameDeck({
           onClick={goNext}
           disabled={atLast}
           aria-label="Next card"
-          className="btn preset-outlined-surface-200-800 w-full"
+          className="btn preset-outlined-primary-950-50 w-full"
         >
           <span>Next</span>
           <ChevronRightIcon className="size-4 shrink-0" aria-hidden="true" />
@@ -2717,7 +2717,7 @@ export default function WorkhousePage() {
         <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 py-6 sm:max-w-lg">
           <WorkhouseHeader />
 
-          <div className="mt-5">
+          <div className="mt-2">
             <RulesOfTheGameDeck
               cards={RULES_OF_THE_GAME_CARDS}
               onDone={() => setEnteredGame(true)}
