@@ -181,18 +181,18 @@ describe("Landing page — first-time participant experience", () => {
       expect(deckBody).toContain("ChevronRightIcon");
     });
 
-    it("both buttons use outlined Skeleton style on primary bg (preset-outlined-primary-950-50)", () => {
+    it("both buttons use outlined Skeleton style on primary bg (preset-outlined-primary-500)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
       const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
       const deckBody = content.slice(deckStart, deckEnd);
-      expect(deckBody).toContain("preset-outlined-primary-950-50");
+      expect(deckBody).toContain("preset-outlined-primary-500");
     });
 
-    it("nav buttons use primary-950-50 color for contrast on primary background", () => {
+    it("nav buttons use primary-500 color for contrast on primary background", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
       const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
       const deckBody = content.slice(deckStart, deckEnd);
-      expect(deckBody).toContain("primary-950-50");
+      expect(deckBody).toContain("preset-outlined-primary-500");
     });
   });
 

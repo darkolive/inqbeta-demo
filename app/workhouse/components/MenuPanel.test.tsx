@@ -47,23 +47,28 @@ describe("MenuPanel drawer changes", () => {
   });
 
   describe("3. Actions buttons use correct Skeleton styling", () => {
-    it("Leave Session uses secondary styling (significant but not primary forward action)", () => {
+    it("Export My Story uses success styling (preserves and exports experience)", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
-      // Find Leave Session button and check its class
-      expect(content).toContain("preset-filled-secondary-500");
-      // Verify it's in the Actions section context
-      const actionsSection = content.match(/Actions[\s\S]*?preset-filled-secondary-500/);
-      expect(actionsSection).toBeTruthy();
+      // Find Export My Story button and verify it uses success preset
+      const exportButtonMatch = content.match(/<button[\s\S]*?Export My Story[\s\S]*?<\/button>/);
+      expect(exportButtonMatch).toBeTruthy();
+      expect(exportButtonMatch[0]).toContain("preset-filled-success-500");
     });
 
-    it("Destroy Character uses error styling", () => {
+    it("Leave Session uses warning styling (consequential but not destructive)", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
-      expect(content).toContain("preset-filled-error-500");
+      // Find Leave Session button and verify it uses warning preset
+      const leaveButtonMatch = content.match(/<button[\s\S]*?Leave Session[\s\S]*?<\/button>/);
+      expect(leaveButtonMatch).toBeTruthy();
+      expect(leaveButtonMatch[0]).toContain("preset-filled-warning-500");
     });
 
-    it("Export My Story uses secondary styling", () => {
+    it("Destroy Character uses error styling (strongest destructive treatment)", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
-      expect(content).toContain("preset-filled-secondary-500");
+      // Find Destroy Character button and verify it uses error preset
+      const destroyButtonMatch = content.match(/<button[\s\S]*?Destroy Character[\s\S]*?<\/button>/);
+      expect(destroyButtonMatch).toBeTruthy();
+      expect(destroyButtonMatch[0]).toContain("preset-filled-error-500");
     });
   });
 
@@ -77,24 +82,31 @@ describe("MenuPanel drawer changes", () => {
   });
 
   describe("5. Help buttons use correct Skeleton styling", () => {
-    it("Stay in Touch uses secondary styling (meaningful but not primary forward action)", () => {
+    it("Stay in Touch uses tonal-primary styling (soft supportive action)", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
-      // Secondary appears for Help buttons
-      // We check for the button text
-      expect(content).toContain("Stay in Touch");
-      expect(content).toContain("preset-filled-secondary-500");
+      // Find Stay in Touch button and verify it uses tonal-primary
+      const stayButtonMatch = content.match(/<button[\s\S]*?Stay in Touch[\s\S]*?<\/button>/);
+      expect(stayButtonMatch).toBeTruthy();
+      expect(stayButtonMatch[0]).toContain("preset-tonal-primary");
     });
 
-    it("Report an Issue uses warning styling", () => {
+    it("Report an Issue uses tonal-tertiary styling (soft supportive action)", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
-      expect(content).toContain("Report an Issue");
-      expect(content).toContain("preset-filled-warning-500");
+      // Find Report an Issue button - should use tonal-tertiary
+      // Use a more specific pattern to capture just this button
+      const reportButtonMatch = content.match(/<button\s*\n\s*type="button"\s*\n\s*onClick=\{onReportIssue\}[\s\S]*?<\/button>/);
+      expect(reportButtonMatch).toBeTruthy();
+      expect(reportButtonMatch[0]).toContain("preset-tonal-tertiary");
+      // Verify it's NOT using warning filled
+      expect(reportButtonMatch[0]).not.toContain("preset-filled-warning");
     });
 
-    it("Review This Experience uses secondary styling", () => {
+    it("Review This Experience uses tonal-secondary styling (soft supportive action)", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
-      expect(content).toContain("Review This Experience");
-      expect(content).toContain("preset-filled-secondary-500");
+      // Find Review This Experience button and verify it uses tonal-secondary
+      const reviewButtonMatch = content.match(/<button[\s\S]*?Review This Experience[\s\S]*?<\/button>/);
+      expect(reviewButtonMatch).toBeTruthy();
+      expect(reviewButtonMatch[0]).toContain("preset-tonal-secondary");
     });
   });
 

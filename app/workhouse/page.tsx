@@ -1898,7 +1898,7 @@ function RulesOfTheGameDeck({
           onClick={goPrev}
           disabled={atFirst}
           aria-label="Previous card"
-          className="btn preset-outlined-primary-950-50 w-full"
+          className="btn preset-outlined-primary-500 w-full"
         >
           <ChevronLeftIcon className="size-4 shrink-0" aria-hidden="true" />
           <span>Previous</span>
@@ -1908,7 +1908,7 @@ function RulesOfTheGameDeck({
           onClick={goNext}
           disabled={atLast}
           aria-label="Next card"
-          className="btn preset-outlined-primary-950-50 w-full"
+          className="btn preset-outlined-primary-500 w-full"
         >
           <span>Next</span>
           <ChevronRightIcon className="size-4 shrink-0" aria-hidden="true" />

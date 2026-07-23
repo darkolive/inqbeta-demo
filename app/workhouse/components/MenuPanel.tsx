@@ -117,14 +117,14 @@ export function MenuPanel({
             type="button"
             disabled={exportBusy || !canExport}
             onClick={onExportStory}
-            className="btn preset-filled-secondary-500 w-full"
+            className="btn preset-filled-success-500 w-full"
           >
             {exportBusy ? "Generating PDF…" : "Export My Story"}
           </button>
           <button
             type="button"
             onClick={onLeaveSession}
-            className="btn preset-filled-secondary-500 w-full"
+            className="btn preset-filled-warning-500 w-full"
           >
             Leave Session
           </button>
@@ -157,21 +157,21 @@ export function MenuPanel({
           <button
             type="button"
             onClick={onStayInTouch}
-            className="btn preset-filled-secondary-500 w-full"
+            className="btn preset-tonal-primary w-full"
           >
             Stay in Touch
           </button>
           <button
             type="button"
             onClick={onReportIssue}
-            className="btn preset-filled-warning-500 w-full"
+            className="btn preset-tonal-tertiary w-full"
           >
             Report an Issue
           </button>
           <button
             type="button"
             onClick={onReviewExperience}
-            className="btn preset-filled-secondary-500 w-full"
+            className="btn preset-tonal-secondary w-full"
           >
             Review This Experience
           </button>
