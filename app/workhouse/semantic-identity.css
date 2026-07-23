@@ -23,6 +23,8 @@
     --wh-chart-series-primary: var(--color-primary-700-300);
     --wh-chart-series-secondary: var(--color-secondary-700-300);
     --wh-chart-series-tertiary: var(--color-surface-950-50);
+    /* Action sent - distinct from primary (received) and clearly visible */
+    --wh-chart-series-sent: var(--color-tertiary-700-300);
   }
 
   .wh-semantic-self {

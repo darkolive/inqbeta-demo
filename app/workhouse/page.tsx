@@ -1415,7 +1415,11 @@ function BalancePanel({
 
   return (
     <div className="mb-12 grid gap-4">
-      <p>Your history in this space.</p>
+      <p>
+        In this section you can see a complete record of all your
+        interactions within this space, secured by encrypted,
+        tamper-evident, hash-verified receipts.
+      </p>
 
       <section className="mt-6 space-y-4">
         <p className="text-lg font-bold">Credits Exchanged</p>

@@ -41,7 +41,7 @@ export function BalanceDrawer({
   children: ReactNode
 }) {
   return (
-    <WorkhouseDrawer open={open} onOpenChange={onOpenChange} title="History bank">
+    <WorkhouseDrawer open={open} onOpenChange={onOpenChange} title="Personal Activity">
       {children}
     </WorkhouseDrawer>
   )
