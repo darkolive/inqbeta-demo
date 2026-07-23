@@ -36,7 +36,7 @@ describe("Landing page — first-time participant experience", () => {
   describe("1. 'Rules of the Game' heading no longer renders", () => {
     it("the text 'Rules of the game' does not appear inside RulesOfTheGameDeck", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).not.toContain("Rules of the game");
     });
@@ -44,7 +44,7 @@ describe("Landing page — first-time participant experience", () => {
     it("RULES_SECTION_TITLE_CLASS is no longer used for the carousel heading", () => {
       // The heading div should use justify-end, not justify-between + title text
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       // Should not have the old heading row pattern
       expect(deckBody).not.toContain("flex items-center justify-between");
@@ -53,7 +53,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("progress label still renders in the carousel area", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("progressLabel");
       expect(deckBody).toContain("safeIndex + 1");
@@ -65,14 +65,14 @@ describe("Landing page — first-time participant experience", () => {
   describe("2. QR image renders using /images/qr-code.png", () => {
     it("an <img> tag references /images/qr-code.png inside RulesOfTheGameDeck", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain('src="/images/qr-code.png"');
     });
 
     it("the QR img has a descriptive alt attribute", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("alt=");
       expect(deckBody).toMatch(/alt="[^"]*join[^"]*experience[^"]*"/i);
@@ -80,14 +80,14 @@ describe("Landing page — first-time participant experience", () => {
 
     it("the QR img is responsive (has a width class)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain('w-[180px]');
     });
 
     it("the QR image is below the Enter/START GAME button in source order", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       const startGameIdx = deckBody.indexOf("START GAME");
       const qrIdx = deckBody.indexOf('src="/images/qr-code.png"');
@@ -100,7 +100,7 @@ describe("Landing page — first-time participant experience", () => {
   describe("3. Caption renders beneath the QR code", () => {
     it("the caption text is present", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain(
         "Scan to join this shared experience on another device."
@@ -109,7 +109,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("the caption uses understated typography (text-xs, opacity-60)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("text-xs");
       expect(deckBody).toContain("opacity-60");
@@ -117,7 +117,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("the caption is centred below the QR image", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       // caption lives in a flex-col items-center wrapper
       expect(deckBody).toContain("flex flex-col items-center");
@@ -129,7 +129,7 @@ describe("Landing page — first-time participant experience", () => {
   describe("4. Previous and Next buttons still work", () => {
     it("goPrev function is defined and used on the Previous button", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("goPrev");
       // Previous button must have onClick={goPrev}
@@ -138,7 +138,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("goNext function is defined and used on the Next button", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("goNext");
       // Next button must have onClick={goNext}
@@ -147,21 +147,21 @@ describe("Landing page — first-time participant experience", () => {
 
     it("Previous button is disabled when at first card (atFirst)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("disabled={atFirst}");
     });
 
     it("Next button is disabled when at last card (atLast)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("disabled={atLast}");
     });
 
     it("both buttons have aria-label for accessibility", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain('aria-label="Previous card"');
       expect(deckBody).toContain('aria-label="Next card"');
@@ -169,28 +169,28 @@ describe("Landing page — first-time participant experience", () => {
 
     it("Previous button includes ChevronLeftIcon", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("ChevronLeftIcon");
     });
 
     it("Next button includes ChevronRightIcon", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("ChevronRightIcon");
     });
 
     it("both buttons use outlined Skeleton style on primary bg (preset-outlined-primary-500)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("preset-outlined-primary-500");
     });
 
     it("nav buttons use primary-500 color for contrast on primary background", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("preset-outlined-primary-500");
     });
@@ -212,7 +212,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("drag/pointer handlers are preserved", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("onPointerDown");
       expect(deckBody).toContain("onPointerMove");
@@ -222,7 +222,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("the START GAME / Enter button is present", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("START GAME");
       expect(deckBody).toContain("onClick={onDone}");
@@ -230,7 +230,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("the carousel role and aria-label are preserved", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain('role="group"');
       expect(deckBody).toContain('aria-label="Rules cards"');
@@ -238,21 +238,21 @@ describe("Landing page — first-time participant experience", () => {
 
     it("touch-pan-y class is preserved for drag interaction", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("touch-pan-y");
     });
 
     it("progress label format is preserved: N / total", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("${safeIndex + 1} / ${cards.length}");
     });
 
     it("card peek (next card preview) is preserved", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("next ?");
       expect(deckBody).toContain("opacity-50");
@@ -264,7 +264,7 @@ describe("Landing page — first-time participant experience", () => {
   describe("6. Spacing is comfortable and uncluttered", () => {
     it("QR section has mt-8 top margin for breathing room from Enter button", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       // The wrapper div after START GAME has mt-8
       expect(deckBody).toContain('className="mt-8 flex flex-col items-center gap-3 pb-8"');
@@ -272,14 +272,14 @@ describe("Landing page — first-time participant experience", () => {
 
     it("caption has gap-3 between QR and caption", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("gap-3");
     });
 
     it("Enter button no longer has mb-12 (space freed for QR section)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       // The Enter button should NOT have mb-12
       expect(deckBody).not.toContain("mb-12");
@@ -291,7 +291,7 @@ describe("Landing page — first-time participant experience", () => {
   describe("7. Carousel uses Skeleton primary background treatment", () => {
     it("carousel container uses Skeleton preset (preset-filled-primary-500)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       // Uses Skeleton preset which applies bg-primary-500
       expect(deckBody).toContain("preset-filled-primary-500");
@@ -299,7 +299,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("carousel no longer uses surface preset classes", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       // preset-filled-surface-50-950 should be gone from the carousel
       expect(deckBody).not.toContain("preset-filled-surface-50-950");
@@ -316,7 +316,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("carousel card inner div uses fixed text-primary-50 (no dark: variant)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("text-primary-50");
       // No dark: variant inside the carousel
@@ -325,7 +325,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("carousel foreground uses fixed text-primary-50 throughout (no dark: switch)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       // Every text-primary-50 occurrence should NOT be followed by dark:text-primary-950
       expect(deckBody).not.toContain("dark:text-primary-950");
@@ -377,21 +377,21 @@ describe("Landing page — first-time participant experience", () => {
   describe("9. Carousel has reduced vertical footprint", () => {
     it("carousel container no longer has fixed h-[200px] height", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).not.toContain("h-[200px]");
     });
 
     it("carousel container uses min-h-[130px] max-h-[160px]", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("min-h-[130px] max-h-[160px]");
     });
 
     it("card vertical padding is reduced (py-2, down from py-4)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).toContain("py-2");
       expect(deckBody).not.toContain("py-4");
@@ -412,7 +412,7 @@ describe("Landing page — first-time participant experience", () => {
 
     it("nav-to-Enter gap is reduced (mt-3, down from mt-6)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       // The grid div that holds Previous/Next buttons has mt-3
       expect(deckBody).toContain('mt-3 grid grid-cols-2 gap-4');
@@ -424,14 +424,14 @@ describe("Landing page — first-time participant experience", () => {
   describe("10. No hard-coded hex or white foreground in carousel", () => {
     it("RulesOfTheGameDeck does not contain rgb( or rgba( for text color", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).not.toMatch(/rgba?\(/);
     });
 
     it("RulesOfTheGameDeck does not contain #fff or #ffffff", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
-      const deckEnd = content.indexOf("\nfunction WorkhouseAttributionFooter");
+      const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       expect(deckBody).not.toMatch(/#fff|#ffffff|#FFFFFF|#FFF/i);
     });
@@ -458,9 +458,129 @@ describe("Test imports work", () => {
   });
 });
 
-// ─── 11. Find a Friend offer flow QR block ───────────────────────────────────
+// ─── 11. New informational section below QR code ─────────────────────────────
 
-describe("11. Find a Friend offer flow includes QR code for joining", () => {
+describe("11. New informational section below QR code and above footer", () => {
+  let content: string;
+
+  beforeEach(() => {
+    content = readFileSync(pagePath, "utf-8");
+  });
+
+  it("WorkhouseInfoSection component is defined", () => {
+    expect(content).toContain("function WorkhouseInfoSection");
+  });
+
+  it("section contains first heading 'What is this?'", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("What is this?");
+  });
+
+  it("section contains second heading 'Your data stays yours'", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("Your data stays yours");
+  });
+
+  it("section contains third heading 'Built around people, not platforms'", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("Built around people, not platforms");
+  });
+
+  it("section contains explanatory text about evidence-based exchange", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("evidence-based exchange");
+  });
+
+  it("section contains explanatory text about sovereign data", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("sovereign data");
+  });
+
+  it("section uses h2 semantic headings", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    // All three headings should be h2
+    const h2Count = (infoSection.match(/<h2/g) || []).length;
+    expect(h2Count).toBe(3);
+  });
+
+  it("section appears below RulesOfTheGameDeck in source order", () => {
+    const deckStart = content.indexOf("function RulesOfTheGameDeck");
+    const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
+    const deckBody = content.slice(deckStart, deckEnd);
+    // Deck should end with the QR code section
+    expect(deckBody).toContain('src="/images/qr-code.png"');
+  });
+
+  it("section appears above WorkhouseAttributionFooter in source order", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    expect(footerStart).toBeGreaterThan(infoSectionStart);
+  });
+
+  it("WorkhouseInfoSection is rendered on the landing page", () => {
+    // Find where it's used in the page component
+    const pageContent = content.slice(content.indexOf("export default function WorkhousePage"));
+    expect(pageContent).toContain("<WorkhouseInfoSection");
+  });
+
+  it("section uses comfortable reading width (max-w-sm)", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("max-w-sm");
+  });
+
+  it("section uses leading-relaxed for readability", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("leading-relaxed");
+  });
+
+  it("section uses space-y-8 for comfortable vertical spacing", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("space-y-8");
+  });
+
+  it("section uses opacity-80 for body text", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("opacity-80");
+  });
+
+  it("headings use text-base font-semibold", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("text-base font-semibold");
+  });
+
+  it("section uses py-8 for vertical padding", () => {
+    const infoSectionStart = content.indexOf("function WorkhouseInfoSection");
+    const footerStart = content.indexOf("function WorkhouseAttributionFooter");
+    const infoSection = content.slice(infoSectionStart, footerStart);
+    expect(infoSection).toContain("py-8");
+  });
+});
+
+// ─── 12. Find a Friend offer flow QR block ───────────────────────────────────
+
+describe("12. Find a Friend offer flow includes QR code for joining", () => {
   let content: string;
 
   beforeEach(() => {

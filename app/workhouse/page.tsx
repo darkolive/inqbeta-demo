@@ -1939,6 +1939,47 @@ function RulesOfTheGameDeck({
   );
 }
 
+function WorkhouseInfoSection({ className }: { className?: string }) {
+  return (
+    <section
+      className={`py-8 ${WORKHOUSE_PAGE_GUTTER}${className ? ` ${className}` : ""}`}
+    >
+      <div className="mx-auto max-w-sm space-y-8 text-sm">
+        <div className="space-y-2">
+          <h2 className="text-base font-semibold">What is this?</h2>
+          <p className="leading-relaxed opacity-80">
+            This is an early-stage demonstration of evidence-based exchange.
+            When two people agree that something has happened, a shared receipt
+            is created. Those receipts allow people to exchange value with
+            confidence, without relying on any organisation or authority to own
+            or control the relationship.
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <h2 className="text-base font-semibold">Your data stays yours</h2>
+          <p className="leading-relaxed opacity-80">
+            The receipts you create are stored on your own device, not in a
+            central database. Only you decide when to share them. They are
+            protected using modern cryptography, so only someone with the correct
+            keys can reveal their contents. We call this sovereign data—information
+            that remains under your control.
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <h2 className="text-base font-semibold">Built around people, not platforms</h2>
+          <p className="leading-relaxed opacity-80">
+            Technology should help people cooperate without asking them to
+            surrender ownership of their identity, their relationships or their
+            data.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function WorkhouseAttributionFooter({ className }: { className?: string }) {
   return (
     <footer
@@ -2724,7 +2765,9 @@ export default function WorkhousePage() {
             />
           </div>
 
-          <WorkhouseAttributionFooter className="mt-20" />
+          <WorkhouseInfoSection />
+
+          <WorkhouseAttributionFooter className="mt-8" />
         </div>
       );
     }
