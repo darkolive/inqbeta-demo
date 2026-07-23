@@ -17,7 +17,6 @@ export const WORKHOUSE_CHART_SERIES = {
   primary: "var(--wh-chart-series-primary)",
   secondary: "var(--wh-chart-series-secondary)",
   tertiary: "var(--wh-chart-series-tertiary)",
-  sent: "var(--wh-chart-series-sent)",
 } as const;
 
 const PARTICIPATION_SERIES_COLORS = [
@@ -45,7 +44,7 @@ export const assetActivityChartConfig = {
   },
   sent: {
     label: "Action sent",
-    color: WORKHOUSE_CHART_SERIES.sent,
+    color: WORKHOUSE_CHART_SERIES.secondary,
   },
 } satisfies ChartConfig;
 

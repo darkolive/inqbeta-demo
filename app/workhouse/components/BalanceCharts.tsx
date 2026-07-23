@@ -137,7 +137,7 @@ export function BalanceAssetActivityChart({
             type="monotone"
             dataKey="received"
             name="Action received"
-            stroke="var(--color-primary)"
+            stroke="var(--color-received)"
             strokeWidth={2}
             dot={{ r: 3, strokeWidth: 0 }}
             activeDot={{ r: 4, strokeWidth: 0 }}
@@ -146,7 +146,7 @@ export function BalanceAssetActivityChart({
             type="monotone"
             dataKey="sent"
             name="Action sent"
-            stroke="var(--color-secondary)"
+            stroke="var(--color-sent)"
             strokeWidth={2}
             dot={{ r: 3, strokeWidth: 0 }}
             activeDot={{ r: 4, strokeWidth: 0 }}
