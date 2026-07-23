@@ -2340,6 +2340,11 @@ export default function WorkhousePage() {
     });
   }, [evidencePage]);
 
+  // Reset activity page to 1 when search changes
+  useEffect(() => {
+    setEvidencePage(1);
+  }, [activitySearch]);
+
   async function run<T>(fn: () => Promise<T>) {
     setBusy(true);
     setError("");
@@ -2784,14 +2789,14 @@ export default function WorkhousePage() {
   );
   const evidencePageCount = Math.max(
     1,
-    Math.ceil(mergedAudit.length / EVIDENCE_PAGE_SIZE),
+    Math.ceil(filteredAudit.length / EVIDENCE_PAGE_SIZE),
   );
-  const safeEvidencePage = Math.min(evidencePage, evidencePageCount);
-  const paginatedAudit = mergedAudit.slice(
+  const safeEvidencePage = Math.max(1, Math.min(evidencePage, evidencePageCount));
+  const paginatedAudit = filteredAudit.slice(
     (safeEvidencePage - 1) * EVIDENCE_PAGE_SIZE,
     safeEvidencePage * EVIDENCE_PAGE_SIZE,
   );
-  const activityEntries = activitySearchActive ? filteredAudit : paginatedAudit;
+  const activityEntries = paginatedAudit;
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pt-3 pb-8 sm:max-w-lg">
@@ -3783,10 +3788,9 @@ export default function WorkhousePage() {
                   currentUser={username}
                   characterDisplayContext={state?.characterDisplayContext}
                 />
-                {!activitySearchActive &&
-                mergedAudit.length > EVIDENCE_PAGE_SIZE ? (
+                {filteredAudit.length > EVIDENCE_PAGE_SIZE ? (
                   <Pagination
-                    count={mergedAudit.length}
+                    count={filteredAudit.length}
                     pageSize={EVIDENCE_PAGE_SIZE}
                     page={safeEvidencePage}
                     onPageChange={(event) =>
