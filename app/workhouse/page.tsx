@@ -1894,9 +1894,10 @@ function RulesOfTheGameDeck({
         START GAME
       </button>
 
-      <div className="mt-5 text-center">
-        <h2 className="whitespace-nowrap text-xl font-semibold leading-tight text-[color:var(--color-brand-orange)] dark:text-secondary-300">
-          We give you 5 credits to start with
+      <div className="mx-8 mt-5 text-center">
+        <h2 className="text-2xl font-semibold leading-tight text-[color:var(--color-brand-orange)] dark:text-secondary-300">
+          <span className="block">We give you 5 credits</span>
+          <span className="block">to start with</span>
         </h2>
       </div>
 
