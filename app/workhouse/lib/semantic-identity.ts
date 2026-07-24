@@ -7,6 +7,7 @@ export type WorkhouseSemanticRole =
   | 'warning'
   | 'success'
   | 'neutral'
+  | 'transaction'
 
 export const WORKHOUSE_SEMANTIC_CLASS: Record<WorkhouseSemanticRole, string> = {
   self: 'wh-semantic-self',
@@ -17,6 +18,7 @@ export const WORKHOUSE_SEMANTIC_CLASS: Record<WorkhouseSemanticRole, string> = {
   warning: 'wh-semantic-warning',
   success: 'wh-semantic-success',
   neutral: 'wh-semantic-neutral',
+  transaction: 'wh-semantic-transaction',
 }
 
 export const WORKHOUSE_SEMANTIC_PROOF_HASH_CLASS = 'wh-semantic-proof-hash'

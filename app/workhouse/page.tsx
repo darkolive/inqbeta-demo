@@ -500,7 +500,8 @@ function ProposedExchangeMessage({
   if (isSelf(offer.from, currentUser)) {
     return (
       <>
-        You proposed an offer to{" "}
+        <ActivityName name={offer.from} currentUser={currentUser} /> proposed an
+        offer to{" "}
         <ActivityName name={offer.to} currentUser={currentUser} /> of{" "}
         <ActivityTerm>{give}</ActivityTerm> in exchange for{" "}
         <ActivityTerm>{receive}</ActivityTerm>.
@@ -510,7 +511,9 @@ function ProposedExchangeMessage({
   return (
     <>
       <ActivityName name={offer.from} currentUser={currentUser} /> proposed an
-      offer to you of <ActivityTerm>{give}</ActivityTerm> in exchange for{" "}
+      offer to{" "}
+      <ActivityName name={offer.to} currentUser={currentUser} /> of{" "}
+      <ActivityTerm>{give}</ActivityTerm> in exchange for{" "}
       <ActivityTerm>{receive}</ActivityTerm>.
     </>
   );
@@ -586,7 +589,8 @@ function CounterofferSentence({
   }
   return (
     <p className="text-surface-700 dark:text-surface-300">
-      You counteroffered{" "}
+      <ActivityName name={currentUser} currentUser={currentUser} />{" "}
+      counteroffered{" "}
       <ActivityName name={offer.from} currentUser={currentUser} />
       &apos;s offer of <ActivityTerm>{originalItem}</ActivityTerm> in exchange
       for <ActivityTerm>{counterReturn}</ActivityTerm>.
@@ -682,7 +686,7 @@ function formatActivityMessage(
         if (isSelf(from, currentUser)) {
           return (
             <>
-              You proposed an offer to <N name={to} /> of{" "}
+              <N name={from} /> proposed an offer to <N name={to} /> of{" "}
               <ActivityTerm>{give}</ActivityTerm> in exchange for{" "}
               <ActivityTerm>{receive}</ActivityTerm>.
             </>
@@ -691,7 +695,7 @@ function formatActivityMessage(
         if (isSelf(to, currentUser)) {
           return (
             <>
-              <N name={from} /> proposed an offer to you of{" "}
+              <N name={from} /> proposed an offer to <N name={to} /> of{" "}
               <ActivityTerm>{give}</ActivityTerm> in exchange for{" "}
               <ActivityTerm>{receive}</ActivityTerm>.
             </>
@@ -713,7 +717,7 @@ function formatActivityMessage(
         if (isSelf(from, currentUser)) {
           return (
             <>
-              You proposed an offer to <N name={to} /> of{" "}
+              <N name={from} /> proposed an offer to <N name={to} /> of{" "}
               <ActivityTerm>{give}</ActivityTerm> in exchange for{" "}
               <ActivityTerm>{receive}</ActivityTerm>.
             </>
@@ -722,7 +726,7 @@ function formatActivityMessage(
         if (isSelf(to, currentUser)) {
           return (
             <>
-              <N name={from} /> proposed an offer to you of{" "}
+              <N name={from} /> proposed an offer to <N name={to} /> of{" "}
               <ActivityTerm>{give}</ActivityTerm> in exchange for{" "}
               <ActivityTerm>{receive}</ActivityTerm>.
             </>
@@ -752,7 +756,8 @@ function formatActivityMessage(
         return (
           <>
             <N name={from} /> offered <ActivityTerm>{gesture}</ActivityTerm> to
-            you for <ActivityTerm>{terms}</ActivityTerm>.
+            {" "}
+            <N name={to} /> for <ActivityTerm>{terms}</ActivityTerm>.
           </>
         );
       }
@@ -1359,7 +1364,7 @@ function BalanceExchangeRow({
       <div className="absolute right-0 top-2">
         <ProofHashActions hash={hash} onViewProof={onViewProof} />
       </div>
-      <p className={`pr-12 ${WORKHOUSE_SEMANTIC_CLASS.proof}`}>{title}</p>
+      <p className={`pr-12 ${WORKHOUSE_SEMANTIC_CLASS.transaction}`}>{title}</p>
       {detail ? <p>{detail}</p> : null}
       <p className="text-surface-700 dark:text-surface-300">
         {formatTime(timestamp)} ·{" "}
@@ -1838,7 +1843,7 @@ function RulesOfTheGameDeck({
               <Carousel.PrevTrigger
                 type="button"
                 aria-label="Previous card"
-                className="btn btn border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900 w-full"
+                className="btn btn-lg border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900 w-full"
               >
                 <ChevronLeftIcon
                   className="size-4 shrink-0"
@@ -1849,7 +1854,7 @@ function RulesOfTheGameDeck({
               <Carousel.NextTrigger
                 type="button"
                 aria-label="Next card"
-                className="btn btn border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900 w-full"
+                className="btn btn-lg border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900 w-full"
               >
                 <span>Next</span>
                 <ChevronRightIcon
@@ -1875,7 +1880,7 @@ function RulesOfTheGameDeck({
       <button
         type="button"
         onClick={onDone}
-        className="btn preset-filled-brand mt-8 w-full"
+        className="btn btn-lg preset-filled-brand mt-8 w-full"
       >
         START GAME
       </button>
@@ -2779,14 +2784,14 @@ export default function WorkhousePage() {
               <button
                 type="submit"
                 disabled={busy}
-                className="btn preset-filled-brand w-full"
+                className="btn btn-lg preset-filled-brand w-full"
               >
                 {busy ? "Entering…" : "ENTER GAME"}
               </button>
               <button
                 type="button"
                 onClick={() => setEnteredGame(false)}
-                className="btn preset-tonal w-full"
+                className="btn btn-lg preset-tonal w-full"
               >
                 CANCEL
               </button>
@@ -2920,7 +2925,7 @@ export default function WorkhousePage() {
         <button
           type="button"
           onClick={openOfferForm}
-          className="btn preset-filled-brand mt-4 flex w-full items-center justify-center gap-2"
+          className="btn btn-lg preset-filled-brand mt-4 flex w-full items-center justify-center gap-2"
         >
           <PlusIcon className="size-5 shrink-0" aria-hidden />
           {NEW_EXCHANGE_LABEL}
@@ -2984,14 +2989,14 @@ export default function WorkhousePage() {
                   setToUser(friendSearch.canonicalName);
                   setOfferFormStep("give");
                 }}
-                className="btn preset-filled-brand w-full"
+                className="btn btn-lg preset-filled-brand w-full"
               >
                 Continue
               </button>
               <button
                 type="button"
                 onClick={closeOfferForm}
-                className="btn preset-tonal w-full"
+                className="btn btn-lg preset-tonal w-full"
               >
                 Cancel
               </button>
@@ -3079,14 +3084,14 @@ export default function WorkhousePage() {
               <button
                 type="button"
                 onClick={continueFromOfferGiveStep}
-                className="btn preset-filled-brand w-full"
+                className="btn btn-lg preset-filled-brand w-full"
               >
                 Continue
               </button>
               <button
                 type="button"
                 onClick={() => setOfferFormStep("friend")}
-                className="btn preset-tonal w-full"
+                className="btn btn-lg preset-tonal w-full"
               >
                 Back
               </button>
@@ -3160,21 +3165,21 @@ export default function WorkhousePage() {
                 type="button"
                 disabled={busy}
                 onClick={submitOfferForm}
-                className="btn preset-filled-brand w-full"
+                className="btn btn-lg preset-filled-brand w-full"
               >
                 {LETS_EXCHANGE_LABEL}
               </button>
               <button
                 type="button"
                 onClick={() => setOfferFormStep("give")}
-                className="btn preset-tonal w-full"
+                className="btn btn-lg preset-tonal w-full"
               >
                 Back
               </button>
               <button
                 type="button"
                 onClick={closeOfferForm}
-                className="btn w-full border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
+                className="btn btn-lg w-full border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
               >
                 Cancel
               </button>
@@ -3218,7 +3223,7 @@ export default function WorkhousePage() {
                           onClick={() =>
                             run(() => acceptCounterOffer(offer.id, username))
                           }
-                          className="btn preset-filled-brand w-full sm:w-auto"
+                          className="btn btn-lg preset-filled-brand w-full sm:w-auto"
                         >
                           Accept
                         </button>
@@ -3228,7 +3233,7 @@ export default function WorkhousePage() {
                           onClick={() =>
                             run(() => rejectOffer(offer.id, username))
                           }
-                          className="btn preset-filled-error-500 w-full sm:w-auto"
+                          className="btn btn-lg preset-filled-error-500 w-full sm:w-auto"
                         >
                           Decline
                         </button>
@@ -3320,7 +3325,7 @@ export default function WorkhousePage() {
                             if (res) noteCompletedExchange(offer);
                           })
                         }
-                        className="btn preset-filled-brand w-full sm:w-auto"
+                        className="btn btn-lg preset-filled-brand w-full sm:w-auto"
                       >
                         Complete exchange
                       </button>
@@ -3491,7 +3496,7 @@ export default function WorkhousePage() {
                             if (res) noteCompletedExchange(offer);
                           })
                         }
-                        className="btn preset-filled-brand w-full sm:w-auto"
+                        className="btn btn-lg preset-filled-brand w-full sm:w-auto"
                       >
                         Complete exchange
                       </button>
@@ -3665,14 +3670,14 @@ export default function WorkhousePage() {
                                 }),
                               ).then(() => setCounteringId(null));
                             }}
-                            className="btn preset-filled-brand w-full sm:w-auto"
+                            className="btn btn-lg preset-filled-brand w-full sm:w-auto"
                           >
                             Send counteroffer
                           </button>
                           <button
                             type="button"
                             onClick={() => setCounteringId(null)}
-                            className="btn w-full sm:w-auto border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
+                            className="btn btn-lg w-full sm:w-auto border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
                           >
                             Cancel
                           </button>
@@ -3687,7 +3692,7 @@ export default function WorkhousePage() {
                             onClick={() =>
                               run(() => acceptOffer(offer.id, username))
                             }
-                            className="btn preset-filled-brand w-full sm:w-auto"
+                            className="btn btn-lg preset-filled-brand w-full sm:w-auto"
                           >
                             Accept
                           </button>
@@ -3706,7 +3711,7 @@ export default function WorkhousePage() {
                                 true,
                               )
                             }
-                            className="btn preset-filled-secondary-500 w-full sm:w-auto"
+                            className="btn btn-lg preset-filled-secondary-500 w-full sm:w-auto"
                           >
                             {creditOfferInsteadLabel(availableForOffer)}
                           </button>
@@ -3731,7 +3736,7 @@ export default function WorkhousePage() {
                               );
                             }
                           }}
-                          className="btn preset-filled-secondary-500 w-full sm:w-auto"
+                          className="btn btn-lg preset-filled-secondary-500 w-full sm:w-auto"
                         >
                           Counteroffer
                         </button>
@@ -3745,7 +3750,7 @@ export default function WorkhousePage() {
                               },
                             )
                           }
-                          className="btn preset-filled-error-500 w-full sm:w-auto"
+                          className="btn btn-lg preset-filled-error-500 w-full sm:w-auto"
                         >
                           Reject
                         </button>

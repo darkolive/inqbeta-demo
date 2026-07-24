@@ -293,7 +293,7 @@ describe("Landing page — Skeleton React Carousel", () => {
       expect(css).toContain("4.2rem");
     });
 
-    it(".rules-carousel-anchor uses theme-aware foreground (var(--color-surface-950-50))", async () => {
+    it(".rules-carousel-anchor uses semantic carousel variable", async () => {
       const fs = await import("fs");
       const css = fs.readFileSync(
         "app/workhouse/semantic-identity.css",
@@ -304,7 +304,8 @@ describe("Landing page — Skeleton React Carousel", () => {
       );
       expect(anchorSection).toBeTruthy();
       const anchorText = anchorSection?.[0] ?? "";
-      expect(anchorText).toContain("var(--color-surface-950-50)");
+      // Uses semantic carousel anchor color variable
+      expect(anchorText).toContain("var(--wh-carousel-anchor-fg)");
     });
   });
 

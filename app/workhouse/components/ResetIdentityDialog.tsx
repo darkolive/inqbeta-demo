@@ -51,7 +51,7 @@ export function ResetIdentityDialog({
               <Dialog.CloseTrigger
                 type="button"
                 disabled={busy}
-                className="btn border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
+                className="btn btn-lg border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
               >
                 No
               </Dialog.CloseTrigger>

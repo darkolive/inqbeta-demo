@@ -105,7 +105,7 @@ describe("MenuPanel drawer changes", () => {
     });
   });
 
-  describe("3b. Reading and display controls", () => {
+  describe("3b. Display controls", () => {
     it("renders accessibility controls before Actions", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
       const controlsIndex = content.indexOf("<AccessibilityControls />");
@@ -125,23 +125,22 @@ describe("MenuPanel drawer changes", () => {
       expect(content).toContain("Dark mode");
     });
 
-    it("provides an expandable text-size slider from 90% to 150%", () => {
+    it("does not provide dynamic text scaling", () => {
       const content = readFileSync(accessibilityControlsPath, "utf-8");
 
-      expect(content).toContain('type="range"');
-      expect(content).toContain("MIN_TEXT_SCALE = 90");
-      expect(content).toContain("MAX_TEXT_SCALE = 150");
-      expect(content).toContain('aria-controls="workhouse-text-size-controls"');
-      expect(content).toContain("Reset to 100%");
+      expect(content).not.toContain('type="range"');
+      expect(content).not.toContain("TEXT_SCALE_STORAGE_KEY");
+      expect(content).not.toContain("MIN_TEXT_SCALE");
+      expect(content).not.toContain("MAX_TEXT_SCALE");
     });
 
-    it("initializes saved preferences before the page is displayed", () => {
+    it("initializes saved colour mode before the page is displayed", () => {
       const content = readFileSync(rootLayoutPath, "utf-8");
 
       expect(content).toContain("accessibilityPreferencesScript");
       expect(content).toContain("inqbeta-color-mode");
-      expect(content).toContain("inqbeta-text-scale");
-      expect(content).toContain("--user-font-scale");
+      expect(content).not.toContain("Number(localStorage.getItem('inqbeta-text-scale'))");
+      expect(content).not.toContain("style.setProperty('--user-font-scale'");
       expect(content).toContain("suppressHydrationWarning");
     });
   });

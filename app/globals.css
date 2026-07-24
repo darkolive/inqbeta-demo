@@ -7,14 +7,6 @@
 @import "tw-animate-css";
 @import "./shadcn.css";
 
-:root {
-	--user-font-scale: 1;
-}
-
-html {
-	font-size: calc(100% * var(--user-font-scale));
-}
-
 /* inQbetaaccessible Theme */
 [data-theme='inQbetaaccessible'] {
 	--text-scaling: 1;
@@ -192,17 +184,17 @@ html {
 	--color-success-contrast-800: var(--color-success-contrast-light);
 	--color-success-contrast-900: var(--color-success-contrast-light);
 	--color-success-contrast-950: var(--color-success-contrast-light);
-	--color-warning-50: oklch(96.98% 0.02 71.79deg);
-	--color-warning-100: oklch(90.17% 0.05 75.61deg);
-	--color-warning-200: oklch(83.09% 0.07 75.4deg);
-	--color-warning-300: oklch(76.28% 0.09 75.54deg);
-	--color-warning-400: oklch(69.25% 0.11 73.75deg);
-	--color-warning-500: oklch(62.64% 0.12 70.44deg);
-	--color-warning-600: oklch(55.57% 0.11 69.97deg);
-	--color-warning-700: oklch(48.61% 0.1 69.7deg);
-	--color-warning-800: oklch(41.04% 0.08 69.12deg);
-	--color-warning-900: oklch(33.46% 0.07 68.67deg);
-	--color-warning-950: oklch(25% 0.05 69.4deg);
+	--color-warning-50: #fefce8;
+	--color-warning-100: #fef9c3;
+	--color-warning-200: #fef08a;
+	--color-warning-300: #fde047;
+	--color-warning-400: #facc15;
+	--color-warning-500: #eab308;
+	--color-warning-600: #ca8a04;
+	--color-warning-700: #a16207;
+	--color-warning-800: #854d0e;
+	--color-warning-900: #713f12;
+	--color-warning-950: #422006;
 	--color-warning-contrast-dark: oklch(18.09% 0.01 248.11deg);
 	--color-warning-contrast-light: oklch(100% 0 none);
 	--color-warning-contrast-50: var(--color-warning-contrast-dark);
@@ -211,7 +203,7 @@ html {
 	--color-warning-contrast-300: var(--color-warning-contrast-dark);
 	--color-warning-contrast-400: var(--color-warning-contrast-dark);
 	--color-warning-contrast-500: var(--color-warning-contrast-dark);
-	--color-warning-contrast-600: var(--color-warning-contrast-light);
+	--color-warning-contrast-600: var(--color-warning-contrast-dark);
 	--color-warning-contrast-700: var(--color-warning-contrast-light);
 	--color-warning-contrast-800: var(--color-warning-contrast-light);
 	--color-warning-contrast-900: var(--color-warning-contrast-light);
@@ -266,7 +258,7 @@ html {
 	--color-surface-contrast-950: var(--color-surface-contrast-light);
 }
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
     --font-heading: var(--font-sans);

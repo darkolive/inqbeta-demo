@@ -6,15 +6,12 @@ const accessibilityPreferencesScript = `
   try {
     const root = document.documentElement;
     const savedMode = localStorage.getItem('inqbeta-color-mode');
-    const savedScale = Number(localStorage.getItem('inqbeta-text-scale'));
-    const scale = Number.isFinite(savedScale) && savedScale >= 90 && savedScale <= 150
-      ? savedScale
-      : 100;
 
     root.classList.toggle('dark', savedMode === 'dark');
-    root.style.setProperty('--user-font-scale', String(scale / 100));
+    root.style.removeProperty('--user-font-scale');
+    localStorage.removeItem('inqbeta-text-scale');
   } catch {
-    // Keep the server-rendered light theme and default text size.
+    // Keep the server-rendered light theme.
   }
 })();
 `

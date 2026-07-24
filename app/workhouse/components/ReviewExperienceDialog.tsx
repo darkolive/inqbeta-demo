@@ -155,7 +155,7 @@ export function ReviewExperienceDialog({
               {saved ? (
                 <Dialog.CloseTrigger
                   type="button"
-                  className="btn border-2 border-surface-500"
+                  className="btn btn-lg border-2 border-surface-500"
                 >
                   Close
                 </Dialog.CloseTrigger>
@@ -163,14 +163,14 @@ export function ReviewExperienceDialog({
                 <>
                   <Dialog.CloseTrigger
                     type="button"
-                    className="btn border-2 border-surface-500"
+                    className="btn btn-lg border-2 border-surface-500"
                   >
                     Close
                   </Dialog.CloseTrigger>
                   <button
                     type="button"
                     onClick={handleSave}
-                    className="btn preset-filled-brand"
+                    className="btn btn-lg preset-filled-brand"
                   >
                     Save
                   </button>
