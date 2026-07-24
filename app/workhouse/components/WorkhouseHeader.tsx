@@ -27,7 +27,7 @@ export function WorkhouseHeader({
         <AppBar.Lead className="flex shrink-0 items-center justify-start pl-0">
           <InQbetaLogo />
         </AppBar.Lead>
-        <AppBar.Trail className="flex shrink-0 items-center justify-end gap-2">
+        <AppBar.Trail className="flex shrink-0 items-center justify-end gap-4">
           <ColorModeToggle className="inline-flex items-center justify-center rounded-[var(--radius-base)] p-1 hover:preset-tonal [&_svg]:size-[18px]" />
           {onBalanceClick ? (
             <button

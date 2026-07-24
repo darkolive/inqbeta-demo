@@ -1895,13 +1895,15 @@ function RulesOfTheGameDeck({
         START GAME
       </button>
 
-      <div className="mt-4 flex items-center gap-2.5 text-sm opacity-90">
+      <div className="mx-4 mt-5 flex items-center gap-2.5 text-base">
         <CoinsIcon
           size={36}
           className="shrink-0 text-surface-700 dark:text-surface-300"
           aria-hidden
         />
-        <p>You start with 5 credits — spend them to make offers to others</p>
+        <p className="font-medium text-[color:var(--color-brand-orange)] dark:text-secondary-300">
+          You start with 5 credits to use when making offers.
+        </p>
       </div>
 
       <div className="mt-8 flex flex-col items-center gap-3 pb-8">
@@ -1971,7 +1973,7 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
             This is not decentralisation, but localisation.
           </p>
 
-          <aside className="mt-5 flex gap-3 rounded-container border border-primary-200 bg-primary-50 p-4 dark:border-primary-800 dark:bg-primary-950/30">
+          <aside className="mt-8 flex gap-3 rounded-container border border-primary-200 bg-primary-50 p-4 dark:border-primary-800 dark:bg-primary-950/30">
             <InfoIcon
               className="mt-0.5 size-5 shrink-0 text-primary-700 dark:text-primary-300"
               aria-hidden="true"
