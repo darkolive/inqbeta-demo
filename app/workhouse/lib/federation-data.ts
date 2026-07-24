@@ -129,6 +129,7 @@ export function buildAssetPieShares(
 
 type WealthEvent =
   | { timestamp: string; kind: "join"; participantKey: string }
+  | { timestamp: string; kind: "destroy"; participantKey: string }
   | { timestamp: string; kind: "credit"; amount: number };
 
 function buildMemberGrowth(
@@ -225,6 +226,9 @@ function buildWealthGrowth(events: WealthEvent[]): FederationTimePoint[] {
       if (seenJoins.has(event.participantKey)) continue;
       seenJoins.add(event.participantKey);
       participantCount += 1;
+    } else if (event.kind === "destroy") {
+      if (!seenJoins.delete(event.participantKey)) continue;
+      participantCount -= 1;
     } else {
       creditsExchanged += event.amount;
     }
@@ -284,6 +288,17 @@ export function computeFederationData(input: FederationInputs): FederationData {
           }
         }
         break;
+      case "destroy": {
+        const key = entry.participants[0]?.trim().toLowerCase();
+        if (key) {
+          wealthEvents.push({
+            timestamp: entry.timestamp,
+            kind: "destroy",
+            participantKey: key,
+          });
+        }
+        break;
+      }
     }
   }
 
