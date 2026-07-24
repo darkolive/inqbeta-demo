@@ -20,7 +20,6 @@ import {
   InfoIcon,
   PlusIcon,
   SearchIcon,
-  CoinsIcon,
 } from "lucide-react";
 import type {
   AuditEntry,
@@ -1895,15 +1894,10 @@ function RulesOfTheGameDeck({
         START GAME
       </button>
 
-      <div className="mt-5 flex flex-col items-center text-center">
-        <CoinsIcon
-          size={36}
-          className="text-[color:var(--color-brand-orange)]"
-          aria-hidden
-        />
-        <p className="mt-2 whitespace-nowrap text-lg font-normal leading-tight">
+      <div className="mt-5 text-center">
+        <h2 className="whitespace-nowrap text-xl font-semibold leading-tight text-[color:var(--color-brand-orange)] dark:text-secondary-300">
           We give you 5 credits to start with
-        </p>
+        </h2>
       </div>
 
       <div className="mt-8 flex flex-col items-center gap-3 pb-8">
