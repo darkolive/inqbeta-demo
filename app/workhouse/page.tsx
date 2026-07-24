@@ -1895,15 +1895,14 @@ function RulesOfTheGameDeck({
         START GAME
       </button>
 
-      <div className="mx-auto mt-5 flex w-fit items-center gap-2.5">
+      <div className="mt-5 flex flex-col items-center text-center">
         <CoinsIcon
           size={36}
-          className="shrink-0 text-[color:var(--color-brand-orange)]"
+          className="text-[color:var(--color-brand-orange)]"
           aria-hidden
         />
-        <p className="text-lg font-semibold leading-tight">
-          <span className="block">We give you 5 credits</span>
-          <span className="block">to start with</span>
+        <p className="mt-2 whitespace-nowrap text-lg font-normal leading-tight">
+          We give you 5 credits to start with
         </p>
       </div>
 
