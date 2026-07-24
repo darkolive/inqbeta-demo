@@ -76,15 +76,15 @@ describe("Shared styling abstractions", () => {
   });
 });
 
-describe("inQbeta theme configuration", () => {
-  it("layout.tsx applies data-theme='inQbeta' to root html element", () => {
+describe("inQbetaaccessible theme configuration", () => {
+  it("layout.tsx applies data-theme='inQbetaaccessible' to root html element", () => {
     const layout = readFileSync(LAYOUT_TSX, "utf-8");
-    expect(layout).toContain('data-theme="inQbeta"');
+    expect(layout).toContain('data-theme="inQbetaaccessible"');
   });
 
-  it("globals.css defines [data-theme='inQbeta'] selector", () => {
+  it("globals.css defines [data-theme='inQbetaaccessible'] selector", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
-    expect(css).toContain("[data-theme='inQbeta']");
+    expect(css).toContain("[data-theme='inQbetaaccessible']");
   });
 
   it("globals.css imports @fontsource/lexend", () => {
@@ -97,76 +97,76 @@ describe("inQbeta theme configuration", () => {
     expect(pkg.dependencies).toHaveProperty("@fontsource/lexend");
   });
 
-  it("inQbeta theme defines primary color palette tokens", () => {
+  it("inQbetaaccessible theme defines primary color palette tokens", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
     expect(css).toContain("--color-primary-50:");
     expect(css).toContain("--color-primary-500:");
     expect(css).toContain("--color-primary-950:");
   });
 
-  it("inQbeta theme defines secondary color palette tokens", () => {
+  it("inQbetaaccessible theme defines secondary color palette tokens", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
     expect(css).toContain("--color-secondary-50:");
     expect(css).toContain("--color-secondary-500:");
     expect(css).toContain("--color-secondary-950:");
   });
 
-  it("inQbeta theme defines tertiary color palette tokens", () => {
+  it("inQbetaaccessible theme defines tertiary color palette tokens", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
     expect(css).toContain("--color-tertiary-50:");
     expect(css).toContain("--color-tertiary-500:");
     expect(css).toContain("--color-tertiary-950:");
   });
 
-  it("inQbeta theme defines success color palette tokens", () => {
+  it("inQbetaaccessible theme defines success color palette tokens", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
     expect(css).toContain("--color-success-50:");
     expect(css).toContain("--color-success-500:");
     expect(css).toContain("--color-success-950:");
   });
 
-  it("inQbeta theme defines warning color palette tokens", () => {
+  it("inQbetaaccessible theme defines warning color palette tokens", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
     expect(css).toContain("--color-warning-50:");
     expect(css).toContain("--color-warning-500:");
     expect(css).toContain("--color-warning-950:");
   });
 
-  it("inQbeta theme defines error color palette tokens", () => {
+  it("inQbetaaccessible theme defines error color palette tokens", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
     expect(css).toContain("--color-error-50:");
     expect(css).toContain("--color-error-500:");
     expect(css).toContain("--color-error-950:");
   });
 
-  it("inQbeta theme defines surface color palette tokens", () => {
+  it("inQbetaaccessible theme defines surface color palette tokens", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
     expect(css).toContain("--color-surface-50:");
     expect(css).toContain("--color-surface-500:");
     expect(css).toContain("--color-surface-950:");
   });
 
-  it("inQbeta theme defines scoop corner shape tokens", () => {
+  it("inQbetaaccessible theme defines bevel corner shape tokens", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
-    expect(css).toContain("--corner-shape-base: scoop");
-    expect(css).toContain("--corner-shape-container: scoop");
+    expect(css).toContain("--corner-shape-base: bevel");
+    expect(css).toContain("--corner-shape-container: bevel");
   });
 
-  it("inQbeta theme uses Lexend font for anchor typography", () => {
+  it("inQbetaaccessible theme uses Lexend font for anchor typography", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
     expect(css).toContain("--typo-anchor--font-family: 'Lexend', sans-serif");
   });
 
-  it("inQbeta theme uses secondary color for headings", () => {
+  it("inQbetaaccessible theme uses secondary color for headings", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
-    expect(css).toContain("--typo-heading--color-light: var(--color-secondary-500)");
-    expect(css).toContain("--typo-heading--color-dark: var(--color-secondary-500)");
+    expect(css).toContain("--typo-heading--color-light: var(--color-secondary-700)");
+    expect(css).toContain("--typo-heading--color-dark: var(--color-secondary-300)");
   });
 
-  it("inQbeta theme uses primary color for anchors", () => {
+  it("inQbetaaccessible theme uses primary color for anchors", () => {
     const css = readFileSync(GLOBALS_CSS, "utf-8");
     expect(css).toContain("--typo-anchor--color-light: var(--color-primary-500)");
-    expect(css).toContain("--typo-anchor--color-dark: var(--color-primary-500)");
+    expect(css).toContain("--typo-anchor--color-dark: var(--color-primary-300)");
   });
 });
 
