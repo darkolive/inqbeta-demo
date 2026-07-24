@@ -2,8 +2,8 @@ import '../globals.css'
 import './semantic-identity.css'
 
 export const metadata = {
-  title: 'Workhouse Festival',
-  description: 'Join the inQbeta network and enter the Workhouse Festival exchange experience.',
+  title: 'inQbeta: Landed Exchange Experiment',
+  description: 'Try inQbeta — a simple, people-led exchange experiment for Landed Festival.',
 }
 
 export default function WorkhouseLayout({ children }: { children: React.ReactNode }) {
