@@ -1901,7 +1901,10 @@ function RulesOfTheGameDeck({
           className="shrink-0 text-[color:var(--color-brand-orange)]"
           aria-hidden
         />
-        <p className="text-base font-semibold">We give you 5 credits to start with.</p>
+        <p className="text-lg font-semibold leading-tight">
+          <span className="block">We give you 5 credits</span>
+          <span className="block">to start with.</span>
+        </p>
       </div>
 
       <div className="mt-8 flex flex-col items-center gap-3 pb-8">
@@ -1932,8 +1935,8 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
             This is an early-stage concept of evidence-based exchange.
           </p>
           <p className="leading-relaxed opacity-80">
-            When two people agree that something has happened, a shared receipt
-            is created.
+            Every meaningful action in this experience creates a receipt of
+            evidence.
           </p>
           <p className="leading-relaxed opacity-80">
             These receipts allow people to exchange value with confidence,
