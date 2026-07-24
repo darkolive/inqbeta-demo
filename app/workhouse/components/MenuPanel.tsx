@@ -1,6 +1,7 @@
 "use client";
 
 import { CommunityParticipationPanel } from "./CommunityInterestCharts";
+import { AccessibilityControls } from "./AccessibilityControls";
 import type { AuditEntry } from "../lib/types";
 
 export const MENU_INTRO =
@@ -31,6 +32,8 @@ export function MenuPanel({
     <div className="mb-12 grid gap-6">
       <p className="text-sm leading-relaxed opacity-90">{MENU_INTRO}</p>
 
+      <AccessibilityControls />
+
       <section className="space-y-3">
         <p className="text-base font-semibold">Actions</p>
         <div className="grid gap-2">
@@ -38,21 +41,21 @@ export function MenuPanel({
             type="button"
             disabled={exportBusy || !canExport}
             onClick={onExportStory}
-            className="btn preset-filled-success-500 w-full"
+            className="btn btn-lg preset-filled-success-500 w-full"
           >
             {exportBusy ? "Generating PDF…" : "Export My Story"}
           </button>
           <button
             type="button"
             onClick={onLeaveSession}
-            className="btn preset-filled-warning-500 w-full"
+            className="btn btn-lg preset-filled-warning-500 w-full"
           >
             Leave Session
           </button>
           <button
             type="button"
             onClick={onResetIdentity}
-            className="btn preset-filled-error-500 w-full"
+            className="btn btn-lg preset-filled-error-500 w-full"
           >
             Destroy Character
           </button>
@@ -65,21 +68,21 @@ export function MenuPanel({
           <button
             type="button"
             onClick={onStayInTouch}
-            className="btn preset-tonal-primary w-full"
+            className="btn btn-lg preset-tonal-primary w-full"
           >
             Stay in Touch
           </button>
           <button
             type="button"
             onClick={onReportIssue}
-            className="btn preset-tonal-tertiary w-full"
+            className="btn btn-lg preset-tonal-tertiary w-full"
           >
             Report an Issue
           </button>
           <button
             type="button"
             onClick={onReviewExperience}
-            className="btn preset-tonal-secondary w-full"
+            className="btn btn-lg preset-tonal-secondary w-full"
           >
             Review This Experience
           </button>

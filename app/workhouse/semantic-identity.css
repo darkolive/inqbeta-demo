@@ -7,15 +7,20 @@
 @layer components {
   .workhouse-surface {
     /* Adaptive semantic identity colors meeting WCAG AA contrast.
-       Light mode uses -700 shades, dark mode uses -300 shades for 4.5:1+ */
+       Light mode uses -700 shades, dark mode uses -300 shades for 4.5:1+
+       Activity narrative: primary for current user, secondary for others */
     --wh-id-self-fg: var(--color-primary-700);
-    --wh-id-other-fg: var(--color-tertiary-700);
+    --wh-id-other-fg: var(--color-secondary-700);
     --wh-id-character-fg: var(--color-secondary-700);
     --wh-id-system-fg: var(--color-secondary-700);
     --wh-id-proof-fg: var(--color-tertiary-700);
     --wh-id-warning-fg: var(--color-warning-700);
     --wh-id-success-fg: var(--color-success-700);
-    --wh-id-neutral-fg: var(--color-surface-800);
+    --wh-id-neutral-fg: var(--color-primary-700);
+    --wh-id-transaction-fg: var(--color-primary-700);
+    /* Carousel lead and anchor colors */
+    --wh-carousel-lead-fg: var(--color-primary-500);
+    --wh-carousel-anchor-fg: var(--color-secondary-500);
     /* Chart lines = information (same contrast as readable foreground text).
        Skeleton legacy pairings — full opacity, no color-mix.
        Runtime mapping (light / dark via light-dark pairings):
@@ -31,17 +36,19 @@
     --wh-chart-series-6: var(--color-error-700-300);
   }
 
-  /* Dark mode semantic identity colors - applies to both .dark class and inQbetaaccessible theme */
-  .dark .workhouse-surface,
-  [data-theme='inQbetaaccessible'] .workhouse-surface {
+  /* Dark mode semantic identity colors */
+  .dark .workhouse-surface {
     --wh-id-self-fg: var(--color-primary-300);
-    --wh-id-other-fg: var(--color-tertiary-300);
+    --wh-id-other-fg: var(--color-secondary-300);
     --wh-id-character-fg: var(--color-secondary-300);
     --wh-id-system-fg: var(--color-secondary-300);
     --wh-id-proof-fg: var(--color-tertiary-300);
     --wh-id-warning-fg: var(--color-warning-300);
     --wh-id-success-fg: var(--color-success-300);
-    --wh-id-neutral-fg: var(--color-surface-100);
+    --wh-id-neutral-fg: var(--color-primary-300);
+    --wh-id-transaction-fg: var(--color-primary-300);
+    --wh-carousel-lead-fg: var(--color-primary-300);
+    --wh-carousel-anchor-fg: var(--color-secondary-300);
   }
 
   .wh-semantic-self {
@@ -73,7 +80,6 @@
     color: var(--color-surface-700);
   }
 
-  [data-theme='inQbetaaccessible'] .wh-semantic-proof-hash,
   .dark .wh-semantic-proof-hash {
     color: var(--color-surface-300);
   }
@@ -93,6 +99,11 @@
     color: var(--wh-id-neutral-fg);
   }
 
+  .wh-semantic-transaction {
+    @apply font-semibold;
+    color: var(--wh-id-transaction-fg);
+  }
+
   /* Intro carousel — compact frame + fluid anchor line (homepage rules deck). */
   .rules-carousel-statement {
     container-type: inline-size;
@@ -102,7 +113,7 @@
 
   .rules-carousel-anchor {
     @apply font-extrabold uppercase leading-tight tracking-tight;
-    color: var(--color-surface-950-50);
+    color: var(--wh-carousel-anchor-fg);
     font-size: clamp(2.1rem, 10.5vw, 4.2rem);
     line-height: 0.9;
     display: block;
@@ -114,9 +125,8 @@
   .rules-carousel-lead {
     font-size: clamp(1.55rem, 5.4vw, 2rem);
     line-height: 1.2;
-    font-weight: 500;
-    color: var(--color-surface-950-50);
-    opacity: 0.8;
+    font-weight: 600;
+    color: var(--wh-carousel-lead-fg);
   }
 }
 

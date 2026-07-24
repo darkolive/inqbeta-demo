@@ -7,6 +7,14 @@
 @import "tw-animate-css";
 @import "./shadcn.css";
 
+:root {
+	--user-font-scale: 1;
+}
+
+html {
+	font-size: calc(100% * var(--user-font-scale));
+}
+
 /* inQbetaaccessible Theme */
 [data-theme='inQbetaaccessible'] {
 	--text-scaling: 1;

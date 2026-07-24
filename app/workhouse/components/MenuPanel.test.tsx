@@ -18,6 +18,11 @@ describe("MenuPanel drawer changes", () => {
     process.cwd(),
     "app/workhouse/components/WorkhouseDrawers.tsx"
   );
+  const accessibilityControlsPath = join(
+    process.cwd(),
+    "app/workhouse/components/AccessibilityControls.tsx"
+  );
+  const rootLayoutPath = join(process.cwd(), "app/layout.tsx");
 
   describe("1. Drawer title is 'Information and Support'", () => {
     it("WorkhouseDrawers.tsx contains 'Information and Support' title", () => {
@@ -97,6 +102,47 @@ describe("MenuPanel drawer changes", () => {
       const destroyButtonMatch = content.match(/<button[\s\S]*?Destroy Character[\s\S]*?<\/button>/);
       expect(destroyButtonMatch).toBeTruthy();
       expect(destroyButtonMatch[0]).toContain("preset-filled-error-500");
+    });
+  });
+
+  describe("3b. Reading and display controls", () => {
+    it("renders accessibility controls before Actions", () => {
+      const content = readFileSync(menuPanelPath, "utf-8");
+      const controlsIndex = content.indexOf("<AccessibilityControls />");
+      const actionsIndex = content.indexOf(">Actions</p>");
+
+      expect(controlsIndex).toBeGreaterThanOrEqual(0);
+      expect(actionsIndex).toBeGreaterThan(controlsIndex);
+    });
+
+    it("provides a persistent light and dark mode control", () => {
+      const content = readFileSync(accessibilityControlsPath, "utf-8");
+
+      expect(content).toContain("COLOR_MODE_STORAGE_KEY");
+      expect(content).toContain('document.documentElement.classList.toggle("dark"');
+      expect(content).toContain('aria-pressed={isDark}');
+      expect(content).toContain("Light mode");
+      expect(content).toContain("Dark mode");
+    });
+
+    it("provides an expandable text-size slider from 90% to 150%", () => {
+      const content = readFileSync(accessibilityControlsPath, "utf-8");
+
+      expect(content).toContain('type="range"');
+      expect(content).toContain("MIN_TEXT_SCALE = 90");
+      expect(content).toContain("MAX_TEXT_SCALE = 150");
+      expect(content).toContain('aria-controls="workhouse-text-size-controls"');
+      expect(content).toContain("Reset to 100%");
+    });
+
+    it("initializes saved preferences before the page is displayed", () => {
+      const content = readFileSync(rootLayoutPath, "utf-8");
+
+      expect(content).toContain("accessibilityPreferencesScript");
+      expect(content).toContain("inqbeta-color-mode");
+      expect(content).toContain("inqbeta-text-scale");
+      expect(content).toContain("--user-font-scale");
+      expect(content).toContain("suppressHydrationWarning");
     });
   });
 
