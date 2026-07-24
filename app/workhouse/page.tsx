@@ -1177,15 +1177,24 @@ function stepsConfig(phase: CardPhase): {
 function CompactCardSteps({ phase }: { phase: CardPhase }) {
   const { steps, step } = stepsConfig(phase);
   return (
-    <Steps step={step} count={steps.length} linear className="w-full">
+    <Steps
+      step={step}
+      count={steps.length}
+      linear
+      className="w-full"
+    >
       <Steps.List>
         {steps.map((item, index) => (
           <Steps.Item key={item.title} index={index}>
             <span className="flex items-center gap-1">
-              <Steps.Indicator>{index + 1}</Steps.Indicator>
-              <span>{item.title}</span>
+              <span className="flex size-6 items-center justify-center rounded-full bg-surface-100 text-sm font-medium text-surface-800 dark:bg-surface-700 dark:text-surface-50">
+                {index + 1}
+              </span>
+              <span className="text-surface-800 dark:text-surface-50">{item.title}</span>
             </span>
-            {index < steps.length - 1 ? <Steps.Separator /> : null}
+            {index < steps.length - 1 ? (
+              <span className="h-0.5 flex-1 bg-surface-600 dark:bg-surface-400" />
+            ) : null}
           </Steps.Item>
         ))}
       </Steps.List>
@@ -1969,7 +1978,7 @@ function WorkhouseAttributionFooter({ className }: { className?: string }) {
           <img
             src="/images/darkolive.png"
             alt="Dark Olive logo"
-            className="max-w-[220px]"
+            className="max-w-[150px]"
           />
         </a>
       </div>
@@ -3711,7 +3720,7 @@ export default function WorkhousePage() {
                                 true,
                               )
                             }
-                            className="btn btn-lg preset-filled-secondary-500 w-full sm:w-auto"
+                            className="btn btn-lg preset-filled-warning-500 w-full sm:w-auto"
                           >
                             {creditOfferInsteadLabel(availableForOffer)}
                           </button>
@@ -3736,7 +3745,7 @@ export default function WorkhousePage() {
                               );
                             }
                           }}
-                          className="btn btn-lg preset-filled-secondary-500 w-full sm:w-auto"
+                          className="btn btn-lg preset-filled-warning-500 w-full sm:w-auto"
                         >
                           Counteroffer
                         </button>
