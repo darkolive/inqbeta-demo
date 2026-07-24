@@ -75,7 +75,7 @@ export function StayInTouchDialog({
                             : [...prev, label],
                         );
                       }}
-                      className="mt-1"
+                      className="checkbox mt-0.5 shrink-0"
                     />
                     <span>{label}</span>
                   </label>

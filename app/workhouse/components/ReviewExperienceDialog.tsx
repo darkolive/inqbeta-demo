@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Dialog, Portal, RatingGroup } from "@/components/ui/skeleton-react";
+import { Dialog, Portal } from "@/components/ui/skeleton-react";
+import { RatingGroup } from "@skeletonlabs/skeleton-react";
 
 import {
   HELP_SIGNAL_CONFIRMATION,
