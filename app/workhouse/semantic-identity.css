@@ -9,15 +9,15 @@
     /* Adaptive semantic identity colors meeting WCAG AA contrast.
        Light mode uses -700 shades, dark mode uses -300 shades for 4.5:1+
        Activity narrative: one secondary orange for people and exchanged terms */
-    --wh-id-self-fg: var(--color-secondary-700);
-    --wh-id-other-fg: var(--color-secondary-700);
-    --wh-id-character-fg: var(--color-secondary-700);
-    --wh-id-system-fg: var(--color-secondary-700);
+    --wh-id-self-fg: var(--color-brand-orange);
+    --wh-id-other-fg: var(--color-brand-orange);
+    --wh-id-character-fg: var(--color-brand-orange);
+    --wh-id-system-fg: var(--color-brand-orange);
     --wh-id-proof-fg: var(--color-tertiary-700);
     --wh-id-warning-fg: var(--color-warning-700);
     --wh-id-success-fg: var(--color-success-700);
-    --wh-id-neutral-fg: var(--color-secondary-700);
-    --wh-id-transaction-fg: var(--color-secondary-700);
+    --wh-id-neutral-fg: var(--color-brand-orange);
+    --wh-id-transaction-fg: var(--color-brand-orange);
     /* Carousel lead and anchor colors */
     --wh-carousel-lead-fg: var(--color-primary-500);
     --wh-carousel-anchor-fg: var(--color-secondary-500);
@@ -137,11 +137,15 @@
 }
 
 .inqbeta-logo .inqbeta-logo__mark {
-  fill: var(--color-secondary-500) !important;
+  fill: var(--color-brand-orange) !important;
 }
 
 .inqbeta-logo .inqbeta-logo__wordmark {
   fill: var(--color-surface-700) !important;
+}
+
+.inqbeta-logo .inqbeta-logo__cutout {
+  fill: transparent !important;
 }
 
 .dark .inqbeta-logo .inqbeta-logo__wordmark {

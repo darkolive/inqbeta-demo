@@ -99,9 +99,13 @@ export function federationMarkerSegmentClass(
     case "inactive":
       return "bg-surface-300-700/40";
     case "live":
-      return filled ? "bg-primary-500" : "bg-surface-300-700/45";
+      return filled
+        ? "bg-primary-500 dark:bg-primary-300"
+        : "bg-surface-300-700/45";
     case "near_end":
-      return filled ? "bg-primary-500" : "bg-surface-300-700/55";
+      return filled
+        ? "bg-primary-500 dark:bg-primary-300"
+        : "bg-surface-300-700/55";
     case "closed":
       return filled ? "bg-surface-400-600/75" : "bg-surface-300-700/35";
   }
@@ -262,7 +266,9 @@ function formatFederationInstantForHumans(
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "Time not configured.";
   const formatted = new Intl.DateTimeFormat(undefined, {
-    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
     hour: "numeric",
     minute: "2-digit",
   }).format(d);

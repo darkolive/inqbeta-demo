@@ -149,32 +149,29 @@ const workhouseHeaderPath = join(
     });
   });
 
-  describe("4. Help buttons use correct Skeleton styling", () => {
-    it("Stay in Touch uses tonal-primary styling (soft supportive action)", () => {
+  describe("4. Help buttons use matching outlined styling", () => {
+    it("Stay in Touch uses a primary outline", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
-      // Find Stay in Touch button and verify it uses tonal-primary
       const stayButtonMatch = content.match(/<button[\s\S]*?Stay in Touch[\s\S]*?<\/button>/);
       expect(stayButtonMatch).toBeTruthy();
-      expect(stayButtonMatch[0]).toContain("preset-tonal-primary");
+      expect(stayButtonMatch[0]).toContain("border-primary-600");
+      expect(stayButtonMatch[0]).toContain("btn-xl");
     });
 
-    it("Report an Issue uses tonal-tertiary styling (soft supportive action)", () => {
+    it("Report an Issue uses the same primary outline", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
-      // Find Report an Issue button - should use tonal-tertiary
-      // Use a more specific pattern to capture just this button
       const reportButtonMatch = content.match(/<button\s*\n\s*type="button"\s*\n\s*onClick=\{onReportIssue\}[\s\S]*?<\/button>/);
       expect(reportButtonMatch).toBeTruthy();
-      expect(reportButtonMatch[0]).toContain("preset-tonal-tertiary");
-      // Verify it's NOT using warning filled
-      expect(reportButtonMatch[0]).not.toContain("preset-filled-warning");
+      expect(reportButtonMatch[0]).toContain("border-primary-600");
+      expect(reportButtonMatch[0]).toContain("btn-xl");
     });
 
-    it("Review This Experience uses tonal-secondary styling (soft supportive action)", () => {
+    it("Review This Experience uses the same primary outline", () => {
       const content = readFileSync(menuPanelPath, "utf-8");
-      // Find Review This Experience button and verify it uses tonal-secondary
       const reviewButtonMatch = content.match(/<button[\s\S]*?Review This Experience[\s\S]*?<\/button>/);
       expect(reviewButtonMatch).toBeTruthy();
-      expect(reviewButtonMatch[0]).toContain("preset-tonal-secondary");
+      expect(reviewButtonMatch[0]).toContain("border-primary-600");
+      expect(reviewButtonMatch[0]).toContain("btn-xl");
     });
   });
 
@@ -267,7 +264,7 @@ describe("8. Action button order is Export My Story, Leave Session, Destroy Char
   it("Actions section renders buttons in correct order", () => {
     const content = readFileSync(menuPanelPath, "utf-8");
     // Find the Actions section
-    const actionsSectionMatch = content.match(/<section className="space-y-3">[\s\S]*?<p className="text-base font-semibold">Actions<\/p>[\s\S]*?<div className="grid gap-2">([\s\S]*?)<\/div>/);
+    const actionsSectionMatch = content.match(/<section className="space-y-3">[\s\S]*?<p className="text-base font-semibold">Actions<\/p>[\s\S]*?<div className="grid gap-3">([\s\S]*?)<\/div>/);
     expect(actionsSectionMatch).toBeTruthy();
     const actionsDiv = actionsSectionMatch[1];
 

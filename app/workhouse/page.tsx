@@ -1923,8 +1923,11 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
           </p>
           <p className="leading-relaxed opacity-80">
             When two people agree that something has happened, a shared receipt
-            is created. Those receipts allow people to exchange value with
-            confidence, without relying on any organisation or authority to own
+            is created.
+          </p>
+          <p className="leading-relaxed opacity-80">
+            These receipts allow people to exchange value with confidence,
+            without relying on any organisation or authority to own
             or control the relationship.
           </p>
         </div>
@@ -1933,9 +1936,11 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
           <h2 className="text-base font-semibold">Your data stays yours</h2>
           <p className="leading-relaxed opacity-80">
             The receipts you create will be stored on your own device, not in a
-            central database. Only you decide when to share them. They are
-            protected using modern cryptography, so only someone with the
-            correct keys can reveal their contents.
+            central database. Only you decide when to share them.
+          </p>
+          <p className="leading-relaxed opacity-80">
+            The evidence is protected using modern cryptography, so only
+            someone with the correct keys can reveal their contents.
           </p>
           <p className="leading-relaxed opacity-80">
             We call this sovereign data, where information remains under your
@@ -1966,7 +1971,7 @@ function WorkhouseAttributionFooter({ className }: { className?: string }) {
     <footer
       className={`mt-10 pb-8 text-center ${WORKHOUSE_PAGE_GUTTER}${className ? ` ${className}` : ""}`}
     >
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-2">
         <p className="text-sm leading-relaxed text-surface-700 dark:text-surface-300">
           This project has been developed by
         </p>
@@ -2781,7 +2786,7 @@ export default function WorkhousePage() {
             </label>
             <div className="flex items-center gap-2.5 text-sm opacity-90">
               <CoinsIcon
-                size={18}
+                size={36}
                 className="shrink-0 text-surface-700 dark:text-surface-300"
                 aria-hidden
               />
@@ -3883,6 +3888,7 @@ export default function WorkhousePage() {
             )}
           </div>
         </details>
+        <WorkhouseAttributionFooter className="mt-16" />
       </div>
     </div>
   );

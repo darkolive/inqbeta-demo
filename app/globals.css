@@ -88,6 +88,7 @@
 	--color-brand-contrast-light: var(--color-primary-contrast-500);
 	--color-brand-dark: var(--color-primary-300);
 	--color-brand-contrast-dark: var(--color-primary-contrast-300);
+	--color-brand-orange: #d16900;
 	--color-primary-50: oklch(96.93% 0.02 126.71deg);
 	--color-primary-100: oklch(87.96% 0.03 123.99deg);
 	--color-primary-200: oklch(78.69% 0.04 124.62deg);

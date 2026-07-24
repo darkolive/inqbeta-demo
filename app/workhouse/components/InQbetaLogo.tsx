@@ -18,7 +18,7 @@ export function InQbetaLogo() {
 
   return (
     <div
-      className="inqbeta-logo h-9 w-36 sm:h-10 sm:w-40"
+      className="inqbeta-logo h-11 w-44 sm:h-12 sm:w-48"
       role="img"
       aria-label="inQbeta"
       dangerouslySetInnerHTML={{ __html: svg }}
