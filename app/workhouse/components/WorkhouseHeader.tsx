@@ -27,39 +27,39 @@ export function WorkhouseHeader({
         <AppBar.Lead className="flex shrink-0 items-center justify-start pl-0">
           <InQbetaLogo />
         </AppBar.Lead>
-        <AppBar.Trail className="flex shrink-0 items-center justify-end gap-1">
-          <ColorModeToggle className="inline-flex items-center justify-center rounded-[var(--radius-base)] p-2 hover:preset-tonal" />
+        <AppBar.Trail className="flex shrink-0 items-center justify-end gap-0">
+          <ColorModeToggle className="inline-flex items-center justify-center rounded-[var(--radius-base)] p-1 hover:preset-tonal [&_svg]:size-[18px]" />
           {onBalanceClick ? (
             <button
               type="button"
               onClick={onBalanceClick}
-              className="inline-flex items-center justify-center rounded-[var(--radius-base)] p-2 hover:preset-tonal"
+              className="inline-flex items-center justify-center rounded-[var(--radius-base)] p-1 hover:preset-tonal"
               aria-label="User"
               aria-expanded={balanceOpen}
             >
-              <UserIcon size={22} aria-hidden />
+              <UserIcon size={18} aria-hidden />
             </button>
           ) : null}
           {onGlobeClick ? (
             <button
               type="button"
               onClick={onGlobeClick}
-              className="inline-flex items-center justify-center rounded-[var(--radius-base)] p-2 hover:preset-tonal"
+              className="inline-flex items-center justify-center rounded-[var(--radius-base)] p-1 hover:preset-tonal"
               aria-label={getFederationDisplayName()}
               aria-expanded={globeOpen}
             >
-              <GlobeIcon size={22} aria-hidden />
+              <GlobeIcon size={18} aria-hidden />
             </button>
           ) : null}
           {onMenuClick ? (
             <button
               type="button"
               onClick={onMenuClick}
-              className="inline-flex items-center justify-center rounded-[var(--radius-base)] p-2 hover:preset-tonal"
+              className="inline-flex items-center justify-center rounded-[var(--radius-base)] p-1 hover:preset-tonal"
               aria-label="Menu"
               aria-expanded={menuOpen}
             >
-              <MenuIcon size={22} aria-hidden />
+              <MenuIcon size={18} aria-hidden />
             </button>
           ) : null}
         </AppBar.Trail>

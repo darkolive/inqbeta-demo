@@ -264,7 +264,7 @@ describe("8. Action button order is Export My Story, Leave Session, Destroy Char
   it("Actions section renders buttons in correct order", () => {
     const content = readFileSync(menuPanelPath, "utf-8");
     // Find the Actions section
-    const actionsSectionMatch = content.match(/<section className="space-y-3">[\s\S]*?<p className="text-base font-semibold">Actions<\/p>[\s\S]*?<div className="grid gap-3">([\s\S]*?)<\/div>/);
+    const actionsSectionMatch = content.match(/<section className="mb-6 space-y-3">[\s\S]*?<p className="text-base font-semibold">Actions<\/p>[\s\S]*?<div className="grid gap-3">([\s\S]*?)<\/div>/);
     expect(actionsSectionMatch).toBeTruthy();
     const actionsDiv = actionsSectionMatch[1];
 

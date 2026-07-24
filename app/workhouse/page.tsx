@@ -1187,7 +1187,7 @@ function CompactCardSteps({ phase }: { phase: CardPhase }) {
         {steps.map((item, index) => (
           <Steps.Item key={item.title} index={index}>
             <span className="flex items-center gap-1">
-              <span className="flex size-6 items-center justify-center rounded-full bg-surface-100 text-sm font-medium text-surface-800 dark:bg-surface-700 dark:text-surface-50">
+              <span className="flex size-6 items-center justify-center rounded-full bg-primary-500 text-sm font-medium text-primary-contrast-500 dark:bg-primary-300 dark:text-primary-contrast-300">
                 {index + 1}
               </span>
               <span className="text-surface-800 dark:text-surface-50">{item.title}</span>

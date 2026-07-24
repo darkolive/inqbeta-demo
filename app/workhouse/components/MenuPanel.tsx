@@ -31,7 +31,7 @@ export function MenuPanel({
     <div className="mb-12 grid gap-6">
       <p className="text-sm leading-relaxed opacity-90">{MENU_INTRO}</p>
 
-      <section className="space-y-3">
+      <section className="mb-6 space-y-3">
         <p className="text-base font-semibold">Actions</p>
         <div className="grid gap-3">
           <button
