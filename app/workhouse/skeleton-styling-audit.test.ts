@@ -56,10 +56,9 @@ describe("Shared styling abstractions", () => {
     expect(content).toContain("tertiary:");
   });
 
-  it("FederationCharts.tsx uses semantic palette (not hardcoded hex)", () => {
+  it("FederationCharts.tsx uses Skeleton table styling (not hardcoded chart colours)", () => {
     const content = readFileSync(FEDERATION_CHARTS, "utf-8");
-    // Should use semantic CSS variables, not raw hex colors
-    expect(content).toContain("var(--wh-chart-series-");
+    expect(content).toContain('className="table"');
     // Should NOT have the old hardcoded palette
     expect(content).not.toContain('"#6366f1"');
     expect(content).not.toContain('"#22c55e"');

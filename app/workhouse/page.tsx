@@ -106,8 +106,8 @@ import { ReportIssueDialog } from "./components/ReportIssueDialog";
 import { ReviewExperienceDialog } from "./components/ReviewExperienceDialog";
 import { StayInTouchDialog } from "./components/StayInTouchDialog";
 import {
+  FederationActivityList,
   FederationLineChart,
-  FederationPieChart,
 } from "./components/FederationCharts";
 import { FederationMembershipChart } from "./components/FederationMembershipChart";
 import {
@@ -1319,8 +1319,8 @@ function FederationDataPanel({
 
           <section className="mt-6 space-y-4">
             <p className="text-lg font-bold">Trading Activity</p>
-            <p>This shows the most exchanged actions in the community.</p>
-            <FederationPieChart shares={data.totalValueGained} />
+            <p>This shows the six most exchanged actions in the community.</p>
+            <FederationActivityList shares={data.totalValueGained} />
           </section>
         </>
       ) : (

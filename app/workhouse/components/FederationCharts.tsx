@@ -3,11 +3,8 @@
 import { useMemo } from "react";
 import {
   CartesianGrid,
-  Cell,
   Line,
   LineChart,
-  Pie,
-  PieChart,
   XAxis,
   YAxis,
 } from "recharts";
@@ -20,20 +17,6 @@ import {
 } from "@/components/ui/chart";
 import type { AssetShareEntry, FederationTimePoint } from "../lib/types";
 
-/**
- * Semantic palette for pie chart slices.
- * Uses Skeleton theme variables via CSS for light/dark mode compatibility.
- * Extended palette provides sufficient distinction between slices.
- */
-const PIE_SLICE_COLORS = [
-  "var(--wh-chart-series-primary)",
-  "var(--wh-chart-series-secondary)",
-  "var(--wh-chart-series-tertiary)",
-  "var(--wh-chart-series-4)",
-  "var(--wh-chart-series-5)",
-  "var(--wh-chart-series-6)",
-];
-
 const wealthChartConfig = {
   wealth: {
     label: "Wealth",
@@ -45,15 +28,6 @@ export function buildWealthChartSeries(points: FederationTimePoint[]) {
   return points.map((point) => ({
     date: point.timestamp,
     wealth: point.value,
-  }));
-}
-
-export function buildPieChartSeries(shares: AssetShareEntry[]) {
-  return shares.map((share, index) => ({
-    key: `slice${index}`,
-    asset: share.asset,
-    count: share.count,
-    share: share.share,
   }));
 }
 
@@ -82,16 +56,6 @@ function ensureLineChartPoints<T>(data: T[]): T[] {
     return [data[0], data[0]];
   }
   return data;
-}
-
-function buildPieChartConfig(shares: AssetShareEntry[]): ChartConfig {
-  return shares.reduce<ChartConfig>((config, share, index) => {
-    config[`slice${index}`] = {
-      label: share.asset,
-      color: PIE_SLICE_COLORS[index % PIE_SLICE_COLORS.length],
-    };
-    return config;
-  }, {});
 }
 
 export function FederationLineChart({
@@ -185,79 +149,59 @@ export function FederationLineChart({
   );
 }
 
-export function FederationPieChart({ shares }: { shares: AssetShareEntry[] }) {
-  const chartData = useMemo(() => buildPieChartSeries(shares), [shares]);
-  const chartConfig = useMemo(() => buildPieChartConfig(shares), [shares]);
+export function FederationActivityList({
+  shares,
+}: {
+  shares: AssetShareEntry[];
+}) {
+  const topActions = shares.filter((share) => !share.isOther);
+  const otherActions = shares.find((share) => share.isOther);
 
-  if (!shares.length) {
+  if (!topActions.length) {
     return <p>No completed action exchanges yet.</p>;
   }
 
   return (
-    <div className="grid gap-4">
-      <ChartContainer
-        config={chartConfig}
-        className="mx-auto aspect-square h-44 w-full max-w-56"
-        aria-label="Most exchanged actions"
-      >
-        <PieChart accessibilityLayer>
-          <ChartTooltip
-            content={
-              <ChartTooltipContent
-                nameKey="asset"
-                labelKey="asset"
-                formatter={(value, _name, item) => {
-                  const count = item.payload?.count;
-                  const share = item.payload?.share;
-                  const percent =
-                    typeof share === "number"
-                      ? `${Math.round(share * 100)}%`
-                      : "";
-                  return (
-                    <span className="font-mono font-medium tabular-nums">
-                      {typeof count === "number" ? count : value}
-                      {percent ? ` (${percent})` : ""}
-                    </span>
-                  );
-                }}
-              />
-            }
-          />
-          <Pie
-            data={chartData}
-            dataKey="count"
-            nameKey="asset"
-            innerRadius={0}
-            strokeWidth={1}
-          >
-            {chartData.map((entry, index) => (
-              <Cell
-                key={entry.key}
-                fill={`var(--color-${entry.key})`}
-              />
-            ))}
-          </Pie>
-        </PieChart>
-      </ChartContainer>
-      <ul className="grid list-none gap-1">
-        {shares.map((share, index) => (
-          <li key={share.asset} className="flex items-center justify-between gap-2">
-            <span className="flex items-center gap-2">
-              <span
-                className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
-                style={{
-                  backgroundColor: PIE_SLICE_COLORS[index % PIE_SLICE_COLORS.length],
-                }}
-                aria-hidden
-              />
-              <span>{share.asset}</span>
-            </span>
-            <span className="font-semibold tabular-nums">
-              {share.count} ({Math.round(share.share * 100)}%)
-            </span>
-          </li>
-        ))}
-      </ul>
+    <div className="mx-4">
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">Action</th>
+            <th scope="col" className="text-right">
+              Exchanges
+            </th>
+            <th scope="col" className="text-right">
+              Share
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {topActions.map((share) => (
+            <tr key={share.asset}>
+              <td>{share.asset}</td>
+              <td className="text-right font-semibold tabular-nums">
+                {share.count}
+              </td>
+              <td className="text-right font-semibold tabular-nums">
+                {Math.round(share.share * 100)}%
+              </td>
+            </tr>
+          ))}
+        </tbody>
+        {otherActions ? (
+          <tfoot>
+            <tr>
+              <td>Other completed actions</td>
+              <td className="text-right font-semibold tabular-nums">
+                {otherActions.count}
+              </td>
+              <td className="text-right font-semibold tabular-nums">
+                {Math.round(otherActions.share * 100)}%
+              </td>
+            </tr>
+          </tfoot>
+        ) : null}
+      </table>
     </div>
   );
 }

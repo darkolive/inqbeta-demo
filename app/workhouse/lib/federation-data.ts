@@ -98,17 +98,32 @@ function assetLabelsInExchange(exchange: WorkhouseExchange): string[] {
 export function buildAssetPieShares(
   counts: Map<string, number>,
 ): AssetShareEntry[] {
-  const topEntries = [...counts.entries()]
+  const entries = [...counts.entries()]
     .map(([asset, count]) => ({ asset, count }))
     .sort((a, b) => b.count - a.count || a.asset.localeCompare(b.asset));
-  const visibleEntries = topEntries.slice(0, ASSET_PIE_MAX_ACTIONS);
-  const visibleTotal = visibleEntries.reduce((sum, entry) => sum + entry.count, 0);
-  if (visibleTotal === 0) return [];
+  const total = entries.reduce((sum, entry) => sum + entry.count, 0);
+  if (total === 0) return [];
 
-  return visibleEntries.map((entry) => ({
+  const visibleEntries = entries.slice(0, ASSET_PIE_MAX_ACTIONS);
+  const otherCount = entries
+    .slice(ASSET_PIE_MAX_ACTIONS)
+    .reduce((sum, entry) => sum + entry.count, 0);
+
+  const shares: AssetShareEntry[] = visibleEntries.map((entry) => ({
     ...entry,
-    share: entry.count / visibleTotal,
+    share: entry.count / total,
   }));
+
+  if (otherCount > 0) {
+    shares.push({
+      asset: "Other",
+      count: otherCount,
+      share: otherCount / total,
+      isOther: true,
+    });
+  }
+
+  return shares;
 }
 
 type WealthEvent =

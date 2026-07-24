@@ -41,7 +41,7 @@ describe("computeFederationData", () => {
     expect(data.wealthGrowth.at(-1)?.value).toBe(data.federationWealth);
   });
 
-  it("shows only the six most common completed actions in the pie chart", () => {
+  it("shows the six most common completed actions plus a separate other total", () => {
     const counts = new Map([
       ["one", 7],
       ["two", 6],
@@ -61,9 +61,14 @@ describe("computeFederationData", () => {
       "four",
       "five",
       "six",
+      "Other",
     ]);
-    expect(shares).toHaveLength(6);
-    expect(shares.find((share) => share.asset === "Other")).toBeUndefined();
+    expect(shares).toHaveLength(7);
+    expect(shares.find((share) => share.isOther)).toMatchObject({
+      asset: "Other",
+      count: 1,
+      share: 1 / 28,
+    });
     expect(shares.reduce((sum, share) => sum + share.share, 0)).toBeCloseTo(1);
   });
 });

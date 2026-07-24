@@ -126,6 +126,7 @@ export type AssetShareEntry = {
   asset: string
   count: number
   share: number
+  isOther?: boolean
 }
 
 export type FederationData = {
