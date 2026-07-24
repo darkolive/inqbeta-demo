@@ -16,7 +16,11 @@ function applyColorMode(mode: ColorMode) {
   }
 }
 
-export function AccessibilityControls() {
+export function ColorModeToggle({
+  className,
+}: {
+  className?: string;
+}) {
   const [colorMode, setColorMode] = useState<ColorMode>("light");
 
   useEffect(() => {
@@ -40,25 +44,18 @@ export function AccessibilityControls() {
   const isDark = colorMode === "dark";
 
   return (
-    <section className="space-y-3" aria-labelledby="display-settings-heading">
-      <p id="display-settings-heading" className="text-base font-semibold">
-        Display
-      </p>
-
-      <button
-        type="button"
-        onClick={toggleColorMode}
-        aria-pressed={isDark}
-        aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-        className="btn btn-lg w-full border-2 border-surface-600 bg-transparent text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
-      >
-        {isDark ? (
-          <MoonIcon className="size-5 shrink-0" aria-hidden />
-        ) : (
-          <SunIcon className="size-5 shrink-0" aria-hidden />
-        )}
-        <span>{isDark ? "Dark mode" : "Light mode"}</span>
-      </button>
-    </section>
+    <button
+      type="button"
+      onClick={toggleColorMode}
+      aria-pressed={isDark}
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      className={className}
+    >
+      {isDark ? (
+        <MoonIcon className="size-5 shrink-0" aria-hidden />
+      ) : (
+        <SunIcon className="size-5 shrink-0" aria-hidden />
+      )}
+    </button>
   );
 }

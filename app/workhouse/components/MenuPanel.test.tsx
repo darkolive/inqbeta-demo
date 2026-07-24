@@ -18,10 +18,14 @@ describe("MenuPanel drawer changes", () => {
     process.cwd(),
     "app/workhouse/components/WorkhouseDrawers.tsx"
   );
-  const accessibilityControlsPath = join(
-    process.cwd(),
-    "app/workhouse/components/AccessibilityControls.tsx"
-  );
+const accessibilityControlsPath = join(
+  process.cwd(),
+  "app/workhouse/components/AccessibilityControls.tsx"
+);
+const workhouseHeaderPath = join(
+  process.cwd(),
+  "app/workhouse/components/WorkhouseHeader.tsx"
+);
   const rootLayoutPath = join(process.cwd(), "app/layout.tsx");
 
   describe("1. Drawer title is 'Information and Support'", () => {
@@ -106,13 +110,14 @@ describe("MenuPanel drawer changes", () => {
   });
 
   describe("3b. Display controls", () => {
-    it("renders accessibility controls before Actions", () => {
-      const content = readFileSync(menuPanelPath, "utf-8");
-      const controlsIndex = content.indexOf("<AccessibilityControls />");
-      const actionsIndex = content.indexOf(">Actions</p>");
+    it("renders the colour-mode control as the first app-bar icon", () => {
+      const content = readFileSync(workhouseHeaderPath, "utf-8");
+      const toggleIndex = content.indexOf("<ColorModeToggle");
+      const trailIndex = content.indexOf("<AppBar.Trail");
+      const balanceIndex = content.indexOf("{onBalanceClick ?", trailIndex);
 
-      expect(controlsIndex).toBeGreaterThanOrEqual(0);
-      expect(actionsIndex).toBeGreaterThan(controlsIndex);
+      expect(toggleIndex).toBeGreaterThan(trailIndex);
+      expect(balanceIndex).toBeGreaterThan(toggleIndex);
     });
 
     it("provides a persistent light and dark mode control", () => {
@@ -121,8 +126,7 @@ describe("MenuPanel drawer changes", () => {
       expect(content).toContain("COLOR_MODE_STORAGE_KEY");
       expect(content).toContain('document.documentElement.classList.toggle("dark"');
       expect(content).toContain('aria-pressed={isDark}');
-      expect(content).toContain("Light mode");
-      expect(content).toContain("Dark mode");
+      expect(content).toContain("Switch to");
     });
 
     it("does not provide dynamic text scaling", () => {

@@ -3,6 +3,8 @@
 import { AppBar } from "@/components/ui/skeleton-react";
 import { GlobeIcon, MenuIcon, UserIcon } from "lucide-react";
 import { getFederationDisplayName } from "../lib/federation-context";
+import { ColorModeToggle } from "./AccessibilityControls";
+import { InQbetaLogo } from "./InQbetaLogo";
 
 export function WorkhouseHeader({
   onBalanceClick,
@@ -23,15 +25,10 @@ export function WorkhouseHeader({
     <AppBar className="w-full bg-transparent px-0 py-5 shadow-none">
       <AppBar.Toolbar className="flex w-full items-center justify-between gap-2">
         <AppBar.Lead className="flex shrink-0 items-center justify-start pl-0">
-          <img
-            src="/images/logo.png?v=98a5970d2ef8"
-            alt="Workhouse"
-            width={168}
-            height={168}
-            className="block"
-          />
+          <InQbetaLogo />
         </AppBar.Lead>
         <AppBar.Trail className="flex shrink-0 items-center justify-end gap-2">
+          <ColorModeToggle className="inline-flex items-center justify-center rounded-[var(--radius-base)] p-2 hover:preset-tonal" />
           {onBalanceClick ? (
             <button
               type="button"

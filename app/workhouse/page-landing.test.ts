@@ -341,11 +341,11 @@ describe("Landing page — Skeleton React Carousel", () => {
   // ─── 9. QR code placement unchanged ─────────────────────────────────────────
 
   describe("9. QR code placement unchanged", () => {
-    it("QR image renders using /images/qr-code.png", () => {
+    it("QR image renders using /images/qr-code.jpg", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
       const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
-      expect(deckBody).toContain('src="/images/qr-code.png"');
+      expect(deckBody).toContain('src="/images/qr-code.jpg"');
     });
 
     it("QR image has descriptive alt attribute", () => {
@@ -377,7 +377,7 @@ describe("Landing page — Skeleton React Carousel", () => {
       const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
       const startGameIdx = deckBody.indexOf("START GAME");
-      const qrIdx = deckBody.indexOf('src="/images/qr-code.png"');
+      const qrIdx = deckBody.indexOf('src="/images/qr-code.jpg"');
       expect(qrIdx).toBeGreaterThan(startGameIdx);
     });
 

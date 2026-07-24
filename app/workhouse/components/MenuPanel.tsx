@@ -1,7 +1,6 @@
 "use client";
 
 import { CommunityParticipationPanel } from "./CommunityInterestCharts";
-import { AccessibilityControls } from "./AccessibilityControls";
 import type { AuditEntry } from "../lib/types";
 
 export const MENU_INTRO =
@@ -31,8 +30,6 @@ export function MenuPanel({
   return (
     <div className="mb-12 grid gap-6">
       <p className="text-sm leading-relaxed opacity-90">{MENU_INTRO}</p>
-
-      <AccessibilityControls />
 
       <section className="space-y-3">
         <p className="text-base font-semibold">Actions</p>

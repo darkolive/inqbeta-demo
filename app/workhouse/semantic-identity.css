@@ -5,7 +5,7 @@
    Future Dark Olive theme work: Skeleton theme configuration + these semantic classes. */
 
 @layer components {
-  .workhouse-surface {
+.workhouse-surface {
     /* Adaptive semantic identity colors meeting WCAG AA contrast.
        Light mode uses -700 shades, dark mode uses -300 shades for 4.5:1+
        Activity narrative: one secondary orange for people and exchanged terms */
@@ -128,6 +128,24 @@
     font-weight: 600;
     color: var(--wh-carousel-lead-fg);
   }
+}
+
+.inqbeta-logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.inqbeta-logo .inqbeta-logo__mark {
+  fill: var(--color-secondary-500) !important;
+}
+
+.inqbeta-logo .inqbeta-logo__wordmark {
+  fill: var(--color-surface-700) !important;
+}
+
+.dark .inqbeta-logo .inqbeta-logo__wordmark {
+  fill: var(--color-surface-300) !important;
 }
 
 /* Workhouse carousel — override Skeleton/Zag-js fixed width.
