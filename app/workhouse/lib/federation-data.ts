@@ -16,7 +16,7 @@ export const MEMBERSHIP_BUCKET_MS = 30 * 60 * 1000;
 export const MEMBERSHIP_WINDOW_MS = 48 * 60 * 60 * 1000;
 
 export const STARTER_CREDITS_PER_PARTICIPANT = 5;
-export const ASSET_PIE_MIN_SHARE = 0.05;
+export const ASSET_PIE_MAX_ACTIONS = 6;
 
 /** Format-only key for federation asset tallies (trim, lowercase, collapse spaces). */
 export function normalizeFederationAssetKey(label: string): string {
@@ -98,33 +98,17 @@ function assetLabelsInExchange(exchange: WorkhouseExchange): string[] {
 export function buildAssetPieShares(
   counts: Map<string, number>,
 ): AssetShareEntry[] {
-  const total = [...counts.values()].reduce((sum, count) => sum + count, 0);
-  if (total === 0) return [];
-
-  const entries = [...counts.entries()]
-    .map(([asset, count]) => ({ asset, count, share: count / total }))
+  const topEntries = [...counts.entries()]
+    .map(([asset, count]) => ({ asset, count }))
     .sort((a, b) => b.count - a.count || a.asset.localeCompare(b.asset));
+  const visibleEntries = topEntries.slice(0, ASSET_PIE_MAX_ACTIONS);
+  const visibleTotal = visibleEntries.reduce((sum, entry) => sum + entry.count, 0);
+  if (visibleTotal === 0) return [];
 
-  const major: AssetShareEntry[] = [];
-  let otherCount = 0;
-
-  for (const entry of entries) {
-    if (entry.share >= ASSET_PIE_MIN_SHARE) {
-      major.push(entry);
-    } else {
-      otherCount += entry.count;
-    }
-  }
-
-  if (otherCount > 0) {
-    major.push({
-      asset: "Other",
-      count: otherCount,
-      share: otherCount / total,
-    });
-  }
-
-  return major;
+  return visibleEntries.map((entry) => ({
+    ...entry,
+    share: entry.count / visibleTotal,
+  }));
 }
 
 type WealthEvent =

@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { computeFederationData } from "./federation-data";
+import {
+  buildAssetPieShares,
+  computeFederationData,
+} from "./federation-data";
 import type { AuditEntry } from "./types";
 
 function auditEntry(
@@ -36,5 +39,31 @@ describe("computeFederationData", () => {
     expect(data.federationWealth).toBe(5);
     expect(data.wealthGrowth.map((point) => point.value)).toEqual([5, 10, 5]);
     expect(data.wealthGrowth.at(-1)?.value).toBe(data.federationWealth);
+  });
+
+  it("shows only the six most common completed actions in the pie chart", () => {
+    const counts = new Map([
+      ["one", 7],
+      ["two", 6],
+      ["three", 5],
+      ["four", 4],
+      ["five", 3],
+      ["six", 2],
+      ["seven", 1],
+    ]);
+
+    const shares = buildAssetPieShares(counts);
+
+    expect(shares.map((share) => share.asset)).toEqual([
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+    ]);
+    expect(shares).toHaveLength(6);
+    expect(shares.find((share) => share.asset === "Other")).toBeUndefined();
+    expect(shares.reduce((sum, share) => sum + share.share, 0)).toBeCloseTo(1);
   });
 });
