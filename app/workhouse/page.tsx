@@ -17,6 +17,7 @@ import {
   ChevronsLeftIcon,
   ChevronsRightIcon,
   FrownIcon,
+  InfoIcon,
   PlusIcon,
   SearchIcon,
   CoinsIcon,
@@ -1894,6 +1895,15 @@ function RulesOfTheGameDeck({
         START GAME
       </button>
 
+      <div className="mt-4 flex items-center gap-2.5 text-sm opacity-90">
+        <CoinsIcon
+          size={36}
+          className="shrink-0 text-surface-700 dark:text-surface-300"
+          aria-hidden
+        />
+        <p>You start with 5 credits — spend them to make offers to others</p>
+      </div>
+
       <div className="mt-8 flex flex-col items-center gap-3 pb-8">
         <img
           src="/images/qr-code.jpg?v=2"
@@ -1960,6 +1970,29 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
           <p className="leading-relaxed opacity-80">
             This is not decentralisation, but localisation.
           </p>
+
+          <aside className="mt-5 flex gap-3 rounded-container border border-primary-200 bg-primary-50 p-4 dark:border-primary-800 dark:bg-primary-950/30">
+            <InfoIcon
+              className="mt-0.5 size-5 shrink-0 text-primary-700 dark:text-primary-300"
+              aria-hidden="true"
+            />
+            <div className="space-y-2 text-surface-700 dark:text-surface-300">
+              <p className="font-semibold text-surface-900 dark:text-surface-50">
+                About this demo
+              </p>
+              <p className="leading-relaxed">
+                Your character is stored on this device in this demo. You can
+                return to it from the same browser, but it cannot yet be moved
+                to another device.
+              </p>
+              <p className="leading-relaxed">
+                Destroying a character removes its active account and personal
+                in-app records. Completed shared receipts remain in the
+                federation history as a former character&apos;s contribution, so
+                the wider record of what happened stays intact.
+              </p>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
@@ -2765,7 +2798,7 @@ export default function WorkhousePage() {
         <WorkhouseParticipantHeader />
 
         <section className={`mt-5 mb-8 grid gap-5 ${WORKHOUSE_PAGE_GUTTER}`}>
-          <p className={RULES_SECTION_TITLE_CLASS}>Who are you going to be</p>
+          <p className={RULES_SECTION_TITLE_CLASS}>Who are you going to be?</p>
 
           <form onSubmit={handleEnter} className="grid gap-5">
             <label htmlFor="join-username" className="grid gap-1.5">
@@ -2784,16 +2817,6 @@ export default function WorkhousePage() {
                 className="input"
               />
             </label>
-            <div className="flex items-center gap-2.5 text-sm opacity-90">
-              <CoinsIcon
-                size={36}
-                className="shrink-0 text-surface-700 dark:text-surface-300"
-                aria-hidden
-              />
-              <p>
-                You start with 5 credits — spend them to make offers to others
-              </p>
-            </div>
             <div className="grid gap-4 pt-3">
               <button
                 type="submit"
