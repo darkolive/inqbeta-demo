@@ -1,5 +1,9 @@
 import type { ExchangeValueType, WorkhouseOffer, WorkhouseState } from './types'
-import { getOrCreateBrowserSecret, rotateBrowserSecret } from './browser-secret'
+import {
+  createCharacterSecret,
+  forgetCharacterSecret,
+  getExistingCharacterSecret,
+} from './browser-secret'
 import { WorkhouseMessages } from './workhouse-messages'
 
 const BASE = '/api/workhouse'
@@ -49,7 +53,10 @@ async function get<T>(path: string, params?: Record<string, string>): Promise<T>
 }
 
 export async function enterSession(username: string) {
-  const password = getOrCreateBrowserSecret()
+  const account = await lookupUsername(username)
+  const password = account.exists
+    ? getExistingCharacterSecret(username)
+    : createCharacterSecret(username)
   const result = await post<{ user: WorkhouseState['user']; isNew: boolean }>('session', {
     username,
     password,
@@ -61,7 +68,7 @@ export async function enterSession(username: string) {
 export async function resetDemoIdentity(username: string) {
   const result = await post<{ ok: boolean }>('session/reset', { username })
   if (result.ok) {
-    rotateBrowserSecret()
+    forgetCharacterSecret(username)
   }
   return result
 }
