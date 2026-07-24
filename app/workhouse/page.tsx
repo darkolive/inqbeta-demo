@@ -1896,7 +1896,7 @@ function RulesOfTheGameDeck({
 
       <div className="mt-8 flex flex-col items-center gap-3 pb-8">
         <img
-          src="/images/qr-code.jpg"
+          src="/images/qr-code.jpg?v=2"
           alt="QR code to join this shared experience"
           width={200}
           height={200}
@@ -3021,7 +3021,7 @@ export default function WorkhousePage() {
                 If your friend hasn't joined yet, let them scan this QR code.
               </p>
               <img
-                src="/images/qr-code.jpg"
+                src="/images/qr-code.jpg?v=2"
                 alt="QR code for a friend to join this shared experience"
                 className="h-40 w-40 max-w-[200px] sm:h-48 sm:max-w-[200px]"
               />
