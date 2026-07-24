@@ -1889,19 +1889,19 @@ function RulesOfTheGameDeck({
       <button
         type="button"
         onClick={onDone}
-        className="btn btn-lg preset-filled-brand mt-8 w-full"
+        className="btn btn-xl preset-filled-brand mt-8 w-full"
       >
         START GAME
       </button>
 
-      <div className="mx-8 mt-5 text-center">
+      <div className="mx-8 mt-4 text-center">
         <h2 className="text-2xl font-semibold leading-tight text-[color:var(--color-brand-orange)] dark:text-secondary-300">
           <span className="block">We give you 5 credits</span>
           <span className="block">to start with</span>
         </h2>
       </div>
 
-      <div className="mt-8 flex flex-col items-center gap-3 pb-8">
+      <div className="mt-6 flex flex-col items-center gap-3 pb-8">
         <img
           src="/images/qr-code.jpg?v=2"
           alt="QR code to join this shared experience"
@@ -1984,9 +1984,12 @@ function WorkhouseInfoSection({ className }: { className?: string }) {
               </p>
               <p className="leading-relaxed">
                 Destroying a character removes its active account and personal
-                in-app records. Completed shared receipts remain in the
-                federation history as a former character&apos;s contribution, so
-                the wider record of what happened stays intact.
+                in-app records.
+              </p>
+              <p className="leading-relaxed">
+                Completed shared receipts remain in the federation history as a
+                former character&apos;s contribution, so the wider record of what
+                happened stays intact.
               </p>
             </div>
           </aside>
@@ -2811,21 +2814,21 @@ export default function WorkhousePage() {
                 enterKeyHint="go"
                 required
                 maxLength={32}
-                className="input"
+                className="input [--field-size:var(--text-xl)]"
               />
             </label>
             <div className="grid gap-4 pt-3">
               <button
                 type="submit"
                 disabled={busy}
-                className="btn btn-lg preset-filled-brand w-full"
+                className="btn btn-xl preset-filled-brand w-full"
               >
                 {busy ? "Entering…" : "ENTER GAME"}
               </button>
               <button
                 type="button"
                 onClick={() => setEnteredGame(false)}
-                className="btn btn-lg preset-tonal w-full"
+                className="btn btn-xl preset-tonal w-full"
               >
                 CANCEL
               </button>
@@ -2959,7 +2962,7 @@ export default function WorkhousePage() {
         <button
           type="button"
           onClick={openOfferForm}
-          className="btn btn-lg preset-filled-brand mt-4 flex w-full items-center justify-center gap-2"
+          className="btn btn-xl preset-filled-brand mt-4 flex w-full items-center justify-center gap-2"
         >
           <PlusIcon className="size-5 shrink-0" aria-hidden />
           {NEW_EXCHANGE_LABEL}
@@ -2981,7 +2984,7 @@ export default function WorkhousePage() {
                   value={toUser}
                   onChange={(e) => setToUser(e.target.value)}
                   autoComplete="off"
-                  className="input pl-10"
+                  className="input [--field-size:var(--text-xl)] pl-10"
                 />
               </div>
             </label>
@@ -3023,14 +3026,14 @@ export default function WorkhousePage() {
                   setToUser(friendSearch.canonicalName);
                   setOfferFormStep("give");
                 }}
-                className="btn btn-lg preset-filled-brand w-full"
+                className="btn btn-xl preset-filled-brand w-full"
               >
                 Continue
               </button>
               <button
                 type="button"
                 onClick={closeOfferForm}
-                className="btn btn-lg preset-tonal w-full"
+                className="btn btn-xl preset-tonal w-full"
               >
                 Cancel
               </button>

@@ -15,6 +15,10 @@ const PAGE_WIDTH = 210
 const PAGE_HEIGHT = 297
 const MARGIN = 18
 const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2
+const EXPORT_LOGO_WIDTH = 44
+const EXPORT_LOGO_HEIGHT = EXPORT_LOGO_WIDTH * (309 / 1317)
+const WEALTH_FORMULA_WIDTH = 122
+const WEALTH_FORMULA_HEIGHT = WEALTH_FORMULA_WIDTH * (308 / 1031)
 
 const INTRO_TEXT =
   'This is your personal story of exchange and participation during the Workhouse festival demonstrator — offers completed, support given, and the receipts that remember them.'
@@ -352,7 +356,7 @@ async function loadImageDataUrl(path: string) {
 }
 
 async function loadLogoDataUrl() {
-  return loadImageDataUrl('/images/logo.png?v=98a5970d2ef8')
+  return loadImageDataUrl('/images/inqbeta-export.png')
 }
 
 async function loadWealthFormulaDataUrl() {
@@ -546,11 +550,16 @@ function renderFederationData(writer: PdfWriter, data: FederationData, wealthFor
 
   writer.subheading('Federation wealth')
   if (wealthFormulaDataUrl) {
-    const width = CONTENT_WIDTH
-    const height = width * (1024 / 1536)
-    writer.ensureSpace(height + 4)
-    writer.doc.addImage(wealthFormulaDataUrl, 'PNG', MARGIN, writer.getY(), width, height)
-    writer.advanceY(height + 4)
+    writer.ensureSpace(WEALTH_FORMULA_HEIGHT + 6)
+    writer.doc.addImage(
+      wealthFormulaDataUrl,
+      'PNG',
+      MARGIN + (CONTENT_WIDTH - WEALTH_FORMULA_WIDTH) / 2,
+      writer.getY(),
+      WEALTH_FORMULA_WIDTH,
+      WEALTH_FORMULA_HEIGHT,
+    )
+    writer.advanceY(WEALTH_FORMULA_HEIGHT + 6)
   }
   writer.body('Credit supply × velocity = federation wealth')
   writer.body('Example: 10 × 1.2 = 12')
@@ -598,9 +607,16 @@ function renderStoryPdf(
   const writer = createPdfWriter(doc)
 
   if (logoDataUrl) {
-    writer.ensureSpace(34)
-    doc.addImage(logoDataUrl, 'PNG', MARGIN, writer.getY(), 24, 24)
-    writer.advanceY(28)
+    writer.ensureSpace(EXPORT_LOGO_HEIGHT + 6)
+    doc.addImage(
+      logoDataUrl,
+      'PNG',
+      MARGIN,
+      writer.getY(),
+      EXPORT_LOGO_WIDTH,
+      EXPORT_LOGO_HEIGHT,
+    )
+    writer.advanceY(EXPORT_LOGO_HEIGHT + 5)
   }
 
   doc.setFont('helvetica', 'bold')

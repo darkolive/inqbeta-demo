@@ -381,11 +381,11 @@ describe("Landing page — Skeleton React Carousel", () => {
       expect(qrIdx).toBeGreaterThan(startGameIdx);
     });
 
-    it("QR section has mt-8 spacing from Enter button", () => {
+    it("QR section uses compact spacing below the starting-credit statement", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
       const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
-      expect(deckBody).toContain("mt-8 flex flex-col items-center gap-3 pb-8");
+      expect(deckBody).toContain("mt-6 flex flex-col items-center gap-3 pb-8");
     });
   });
 
