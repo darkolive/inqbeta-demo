@@ -52,8 +52,8 @@ export function ExchangeTypeSelector({
             onClick={() => onChange(type)}
             className={
               selected
-                ? "flex min-h-[4.75rem] flex-col items-center justify-center gap-2 rounded-[var(--radius-base)] border-2 border-[var(--color-primary-500)] px-2 py-3 text-center text-sm font-semibold preset-filled-primary-500"
-                : "flex min-h-[4.75rem] flex-col items-center justify-center gap-2 rounded-[var(--radius-base)] px-2 py-3 text-center text-sm font-medium preset-filled-surface-100-900 preset-outlined-surface-200-800 hover:preset-tonal"
+                ? "flex min-h-[4.75rem] flex-col items-center justify-center gap-2 rounded-[var(--radius-base)] border-2 border-[var(--color-primary-500)] px-2 py-3 text-center text-sm font-semibold preset-filled-brand"
+                : "flex min-h-[4.75rem] flex-col items-center justify-center gap-2 rounded-[var(--radius-base)] border-2 border-surface-500 px-2 py-3 text-center text-sm font-medium bg-transparent text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
             }
           >
             <Icon size={26} strokeWidth={selected ? 2.25 : 2} aria-hidden />

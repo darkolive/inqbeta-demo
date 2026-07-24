@@ -63,7 +63,7 @@ export function ReviewExperienceDialog({
       <Portal>
         <Dialog.Backdrop className="fixed inset-0 z-100 bg-black/40 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
         <Dialog.Positioner className="fixed inset-0 z-100 flex items-center justify-center p-4">
-          <Dialog.Content className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 w-full max-w-md p-5 shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
+          <Dialog.Content className="card preset-filled-surface-50-950 border-2 border-surface-500 w-full max-w-md p-5 shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
             <Dialog.Title className="h5 font-semibold">
               {REVIEW_EXPERIENCE_TITLE}
             </Dialog.Title>
@@ -155,7 +155,7 @@ export function ReviewExperienceDialog({
               {saved ? (
                 <Dialog.CloseTrigger
                   type="button"
-                  className="btn preset-outlined-surface-200-800"
+                  className="btn border-2 border-surface-500"
                 >
                   Close
                 </Dialog.CloseTrigger>
@@ -163,14 +163,14 @@ export function ReviewExperienceDialog({
                 <>
                   <Dialog.CloseTrigger
                     type="button"
-                    className="btn preset-outlined-surface-200-800"
+                    className="btn border-2 border-surface-500"
                   >
                     Close
                   </Dialog.CloseTrigger>
                   <button
                     type="button"
                     onClick={handleSave}
-                    className="btn preset-filled-primary-500"
+                    className="btn preset-filled-brand"
                   >
                     Save
                   </button>

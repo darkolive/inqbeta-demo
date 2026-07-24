@@ -23,7 +23,7 @@ function WorkhouseDrawer({ open, onOpenChange, title, children }: WorkhouseDrawe
       <DrawerContent className="workhouse-surface flex h-full w-full max-w-md flex-col border-surface-300-700 bg-surface-50-950 data-[vaul-drawer-direction=right]:w-full data-[vaul-drawer-direction=right]:sm:max-w-md">
         <DrawerHeader className="shrink-0 flex-row items-center justify-between gap-2 border-b border-surface-300-700 p-4 text-left">
           <DrawerTitle className="h5 font-semibold">{title}</DrawerTitle>
-          <DrawerClose className="btn btn-sm preset-outlined-surface-200-800">Close</DrawerClose>
+          <DrawerClose className="btn btn-sm border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900">Close</DrawerClose>
         </DrawerHeader>
         <div className="min-h-0 flex-1 overflow-y-auto p-4">{children}</div>
       </DrawerContent>

@@ -6,14 +6,16 @@
 
 @layer components {
   .workhouse-surface {
-    --wh-id-self-fg: var(--color-primary-500);
-    --wh-id-other-fg: var(--color-primary-500);
-    --wh-id-character-fg: var(--color-primary-500);
-    --wh-id-system-fg: var(--color-secondary-500);
-    --wh-id-proof-fg: var(--color-primary-500);
-    --wh-id-warning-fg: var(--color-error-500);
-    --wh-id-success-fg: var(--color-success-500);
-    --wh-id-neutral-fg: var(--color-secondary-500);
+    /* Adaptive semantic identity colors meeting WCAG AA contrast.
+       Light mode uses -700 shades, dark mode uses -300 shades for 4.5:1+ */
+    --wh-id-self-fg: var(--color-primary-700);
+    --wh-id-other-fg: var(--color-tertiary-700);
+    --wh-id-character-fg: var(--color-secondary-700);
+    --wh-id-system-fg: var(--color-secondary-700);
+    --wh-id-proof-fg: var(--color-tertiary-700);
+    --wh-id-warning-fg: var(--color-warning-700);
+    --wh-id-success-fg: var(--color-success-700);
+    --wh-id-neutral-fg: var(--color-surface-800);
     /* Chart lines = information (same contrast as readable foreground text).
        Skeleton legacy pairings — full opacity, no color-mix.
        Runtime mapping (light / dark via light-dark pairings):
@@ -27,6 +29,19 @@
     --wh-chart-series-4: var(--color-success-700-300);
     --wh-chart-series-5: var(--color-warning-700-300);
     --wh-chart-series-6: var(--color-error-700-300);
+  }
+
+  /* Dark mode semantic identity colors - applies to both .dark class and inQbetaaccessible theme */
+  .dark .workhouse-surface,
+  [data-theme='inQbetaaccessible'] .workhouse-surface {
+    --wh-id-self-fg: var(--color-primary-300);
+    --wh-id-other-fg: var(--color-tertiary-300);
+    --wh-id-character-fg: var(--color-secondary-300);
+    --wh-id-system-fg: var(--color-secondary-300);
+    --wh-id-proof-fg: var(--color-tertiary-300);
+    --wh-id-warning-fg: var(--color-warning-300);
+    --wh-id-success-fg: var(--color-success-300);
+    --wh-id-neutral-fg: var(--color-surface-100);
   }
 
   .wh-semantic-self {
@@ -45,6 +60,7 @@
   }
 
   .wh-semantic-system {
+    @apply font-semibold;
     color: var(--wh-id-system-fg);
   }
 
@@ -53,7 +69,13 @@
   }
 
   .wh-semantic-proof-hash {
-    @apply select-all break-all font-mono text-xs touch-manipulation opacity-60;
+    @apply select-all break-all font-mono text-xs touch-manipulation;
+    color: var(--color-surface-700);
+  }
+
+  [data-theme='inQbetaaccessible'] .wh-semantic-proof-hash,
+  .dark .wh-semantic-proof-hash {
+    color: var(--color-surface-300);
   }
 
   .wh-semantic-warning {

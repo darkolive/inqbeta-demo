@@ -32,7 +32,7 @@ export function ResetIdentityDialog({
       <Portal>
         <Dialog.Backdrop className="fixed inset-0 z-100 bg-black/40 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
         <Dialog.Positioner className="fixed inset-0 z-100 flex items-center justify-center p-4">
-          <Dialog.Content className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 w-full max-w-md p-5 shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
+          <Dialog.Content className="card preset-filled-surface-50-950 border-2 border-surface-500 w-full max-w-md p-5 shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95">
             <Dialog.Title className="h5 font-semibold">
               {RESET_IDENTITY_DIALOG_TITLE}
             </Dialog.Title>
@@ -42,7 +42,7 @@ export function ResetIdentityDialog({
             {error ? (
               <div
                 role="alert"
-                className="card preset-filled-error-100-900 preset-outlined-error-200-800 mt-3 px-3 py-2.5 text-sm"
+                className="card preset-filled-error-100-900 border-2 border-error-600 dark:border-error-300 mt-3 px-3 py-2.5 text-sm"
               >
                 {error}
               </div>
@@ -51,7 +51,7 @@ export function ResetIdentityDialog({
               <Dialog.CloseTrigger
                 type="button"
                 disabled={busy}
-                className="btn preset-outlined-surface-200-800"
+                className="btn border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
               >
                 No
               </Dialog.CloseTrigger>

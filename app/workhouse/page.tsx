@@ -577,7 +577,7 @@ function CounterofferSentence({
   const originalItem = giveTermsText(offer);
   if (perspective === "sender") {
     return (
-      <p className="opacity-60">
+      <p className="text-surface-700 dark:text-surface-300">
         <ActivityName name={offer.to} currentUser={currentUser} />{" "}
         counteroffered your offer of <ActivityTerm>{originalItem}</ActivityTerm>{" "}
         in exchange for <ActivityTerm>{counterReturn}</ActivityTerm>.
@@ -585,7 +585,7 @@ function CounterofferSentence({
     );
   }
   return (
-    <p className="opacity-60">
+    <p className="text-surface-700 dark:text-surface-300">
       You counteroffered{" "}
       <ActivityName name={offer.from} currentUser={currentUser} />
       &apos;s offer of <ActivityTerm>{originalItem}</ActivityTerm> in exchange
@@ -1065,16 +1065,16 @@ function ActivityTimeline({
         >
           <span
             aria-hidden
-            className="absolute left-0 top-1.5 size-2.5 -translate-x-1/2 rounded-full bg-primary-500 ring-4 ring-surface-50-950"
+            className="absolute left-0 top-1.5 size-2.5 -translate-x-1/2 rounded-full bg-primary-500 dark:bg-primary-300 ring-4 ring-surface-50 dark:ring-surface-950"
           />
-          <p className="opacity-60">{formatTime(entry.timestamp)}</p>
+          <p className="text-surface-700 dark:text-surface-300">{formatTime(entry.timestamp)}</p>
           {formatActivityDate(entry.timestamp) ? (
-            <p className="opacity-60">{formatActivityDate(entry.timestamp)}</p>
+            <p className="text-surface-700 dark:text-surface-300">{formatActivityDate(entry.timestamp)}</p>
           ) : null}
           <p className="mt-1">
             {formatActivityMessage(entry, currentUser, characterDisplayContext)}
           </p>
-          <dl className="mt-2 grid gap-1 opacity-60">
+          <dl className="mt-2 grid gap-1 text-surface-700 dark:text-surface-300">
             <div>
               <dt className="sr-only">Proof ID</dt>
               <dd className="break-all">
@@ -1361,7 +1361,7 @@ function BalanceExchangeRow({
       </div>
       <p className={`pr-12 ${WORKHOUSE_SEMANTIC_CLASS.proof}`}>{title}</p>
       {detail ? <p>{detail}</p> : null}
-      <p className="opacity-60">
+      <p className="text-surface-700 dark:text-surface-300">
         {formatTime(timestamp)} ·{" "}
         <span id={hashTargetId} className={WORKHOUSE_SEMANTIC_PROOF_HASH_CLASS}>
           {hash}
@@ -1528,7 +1528,7 @@ function BalancePanel({
         <div>
           <p className="mb-2 font-bold">Actions Received</p>
           {!assetsReceived.length ? (
-            <p className="opacity-60">None yet.</p>
+            <p className="text-surface-700 dark:text-surface-300">None yet.</p>
           ) : (
             <ul className="grid list-none gap-0 rounded-md border border-surface-300-700 bg-surface-100-900/30 px-3 py-1">
               {assetsReceived.map((row) => (
@@ -1559,7 +1559,7 @@ function BalancePanel({
         <div>
           <p className="mb-2 font-bold">Actions Sent</p>
           {!assetsSent.length ? (
-            <p className="opacity-60">None yet.</p>
+            <p className="text-surface-700 dark:text-surface-300">None yet.</p>
           ) : (
             <ul className="grid list-none gap-0 rounded-md border border-surface-300-700 bg-surface-100-900/30 px-3 py-1">
               {assetsSent.map((row) => (
@@ -1622,7 +1622,7 @@ function BalancePanel({
           <div>
             <p className="mb-2 font-bold">Cash received</p>
             {!cashReceivedRows.length ? (
-              <p className="opacity-60">None yet.</p>
+              <p className="text-surface-700 dark:text-surface-300">None yet.</p>
             ) : (
               <ul className="grid list-none gap-0 rounded-md border border-surface-300-700 bg-surface-100-900/30 px-3 py-1">
                 {cashReceivedRows.map((row) => (
@@ -1660,7 +1660,7 @@ function BalancePanel({
           <div>
             <p className="mb-2 font-bold">Cash sent</p>
             {!cashSentRows.length ? (
-              <p className="opacity-60">None yet.</p>
+              <p className="text-surface-700 dark:text-surface-300">None yet.</p>
             ) : (
               <ul className="grid list-none gap-0 rounded-md border border-surface-300-700 bg-surface-100-900/30 px-3 py-1">
                 {cashSentRows.map((row) => (
@@ -1708,7 +1708,7 @@ function BalancePanel({
           <div>
             <p className="mb-2 font-bold">Help sent</p>
             {!helpSent.length ? (
-              <p className="opacity-60">None yet.</p>
+              <p className="text-surface-700 dark:text-surface-300">None yet.</p>
             ) : (
               <ul className="grid list-none gap-0 rounded-md border border-surface-300-700 bg-surface-100-900/30 px-3 py-1">
                 {helpSent.map((entry) => (
@@ -1726,7 +1726,7 @@ function BalancePanel({
           <div>
             <p className="mb-2 font-bold">Help received</p>
             {!helpReceived.length ? (
-              <p className="opacity-60">None yet.</p>
+              <p className="text-surface-700 dark:text-surface-300">None yet.</p>
             ) : (
               <ul className="grid list-none gap-0 rounded-md border border-surface-300-700 bg-surface-100-900/30 px-3 py-1">
                 {helpReceived.map((entry) => (
@@ -1838,7 +1838,7 @@ function RulesOfTheGameDeck({
               <Carousel.PrevTrigger
                 type="button"
                 aria-label="Previous card"
-                className="btn preset-outlined-surface-300-700 w-full"
+                className="btn btn border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900 w-full"
               >
                 <ChevronLeftIcon
                   className="size-4 shrink-0"
@@ -1849,7 +1849,7 @@ function RulesOfTheGameDeck({
               <Carousel.NextTrigger
                 type="button"
                 aria-label="Next card"
-                className="btn preset-outlined-surface-300-700 w-full"
+                className="btn btn border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900 w-full"
               >
                 <span>Next</span>
                 <ChevronRightIcon
@@ -1875,7 +1875,7 @@ function RulesOfTheGameDeck({
       <button
         type="button"
         onClick={onDone}
-        className="btn preset-filled-primary-500 mt-8 w-full"
+        className="btn preset-filled-brand mt-8 w-full"
       >
         START GAME
       </button>
@@ -1953,7 +1953,7 @@ function WorkhouseAttributionFooter({ className }: { className?: string }) {
       className={`mt-10 pb-8 text-center ${WORKHOUSE_PAGE_GUTTER}${className ? ` ${className}` : ""}`}
     >
       <div className="flex flex-col items-center gap-4">
-        <p className="text-sm leading-relaxed opacity-70">
+        <p className="text-sm leading-relaxed text-surface-700 dark:text-surface-300">
           This project has been developed by
         </p>
         <a
@@ -2768,7 +2768,7 @@ export default function WorkhousePage() {
             <div className="flex items-center gap-2.5 text-sm opacity-90">
               <CoinsIcon
                 size={18}
-                className="shrink-0 opacity-70"
+                className="shrink-0 text-surface-700 dark:text-surface-300"
                 aria-hidden
               />
               <p>
@@ -2779,7 +2779,7 @@ export default function WorkhousePage() {
               <button
                 type="submit"
                 disabled={busy}
-                className="btn preset-filled-primary-500 w-full"
+                className="btn preset-filled-brand w-full"
               >
                 {busy ? "Entering…" : "ENTER GAME"}
               </button>
@@ -2794,7 +2794,7 @@ export default function WorkhousePage() {
           </form>
 
           {error ? (
-            <div className="card preset-filled-error-100-900 preset-outlined-error-200-800 px-3 py-2.5">
+            <div className="card preset-filled-error-100-900 border-2 border-error-600 dark:border-error-300 px-3 py-2.5">
               {error}
             </div>
           ) : null}
@@ -2910,7 +2910,7 @@ export default function WorkhousePage() {
 
       {error ? (
         <div className="mt-3">
-          <div className="card preset-filled-error-100-900 preset-outlined-error-200-800 px-3 py-2.5">
+          <div className="card preset-filled-error-100-900 border-2 border-error-600 dark:border-error-300 px-3 py-2.5">
             {error}
           </div>
         </div>
@@ -2920,13 +2920,13 @@ export default function WorkhousePage() {
         <button
           type="button"
           onClick={openOfferForm}
-          className="btn preset-filled-primary-500 mt-4 flex w-full items-center justify-center gap-2"
+          className="btn preset-filled-brand mt-4 flex w-full items-center justify-center gap-2"
         >
           <PlusIcon className="size-5 shrink-0" aria-hidden />
           {NEW_EXCHANGE_LABEL}
         </button>
       ) : offerFormStep === "friend" ? (
-        <section className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 mt-4 p-4 sm:p-5">
+        <section className="card preset-filled-surface-50-950 border-2 border-surface-500 mt-4 p-4 sm:p-5">
           <div className={`grid gap-5 ${WORKHOUSE_PAGE_GUTTER}`}>
             <p className={RULES_SECTION_TITLE_CLASS}>{FIND_FRIEND_PROMPT}</p>
             <label htmlFor="offer-to" className="grid gap-1.5">
@@ -2955,10 +2955,10 @@ export default function WorkhousePage() {
                 <FrownIcon
                   size={28}
                   strokeWidth={1.75}
-                  className="opacity-60"
+                  className="text-surface-700 dark:text-surface-300"
                   aria-hidden
                 />
-                <p className="text-sm opacity-70">{FRIEND_NOT_FOUND_FOOTER}</p>
+                <p className="text-sm text-surface-700 dark:text-surface-300">{FRIEND_NOT_FOUND_FOOTER}</p>
               </div>
             ) : null}
             {previousFriends.length > 0 ? (
@@ -2968,7 +2968,7 @@ export default function WorkhousePage() {
                     key={friend}
                     type="button"
                     onClick={() => setToUser(friend)}
-                    className="badge preset-filled-surface-100-900 preset-outlined-surface-200-800 px-2.5 py-1.5 text-sm font-medium hover:preset-tonal"
+                    className="badge preset-filled-surface-100-900 border-2 border-surface-500 px-2.5 py-1.5 text-sm font-medium hover:preset-tonal"
                   >
                     {friend}
                   </button>
@@ -2984,7 +2984,7 @@ export default function WorkhousePage() {
                   setToUser(friendSearch.canonicalName);
                   setOfferFormStep("give");
                 }}
-                className="btn preset-filled-primary-500 w-full"
+                className="btn preset-filled-brand w-full"
               >
                 Continue
               </button>
@@ -3010,7 +3010,7 @@ export default function WorkhousePage() {
           </div>
         </section>
       ) : offerFormStep === "give" ? (
-        <section className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 mt-4 p-4 sm:p-5">
+        <section className="card preset-filled-surface-50-950 border-2 border-surface-500 mt-4 p-4 sm:p-5">
           <div className={`grid gap-5 ${WORKHOUSE_PAGE_GUTTER}`}>
             <p className={RULES_SECTION_TITLE_CLASS}>{OFFER_GIVE_TITLE}</p>
             <p className="text-sm opacity-80">
@@ -3079,7 +3079,7 @@ export default function WorkhousePage() {
               <button
                 type="button"
                 onClick={continueFromOfferGiveStep}
-                className="btn preset-filled-primary-500 w-full"
+                className="btn preset-filled-brand w-full"
               >
                 Continue
               </button>
@@ -3094,12 +3094,12 @@ export default function WorkhousePage() {
           </div>
         </section>
       ) : (
-        <section className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 mt-4 p-4 sm:p-5">
+        <section className="card preset-filled-surface-50-950 border-2 border-surface-500 mt-4 p-4 sm:p-5">
           <div className={`grid gap-5 ${WORKHOUSE_PAGE_GUTTER}`}>
             <p className={RULES_SECTION_TITLE_CLASS}>{OFFER_RECEIVE_TITLE}</p>
             {offerGiveSummary ? (
               <div className="grid gap-1">
-                <p className="text-xs font-bold tracking-wide opacity-70">
+                <p className="text-xs font-bold tracking-wide text-surface-700 dark:text-surface-300">
                   {OFFER_GIVE_SUMMARY_LABEL}
                 </p>
                 <p className="text-base font-semibold">{offerGiveSummary}</p>
@@ -3160,7 +3160,7 @@ export default function WorkhousePage() {
                 type="button"
                 disabled={busy}
                 onClick={submitOfferForm}
-                className="btn preset-filled-primary-500 w-full"
+                className="btn preset-filled-brand w-full"
               >
                 {LETS_EXCHANGE_LABEL}
               </button>
@@ -3174,7 +3174,7 @@ export default function WorkhousePage() {
               <button
                 type="button"
                 onClick={closeOfferForm}
-                className="btn preset-outlined-surface-200-800 w-full"
+                className="btn w-full border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
               >
                 Cancel
               </button>
@@ -3184,10 +3184,10 @@ export default function WorkhousePage() {
       )}
 
       {hasOutgoing ? (
-        <section className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 mt-4 grid gap-3 p-4 sm:p-5">
+        <section className="card preset-filled-surface-50-950 border-2 border-surface-500 mt-4 grid gap-3 p-4 sm:p-5">
           <div className="flex items-center gap-2">
             <p className="text-lg font-bold">OFFERS SENT</p>
-            <span className="badge badge-icon preset-filled-primary-500">
+            <span className="badge badge-icon preset-filled-brand">
               {outgoingCardItems.length}
             </span>
           </div>
@@ -3199,7 +3199,7 @@ export default function WorkhousePage() {
                   return (
                     <div
                       key={offer.id}
-                      className="card preset-filled-surface-100-900 preset-outlined-surface-200-800 grid gap-3 p-3 sm:p-4"
+                      className="card preset-filled-surface-100-900 border-2 border-surface-500 grid gap-3 p-3 sm:p-4"
                     >
                       <CompactCardSteps phase="outgoing-countered" />
                       <OutgoingOfferSentence
@@ -3218,7 +3218,7 @@ export default function WorkhousePage() {
                           onClick={() =>
                             run(() => acceptCounterOffer(offer.id, username))
                           }
-                          className="btn preset-filled-primary-500 w-full sm:w-auto"
+                          className="btn preset-filled-brand w-full sm:w-auto"
                         >
                           Accept
                         </button>
@@ -3242,7 +3242,7 @@ export default function WorkhousePage() {
                   return (
                     <div
                       key={offer.id}
-                      className="card preset-filled-surface-100-900 preset-outlined-surface-200-800 grid gap-3 p-3 sm:p-4"
+                      className="card preset-filled-surface-100-900 border-2 border-surface-500 grid gap-3 p-3 sm:p-4"
                     >
                       <AutoDismissEffect
                         offerId={offer.id}
@@ -3267,7 +3267,7 @@ export default function WorkhousePage() {
                   return (
                     <div
                       key={offer.id}
-                      className="card preset-filled-surface-100-900 preset-outlined-surface-200-800 grid gap-3 p-3 sm:p-4"
+                      className="card preset-filled-surface-100-900 border-2 border-surface-500 grid gap-3 p-3 sm:p-4"
                     >
                       <CompactCardSteps phase="outgoing-accepted" />
                       <OutgoingOfferSentence
@@ -3306,7 +3306,7 @@ export default function WorkhousePage() {
                           </>
                         )}
                       </p>
-                      <p className="text-sm opacity-70">
+                      <p className="text-sm text-surface-700 dark:text-surface-300">
                         One more step — complete the exchange when you have
                         given or received.
                       </p>
@@ -3320,7 +3320,7 @@ export default function WorkhousePage() {
                             if (res) noteCompletedExchange(offer);
                           })
                         }
-                        className="btn preset-filled-primary-500 w-full sm:w-auto"
+                        className="btn preset-filled-brand w-full sm:w-auto"
                       >
                         Complete exchange
                       </button>
@@ -3332,7 +3332,7 @@ export default function WorkhousePage() {
                   return (
                     <div
                       key={offer.id}
-                      className="card preset-filled-surface-100-900 preset-outlined-surface-200-800 grid gap-3 p-3 sm:p-4"
+                      className="card preset-filled-surface-100-900 border-2 border-surface-500 grid gap-3 p-3 sm:p-4"
                     >
                       <AutoDismissEffect
                         offerId={offer.id}
@@ -3356,7 +3356,7 @@ export default function WorkhousePage() {
                 return (
                   <div
                     key={offer.id}
-                    className="card preset-filled-surface-100-900 preset-outlined-surface-200-800 grid gap-3 p-3 sm:p-4"
+                    className="card preset-filled-surface-100-900 border-2 border-surface-500 grid gap-3 p-3 sm:p-4"
                   >
                     <CompactCardSteps phase="outgoing-pending" />
                     <OutgoingOfferSentence
@@ -3380,11 +3380,11 @@ export default function WorkhousePage() {
       {hasIncoming ? (
         <section
           ref={incomingRef}
-          className="card preset-filled-surface-50-950 preset-outlined-surface-200-800 mt-4 grid gap-3 p-4 sm:p-5"
+          className="card preset-filled-surface-50-950 border-2 border-surface-500 mt-4 grid gap-3 p-4 sm:p-5"
         >
           <div className="flex items-center gap-2">
             <p className="text-lg font-bold">{ASSETS_RECEIVED_LABEL}</p>
-            <span className="badge badge-icon preset-filled-primary-500">
+            <span className="badge badge-icon preset-filled-brand">
               {visibleIncomingOffers.length}
             </span>
           </div>
@@ -3410,7 +3410,7 @@ export default function WorkhousePage() {
                   return (
                     <div
                       key={offer.id}
-                      className="card preset-filled-surface-100-900 preset-outlined-surface-200-800 grid gap-3 p-3 sm:p-4"
+                      className="card preset-filled-surface-100-900 border-2 border-surface-500 grid gap-3 p-3 sm:p-4"
                     >
                       <CompactCardSteps phase="incoming-countered-waiting" />
                       <IncomingOfferSentence
@@ -3422,7 +3422,7 @@ export default function WorkhousePage() {
                         currentUser={username}
                         perspective="recipient"
                       />
-                      <p className="opacity-60">
+                      <p className="text-surface-700 dark:text-surface-300">
                         Waiting for{" "}
                         <ActivityName
                           name={offer.from}
@@ -3438,7 +3438,7 @@ export default function WorkhousePage() {
                   return (
                     <div
                       key={offer.id}
-                      className="card preset-filled-surface-100-900 preset-outlined-surface-200-800 grid gap-3 p-3 sm:p-4"
+                      className="card preset-filled-surface-100-900 border-2 border-surface-500 grid gap-3 p-3 sm:p-4"
                     >
                       <CompactCardSteps phase="incoming-accepted" />
                       <IncomingOfferSentence
@@ -3477,7 +3477,7 @@ export default function WorkhousePage() {
                           </>
                         )}
                       </p>
-                      <p className="text-sm opacity-70">
+                      <p className="text-sm text-surface-700 dark:text-surface-300">
                         One more step — complete the exchange when you have
                         given or received.
                       </p>
@@ -3491,7 +3491,7 @@ export default function WorkhousePage() {
                             if (res) noteCompletedExchange(offer);
                           })
                         }
-                        className="btn preset-filled-primary-500 w-full sm:w-auto"
+                        className="btn preset-filled-brand w-full sm:w-auto"
                       >
                         Complete exchange
                       </button>
@@ -3503,7 +3503,7 @@ export default function WorkhousePage() {
                   return (
                     <div
                       key={offer.id}
-                      className="card preset-filled-surface-100-900 preset-outlined-surface-200-800 grid gap-3 p-3 sm:p-4"
+                      className="card preset-filled-surface-100-900 border-2 border-surface-500 grid gap-3 p-3 sm:p-4"
                     >
                       <AutoDismissEffect
                         offerId={offer.id}
@@ -3527,7 +3527,7 @@ export default function WorkhousePage() {
                 return (
                   <div
                     key={offer.id}
-                    className="card preset-filled-surface-100-900 preset-outlined-surface-200-800 grid gap-3 p-3 sm:p-4"
+                    className="card preset-filled-surface-100-900 border-2 border-surface-500 grid gap-3 p-3 sm:p-4"
                   >
                     <CompactCardSteps phase="incoming-pending" />
                     <IncomingOfferSentence
@@ -3535,7 +3535,7 @@ export default function WorkhousePage() {
                       currentUser={username}
                     />
                     {unaffordable ? (
-                      <p className="card preset-filled-warning-100-900 preset-outlined-warning-200-800 px-3 py-2 text-warning-500">
+                      <p className="card preset-filled-warning-100-900 border-2 border-warning-600 dark:border-warning-300 px-3 py-2">
                         You only have {offerCreditContext.available} credits
                         available to offer. This asks for {offer.creditAmount}.
                       </p>
@@ -3665,14 +3665,14 @@ export default function WorkhousePage() {
                                 }),
                               ).then(() => setCounteringId(null));
                             }}
-                            className="btn preset-filled-primary-500 w-full sm:w-auto"
+                            className="btn preset-filled-brand w-full sm:w-auto"
                           >
                             Send counteroffer
                           </button>
                           <button
                             type="button"
                             onClick={() => setCounteringId(null)}
-                            className="btn preset-outlined-surface-200-800 w-full sm:w-auto"
+                            className="btn w-full sm:w-auto border-2 bg-transparent border-surface-600 text-surface-800 hover:bg-surface-100 dark:border-surface-300 dark:text-surface-50 dark:hover:bg-surface-900"
                           >
                             Cancel
                           </button>
@@ -3687,7 +3687,7 @@ export default function WorkhousePage() {
                             onClick={() =>
                               run(() => acceptOffer(offer.id, username))
                             }
-                            className="btn preset-filled-primary-500 w-full sm:w-auto"
+                            className="btn preset-filled-brand w-full sm:w-auto"
                           >
                             Accept
                           </button>
@@ -3752,14 +3752,14 @@ export default function WorkhousePage() {
                       </div>
                     )}
                     {!unaffordable && counteringId !== offer.id ? (
-                      <p className="text-sm opacity-70">
+                      <p className="text-sm text-surface-700 dark:text-surface-300">
                         {ACCEPT_NOT_COMPLETE_HINT}
                       </p>
                     ) : null}
                     {unaffordable &&
                     availableForOffer === 0 &&
                     counteringId !== offer.id ? (
-                      <p className="opacity-60">
+                      <p className="text-surface-700 dark:text-surface-300">
                         You can counter with an action instead.
                       </p>
                     ) : null}
@@ -3777,7 +3777,7 @@ export default function WorkhousePage() {
       ) : null}
 
       <div ref={activityRef}>
-        <p className="mt-12 border-t-2 border-surface-200-800 pt-8 pb-4 opacity-60">
+        <p className="mt-12 border-t-2 border-surface-200-800 pt-8 pb-4 text-surface-700 dark:text-surface-300">
           Below is a record of every interaction you have made, secured by
           encrypted, tamper-evident, hash-verified receipts.
         </p>
@@ -3814,7 +3814,7 @@ export default function WorkhousePage() {
                 <button
                   type="button"
                   onClick={() => setActivitySearch("")}
-                  className="btn btn-sm preset-outlined-surface-200-800"
+                  className="btn btn-sm border-2 border-surface-500"
                 >
                   Show all
                 </button>

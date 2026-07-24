@@ -193,11 +193,12 @@ describe("Landing page — Skeleton React Carousel", () => {
       expect(deckBody).toContain("<span>Next</span>");
     });
 
-    it("trigger buttons use outlined surface treatment (secondary to Enter)", () => {
+    it("trigger buttons use accessible outlined surface treatment", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
       const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
-      expect(deckBody).toContain("preset-outlined-surface-300-700");
+      // Uses accessible border treatment instead of weak preset
+      expect(deckBody).toContain("border-surface-600");
     });
 
     it("both triggers have aria-label for accessibility", () => {
@@ -252,7 +253,7 @@ describe("Landing page — Skeleton React Carousel", () => {
       const itemGroupEnd = content.indexOf("</Carousel.ItemGroup>");
       const itemGroup = content.slice(itemGroupStart, itemGroupEnd);
       // Carousel slides should NOT have primary filled background
-      expect(itemGroup).not.toContain("preset-filled-primary-500");
+      expect(itemGroup).not.toContain("preset-filled-brand");
     });
 
     it("no drag handlers remain in carousel (touch-pan-y, onPointerDown, etc.)", () => {
@@ -318,11 +319,11 @@ describe("Landing page — Skeleton React Carousel", () => {
       expect(deckBody).toContain("onClick={onDone}");
     });
 
-    it("START GAME button uses preset-filled-primary-500 (call-to-action)", () => {
+    it("START GAME button uses preset-filled-brand (call-to-action)", () => {
       const deckStart = content.indexOf("function RulesOfTheGameDeck");
       const deckEnd = content.indexOf("\nfunction WorkhouseInfoSection");
       const deckBody = content.slice(deckStart, deckEnd);
-      expect(deckBody).toContain("preset-filled-primary-500");
+      expect(deckBody).toContain("preset-filled-brand");
     });
 
     it("START GAME button is NOT inside Carousel component", () => {
