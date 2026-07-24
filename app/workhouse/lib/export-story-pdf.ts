@@ -9,7 +9,7 @@ import { loadHelpSignals } from './help-signals'
 import type { AuditEntry, FederationData, MoneyReceipt, WorkhouseState, WorkhouseUser } from './types'
 import { formatVelocity } from './federation-data'
 
-export const FEDERATION_DATA_SNAPSHOT_HEADING = 'Workhouse Festival snapshot'
+export const FEDERATION_DATA_SNAPSHOT_HEADING = 'Activity snapshot'
 
 const PAGE_WIDTH = 210
 const PAGE_HEIGHT = 297
@@ -17,11 +17,11 @@ const MARGIN = 18
 const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2
 const EXPORT_LOGO_WIDTH = 44
 const EXPORT_LOGO_HEIGHT = EXPORT_LOGO_WIDTH * (309 / 1317)
-const WEALTH_FORMULA_WIDTH = 122
+const WEALTH_FORMULA_WIDTH = 88
 const WEALTH_FORMULA_HEIGHT = WEALTH_FORMULA_WIDTH * (308 / 1031)
 
 const INTRO_TEXT =
-  'This is your personal story of exchange and participation during the Workhouse festival demonstrator — offers completed, support given, and the receipts that remember them.'
+  'This is your personal story of exchange and participation during this proof-of-concept demo — offers completed, support given, and the receipts that remember them.'
 
 const DISCLAIMER =
   'This was generated from a local festival demonstrator. It is a personal record, not a legal receipt or financial statement.'
@@ -385,6 +385,7 @@ type PdfWriter = {
   heading: (text: string) => void
   subheading: (text: string) => void
   body: (text: string, indent?: number) => void
+  centered: (text: string) => void
   small: (text: string, indent?: number) => void
   line: () => void
 }
@@ -437,6 +438,15 @@ function createPdfWriter(doc: jsPDF): PdfWriter {
     cursor.y += lines.length * 3.5 + 2
   }
 
+  const centered = (text: string) => {
+    ensureSpace(6.5)
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(10)
+    doc.setTextColor(40, 40, 40)
+    doc.text(text, PAGE_WIDTH / 2, cursor.y, { align: 'center' })
+    cursor.y += 6.5
+  }
+
   const line = () => {
     ensureSpace(4)
     doc.setDrawColor(200, 200, 200)
@@ -454,6 +464,7 @@ function createPdfWriter(doc: jsPDF): PdfWriter {
     heading,
     subheading,
     body,
+    centered,
     small,
     line,
   }
@@ -561,10 +572,9 @@ function renderFederationData(writer: PdfWriter, data: FederationData, wealthFor
     )
     writer.advanceY(WEALTH_FORMULA_HEIGHT + 6)
   }
-  writer.body('Credit supply × velocity = federation wealth')
-  writer.body('Example: 10 × 1.2 = 12')
+  writer.centered('Credit supply × velocity = federation wealth')
   writer.body(`Credit supply: ${data.creditSupply}`)
-  writer.body('The total credits introduced into the federation.')
+  writer.body('Credits currently held by active members, based on five starter credits each.')
   writer.body(`Credits exchanged: ${data.creditsExchanged}`)
   writer.body(`Velocity: ${formatVelocity(data.velocity)}`)
   writer.body(
@@ -590,11 +600,6 @@ function renderFederationData(writer: PdfWriter, data: FederationData, wealthFor
 }
 
 function renderFooter(writer: PdfWriter) {
-  writer.heading('Dark Olive / inQbeta follow-up')
-  writer.body('Project: inQbeta Workhouse festival demonstrator')
-  writer.body('Contact email: TODO')
-  writer.body('Facebook / page: TODO')
-  writer.line()
   writer.small(DISCLAIMER)
 }
 
@@ -616,14 +621,14 @@ function renderStoryPdf(
       EXPORT_LOGO_WIDTH,
       EXPORT_LOGO_HEIGHT,
     )
-    writer.advanceY(EXPORT_LOGO_HEIGHT + 5)
+    writer.advanceY(EXPORT_LOGO_HEIGHT + 9)
   }
 
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(18)
   doc.setTextColor(30, 30, 30)
   writer.ensureSpace(10)
-  doc.text('My Workhouse Exchange Story', MARGIN, writer.getY())
+  doc.text('My Story', MARGIN, writer.getY())
   writer.advanceY(10)
 
   doc.setFont('helvetica', 'normal')
